@@ -27,6 +27,7 @@ export const SectionTitle = styled.div`
 export const SectionCardWrapper = styled.div`
   display: flex;
   margin: 0 10%;
+  justify-content: center;
 `;
 export const CardWrapper = styled.div`
   width: 410px;
