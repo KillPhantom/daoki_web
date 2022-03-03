@@ -2,6 +2,8 @@
 import {
   submitCollaboratorInfo,
   SUBMIT_COLLABORATOR_INFO_SERVICES,
+  fetchHomePageInitialData,
+  FETCH_HOME_PAGE_INITIAL_DATA,
 } from "./HomePageActions";
 
 /* Actions */
@@ -12,8 +14,20 @@ export type SubmitCollaboratorInfoType = {
   payload: Promise<any>;
 };
 
+export type FetchHomePageInitialDataType = {
+  type: typeof FETCH_HOME_PAGE_INITIAL_DATA;
+  payload: Promise<any>;
+};
+
 type SubmitCollaboratorFulfilledActionType = GetFulfilledActionType<
   typeof submitCollaboratorInfo
 >;
 
-export type ActionType = SubmitCollaboratorFulfilledActionType;
+type FetchHomePageInitialDataFulFilledActionType = GetFulfilledActionType<
+  typeof fetchHomePageInitialData
+>;
+
+export type ActionType =
+  | FetchHomePageInitialDataType
+  | SubmitCollaboratorFulfilledActionType
+  | FetchHomePageInitialDataFulFilledActionType;

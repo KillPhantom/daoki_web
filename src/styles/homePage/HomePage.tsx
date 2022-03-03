@@ -7,4 +7,5 @@ export const TopSection = styled.div`
   width: 100%;
   height: 830px;
   background-image: url(${TopSectionBackgroundImg});
+  background-repeat: round;
 `;

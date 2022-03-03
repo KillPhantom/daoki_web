@@ -8,15 +8,17 @@ import MainContent from "./topSection/MainContent";
 import IntroductionSection from "./IntroductionSection";
 import AdvantageSection from "./AdvantangeSection";
 import AboutUsSection from "./AboutUsSection";
+import SearchSection from "./searchSection/SearchSection";
 
 const HomePage = () => {
   return (
     <>
       <TopSection>
-        <Header />
-        <MainContent />
+        <Header isOfficial />
+        <MainContent isOfficial />
       </TopSection>
       <IntroductionSection />
+      <SearchSection />
       <AdvantageSection />
       <AboutUsSection />
     </>

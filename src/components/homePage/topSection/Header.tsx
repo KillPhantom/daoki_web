@@ -1,47 +1,54 @@
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
+
 /* Styled Components */
 import {
   Logo,
   HeaderContainer,
   IconWrapper,
+  MenuText,
+  MenuContainer,
+  Button,
+  RightMenuWrapper,
+  HeaderWrapper,
 } from "../../../styles/homePage/topSection/Header";
 
 /* Child Component */
-import HeaderText from "./HeaderText";
 import TwitterIcon from "../../common/icons/TwitterIcon";
 import GithubIcon from "../../common/icons/GithubIcon";
 import DiscordIcon from "../../common/icons/DiscordIcon";
 
-/* Constants */
-// import { MENU_KEY } from "../../data/Constants";
+/* Routes */
+import { isOnHomePage, isOnCreateProjectPage } from "../../../routes";
 
-const Header = () => {
-  // const [currentMenu, setCurrentMenu] = useState(MENU_KEY.HOME);
+type PropsType = {
+  isOfficial?: boolean;
+};
+
+const Header = ({ isOfficial }: PropsType) => {
+  const location = useLocation();
   return (
-    <HeaderContainer>
-      <Logo>LOGO</Logo>
-      {/* <MenuContainer>
-        <HeaderText
-          text={MENU_KEY.HOME}
-          isSelected={currentMenu === MENU_KEY.HOME}
-          onItemClick={() => setCurrentMenu(MENU_KEY.HOME)}
-        />
-        <HeaderText
-          text={MENU_KEY.CREATE_PROJECT}
-          isSelected={currentMenu === MENU_KEY.CREATE_PROJECT}
-          onItemClick={() => setCurrentMenu(MENU_KEY.CREATE_PROJECT)}
-        />
-        <HeaderText
-          text={MENU_KEY.PROJECT_POOL}
-          isSelected={currentMenu === MENU_KEY.PROJECT_POOL}
-          onItemClick={() => setCurrentMenu(MENU_KEY.PROJECT_POOL)}
-        />
-      </MenuContainer> */}
-      <IconWrapper>
-        <TwitterIcon overrideStyle={{ marginRight: "32px" }} />
-        <DiscordIcon overrideStyle={{ marginRight: "32px" }} />
-        <GithubIcon />
-      </IconWrapper>
-    </HeaderContainer>
+    <HeaderWrapper>
+      <HeaderContainer>
+        <Logo>LOGO</Logo>
+        {isOfficial && (
+          <MenuContainer>
+            <MenuText>My Project</MenuText>
+            <MenuText isSelected={isOnCreateProjectPage(location)}>
+              Create Project
+            </MenuText>
+          </MenuContainer>
+        )}
+        <RightMenuWrapper>
+          <IconWrapper>
+            <TwitterIcon overrideStyle={{ marginRight: "32px" }} />
+            <DiscordIcon overrideStyle={{ marginRight: "32px" }} />
+            <GithubIcon />
+          </IconWrapper>
+          <Button>Connect Wallet</Button>
+        </RightMenuWrapper>
+      </HeaderContainer>
+    </HeaderWrapper>
   );
 };
 

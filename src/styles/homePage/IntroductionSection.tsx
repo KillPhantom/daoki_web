@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   margin: 0 10%;
   margin-top: 40px;
   text-align: left;
+  justify-content: center;
 `;
 
 export const LeftPanel = styled.div``;

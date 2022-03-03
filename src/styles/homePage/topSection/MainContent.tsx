@@ -1,9 +1,15 @@
 import styled from "styled-components";
 
+import MyProjectBackground from "../../../assets/images/my_project_background.png";
+
+export const MyProjectCard = styled.img.attrs({ src: MyProjectBackground })`
+  margin: 80px auto 0;
+`;
 export const MainContentWrapper = styled.div`
   display: flex;
   margin: 0 10%;
   margin-top: 120px;
+  justify-content: center;
 `;
 
 export const TextContentWrapper = styled.div`
@@ -36,8 +42,8 @@ export const Body = styled.div`
 
 export const FormContentWrapper = styled.div`
   width: 452px;
-  height: fit-content;
   margin-left: 160px;
+  height: fit-content;
   background: #ffffff;
   box-shadow: 0px 14px 28px 0px rgba(30, 96, 218, 0.14);
   padding: 24px;
