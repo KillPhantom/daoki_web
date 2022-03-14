@@ -5,6 +5,7 @@ import promise from "redux-promise-middleware";
 
 /* reducer */
 import HomePageReducer from "./data/reducers/HomePageReducer";
+import CreatePageReducer from "./data/reducers/CreatePageReducer";
 import { StateType } from "./data/types/StateType";
 
 const STORE_INITIAL = {};
@@ -12,6 +13,7 @@ const logger = createLogger();
 const storeCreator = () => {
   const reducers = {
     homePage: HomePageReducer,
+    createPage: CreatePageReducer,
   };
   const store = createStore(
     //@ts-ignore

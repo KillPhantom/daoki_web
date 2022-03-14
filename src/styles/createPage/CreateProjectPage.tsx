@@ -18,6 +18,7 @@ export const ContentWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 24px;
+  padding-bottom: 300px;
 `;
 
 export const Content = styled.div`
@@ -67,11 +68,9 @@ export const ModuleQuoteWrapper = styled.div`
 
 export const ModuleQuoteContainer = styled.div`
   background: white;
-  padding: 12px;
 `;
 export const ModuleQuotedContainer = styled.div`
   background: white;
-  padding: 12px;
   margin-top: 12px;
 `;
 
@@ -112,8 +111,7 @@ export const RichTextWrapper = styled.div`
 `;
 
 export const AddMoreButton = styled.div`
-  width: 100%;
-  margin-left: 20px;
+  margin: 0 20px;
   height: 40px;
   max-width: 764px;
   background: rgba(58, 194, 141, 0.08);
@@ -127,4 +125,64 @@ export const AddMoreButton = styled.div`
   padding-top: 6px;
   margin-top: 10px;
   margin-bottom: 10px;
+`;
+
+export const ExternalLinkMainWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 1280px;
+`;
+export const ExternalLinksWrapper = styled.div`
+  width: 100%;
+  max-width: 1024px;
+  min-height: 120px;
+  background: white;
+  margin-top: 20px;
+`;
+
+export const ModuleTitleWrapper = styled.div`
+  display: flex;
+  padding: 16px;
+  border-bottom: 1px solid rgba(20, 37, 66, 0.1);
+`;
+
+export const LeftColorBar = styled.div`
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(360deg, #b6ff2e 0%, #3ac28d 100%);
+  border-radius: 1px;
+  margin: 4px 4px 4px 0;
+`;
+
+export const ModuleTitle = styled.div`
+  font-size: 20px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #142542;
+  line-height: 28px;
+  margin-left: 2px;
+  text-align: left;
+`;
+
+export const ExternalLinksTitleBottomLine = styled.div`
+  width: 1024px;
+  height: 1px;
+  border: 1px solid rgba(20, 37, 66, 0.1);
+`;
+
+export const EmptySpaceHolder = styled.div`
+  width: 300px;
+  height: 120px;
+`;
+
+export const ExternalLinkContentRow = styled.div`
+  display: flex;
+  padding: 4px 16px 0;
+  justify-content: space-between;
+`;
+
+export const ExternalLinkContentWrapper = styled.div`
+  margin: 0 10px;
+  padding-bottom: 12px;
 `;

@@ -3,3 +3,5 @@ export const MENU_KEY = {
   CREATE_PROJECT: "Create Project",
   PROJECT_POOL: "Project Pool",
 };
+
+export const LINK_TYPE = "link";

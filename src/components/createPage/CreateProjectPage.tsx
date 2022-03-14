@@ -17,6 +17,9 @@ import {
   ModuleQuoteWrapper,
   ModuleQuoteContainer,
   ModuleQuotedContainer,
+  ModuleTitleWrapper,
+  ModuleTitle,
+  LeftColorBar,
 } from "../../styles/createPage/CreateProjectPage";
 
 /* Child Components */
@@ -24,6 +27,7 @@ import { Button, Dropdown } from "antd";
 import CreateProjectMenu from "./CreateProjectMenu";
 import RichTextEditor from "../richText/RichTextEditor";
 import Header from "../homePage/topSection/Header";
+import ExternalLinkSection from "./ExternalLinksSection";
 
 const MODULE_TYPE = {
   TEXT: "Text template",
@@ -36,17 +40,22 @@ const CreateProjectPage = () => {
   const [showInitialPanel, setShowInitialPanel] = useState(true);
   const [contentList, setContentList] = useState<Array<any>>([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [positionList, setPositionList] = useState<Array<number>>([]);
+  const [currentPosition, setCurrentPosition] = useState(0);
 
   const onTextTemplateClick = () => {
     setShowInitialPanel(false);
     setShowDropdown(false);
+    setCurrentPosition(currentPosition + 1);
+    positionList.push(currentPosition);
+    setPositionList(positionList);
     // leave time for the dropdown to disappear
     window.setTimeout(
       () =>
         setContentList([
           ...contentList,
           <RichTextWrapper>
-            <RichTextEditor />
+            <RichTextEditor position={currentPosition} />
           </RichTextWrapper>,
         ]),
       10
@@ -77,6 +86,7 @@ const CreateProjectPage = () => {
     { menuText: MODULE_TYPE.TWITTER, menuOnClick: onTwitterLinkClick },
     { menuText: MODULE_TYPE.CODE, menuOnClick: onCodeTemplateClick },
   ];
+
   return (
     <Wrapper>
       <Header isOfficial />
@@ -104,7 +114,7 @@ const CreateProjectPage = () => {
           <>
             <ProjectTitleWrapper>
               <ProjectTitle>
-                <ProjectTitleInput />
+                <ProjectTitleInput placeholder="Put your title here" />
               </ProjectTitle>
 
               <Button
@@ -134,7 +144,12 @@ const CreateProjectPage = () => {
             </ProjectTitleWrapper>
             <EditWrapper>
               <ModuleWrapper>
-                <ModuleContextContainer>Context</ModuleContextContainer>
+                <ModuleContextContainer>
+                  <ModuleTitleWrapper>
+                    <LeftColorBar />
+                    <ModuleTitle>Context</ModuleTitle>
+                  </ModuleTitleWrapper>
+                </ModuleContextContainer>
                 <ModuleContentContainer>
                   {contentList.map((item) => item)}
                   <Dropdown
@@ -148,10 +163,21 @@ const CreateProjectPage = () => {
                 </ModuleContentContainer>
               </ModuleWrapper>
               <ModuleQuoteWrapper>
-                <ModuleQuoteContainer>Quote Topic</ModuleQuoteContainer>
-                <ModuleQuotedContainer>Quoted Topic</ModuleQuotedContainer>
+                <ModuleQuoteContainer>
+                  <ModuleTitleWrapper>
+                    <LeftColorBar />
+                    <ModuleTitle>Quote topic</ModuleTitle>
+                  </ModuleTitleWrapper>
+                </ModuleQuoteContainer>
+                <ModuleQuotedContainer>
+                  <ModuleTitleWrapper>
+                    <LeftColorBar />
+                    <ModuleTitle>Quoted topic</ModuleTitle>
+                  </ModuleTitleWrapper>
+                </ModuleQuotedContainer>
               </ModuleQuoteWrapper>
             </EditWrapper>
+            <ExternalLinkSection />
           </>
         )}
       </ContentWrapper>
