@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   display: flex;
   margin: 0 10%;
-  margin-top: 40px;
+  margin: 88px 0;
   text-align: left;
   justify-content: center;
 `;
@@ -62,15 +62,17 @@ export const IconTextContainerWrapper = styled.div`
 
 export const IconTextWrapper = styled.div`
   margin-left: 24px;
+  max-width: 542px;
 `;
 
 export const IconWrapper = styled.div``;
 
 export const IconTextTitle = styled.div`
   font-size: 24px;
-  font-weight: 500;
+  font-weight: bold;
   color: #142542;
   line-height: 31px;
+  max-width: 386px;
 `;
 
 export const IconTextBody = styled.div`
@@ -78,4 +80,5 @@ export const IconTextBody = styled.div`
   font-weight: 400;
   color: #142542;
   line-height: 23px;
+  margin-top: 14px;
 `;

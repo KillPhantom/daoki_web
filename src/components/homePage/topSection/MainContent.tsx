@@ -1,4 +1,5 @@
-import { Button } from "antd";
+import { useState } from "react";
+import { Button, Modal } from "antd";
 
 /* Styled Components */
 import {
@@ -6,33 +7,47 @@ import {
   TextContentWrapper,
   Title,
   SubTitle,
-  Body,
   FormContentWrapper,
   FormUnorderedList,
   FormUnorderedListSpan,
   FormTitle,
   MyProjectCard,
+  ErrorText,
 } from "../../../styles/homePage/topSection/MainContent";
 
+import { emailValidationCheck } from "../../common/Helper";
+
 type PropsType = {
-  isOfficial: boolean;
+  isOfficial?: boolean;
 };
 
 const MainContent = ({ isOfficial }: PropsType) => {
-  const onTextInputChange = (e: any) => {
-    console.log("Change:", e?.target?.value);
+  const [emailInputValue, setEmailInputValue] = useState("");
+  const [textInputValue, setTextInputValue] = useState("");
+
+  const [emailInputError, setEmailInputError] = useState<string | null>(null);
+  const [textInputError, setTextInputError] = useState<string | null>(null);
+
+  const onClickSubmit = () => {
+    if (!emailValidationCheck(emailInputValue)) {
+      setEmailInputError("Please use a valid email ! ");
+      return;
+    }
+    if (textInputValue.length < 10) {
+      setTextInputError("Please provide more information !");
+      return;
+    }
+
+    Modal.success({
+      content: "Thanks for you participation!",
+    });
   };
+
   return (
     <MainContentWrapper>
       <TextContentWrapper>
-        <Title>DAOKI</Title>
-        <SubTitle>Connecting history and decentralized knowledge</SubTitle>
-        <Body>
-          brief introduction to the projectbrief introduction to the project
-          brief introduction to the projectbrief introduction to the project
-          brief introduction to the projectbrief introduction to the project
-          brief introduction to the
-        </Body>
+        <Title>DAOKi</Title>
+        <SubTitle>connecting decentralized knowledge nodes.</SubTitle>
       </TextContentWrapper>
       {isOfficial ? (
         <FormContentWrapper>
@@ -65,7 +80,13 @@ const MainContent = ({ isOfficial }: PropsType) => {
               background: "#F5F7FD",
               padding: "6px 16px",
             }}
+            onChange={(e) => {
+              setEmailInputValue(e.target.value);
+              setEmailInputError(null);
+            }}
+            value={emailInputValue}
           />
+          {emailInputError && <ErrorText>{emailInputError}</ErrorText>}
           <FormUnorderedList style={{ marginTop: "16px" }}>
             <li>
               <FormUnorderedListSpan>
@@ -82,9 +103,13 @@ const MainContent = ({ isOfficial }: PropsType) => {
               background: "#F5F7FD",
               padding: "6px 16px",
             }}
-            onChange={onTextInputChange}
+            value={textInputValue}
+            onChange={(e) => {
+              setTextInputValue(e.target.value);
+              setTextInputError(null);
+            }}
           />
-
+          {textInputError && <ErrorText>{textInputError}</ErrorText>}
           <Button
             style={{
               background: "#3AC28D",
@@ -93,6 +118,7 @@ const MainContent = ({ isOfficial }: PropsType) => {
               width: "100%",
               marginTop: "100px",
             }}
+            onClick={onClickSubmit}
           >
             Submit
           </Button>

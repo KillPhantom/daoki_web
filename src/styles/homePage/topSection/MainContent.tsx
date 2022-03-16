@@ -25,7 +25,7 @@ export const Title = styled.div`
 `;
 
 export const SubTitle = styled.div`
-  font-size: 56px;
+  font-size: 54px;
   font-weight: 400;
   color: #142542;
   line-height: 72px;
@@ -67,5 +67,12 @@ export const FormUnorderedList = styled.ul`
 export const FormUnorderedListSpan = styled.span`
   font-weight: 400;
   color: #142542;
+  line-height: 21px;
+`;
+
+export const ErrorText = styled.div`
+  text-align: left;
+  color: red;
+  font-weight: 400;
   line-height: 21px;
 `;

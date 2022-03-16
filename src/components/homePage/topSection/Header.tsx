@@ -45,7 +45,7 @@ const Header = ({ isOfficial }: PropsType) => {
             <DiscordIcon overrideStyle={{ marginRight: "32px" }} />
             <GithubIcon />
           </IconWrapper>
-          <Button>Connect Wallet</Button>
+          {isOfficial && <Button>Connect Wallet</Button>}
         </RightMenuWrapper>
       </HeaderContainer>
     </HeaderWrapper>
