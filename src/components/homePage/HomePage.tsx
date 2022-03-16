@@ -7,11 +7,13 @@ import Header from "./topSection/Header";
 import MainContent from "./topSection/MainContent";
 import IntroductionSection from "./IntroductionSection";
 import AdvantageSection from "./AdvantangeSection";
-import AboutUsSection from "./AboutUsSection";
+import DAOkiDaoSection from "./DAOkiDaoSection";
 import SearchSection from "./searchSection/SearchSection";
+import EarlyStageHomePage from "./EarlyStageHomePage";
 
 const HomePage = () => {
-  return (
+  const isOfficial = false;
+  return isOfficial ? (
     <>
       <TopSection>
         <Header isOfficial />
@@ -20,8 +22,10 @@ const HomePage = () => {
       <IntroductionSection />
       <SearchSection />
       <AdvantageSection />
-      <AboutUsSection />
+      <DAOkiDaoSection />
     </>
+  ) : (
+    <EarlyStageHomePage />
   );
 };
 
