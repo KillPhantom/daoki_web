@@ -30,11 +30,11 @@ const MainContent = ({ isOfficial }: PropsType) => {
 
   const onClickSubmit = () => {
     if (!emailValidationCheck(emailInputValue)) {
-      setEmailInputError("Please use a valid email ! ");
+      setEmailInputError("Please use a valid email.");
       return;
     }
     if (textInputValue.length < 10) {
-      setTextInputError("Please provide more information !");
+      setTextInputError("Please provide more information.");
       return;
     }
 

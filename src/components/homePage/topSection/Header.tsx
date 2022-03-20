@@ -17,7 +17,7 @@ import {
 import TwitterIcon from "../../common/icons/TwitterIcon";
 import GithubIcon from "../../common/icons/GithubIcon";
 import DiscordIcon from "../../common/icons/DiscordIcon";
-
+import LogoIcon from "../../common/icons/LogoIcon";
 /* Routes */
 import { isOnHomePage, isOnCreateProjectPage } from "../../../routes";
 
@@ -30,7 +30,7 @@ const Header = ({ isOfficial }: PropsType) => {
   return (
     <HeaderWrapper>
       <HeaderContainer>
-        <Logo>LOGO</Logo>
+        <LogoIcon />
         {isOfficial && (
           <MenuContainer>
             <MenuText>My Project</MenuText>
