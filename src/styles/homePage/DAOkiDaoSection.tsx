@@ -25,14 +25,16 @@ export const SectionTitle = styled.div`
   line-height: 72px;
 `;
 
-export const ContentCardWrapper = styled.div`
+export const ContentCardWrapper = styled.div<{ isCollapsed?: boolean }>`
   width: 1280px;
-  min-height: 180px;
+  position: relative;
+  height: ${({ isCollapsed }) => (isCollapsed ? "180px" : "fit-content")};
   margin: 16px auto 0;
   background: #ffffff;
   box-shadow: 0px 14px 28px 0px rgba(30, 96, 218, 0.14);
   border-radius: 4px;
   padding: 24px;
+  overflow: hidden;
 `;
 
 export const ContentCardTitleWrapper = styled.div`
@@ -54,4 +56,14 @@ export const ContentCardBody = styled.div`
   font-weight: 400;
   color: #142542;
   line-height: 23px;
+`;
+
+export const CardShadowCover = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 1280px;
+  height: 69px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
+  border-radius: 4px;
 `;

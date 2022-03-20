@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import LogoImg from "../../../assets/icons/logo.png";
+
 export const HeaderWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -35,11 +37,6 @@ export const MenuText = styled.div<{ isSelected?: boolean }>`
   ${({ isSelected }) => isSelected && "color:#3AC28D"};
 `;
 
-export const Logo = styled.div`
-  font-weight: bold;
-  font-size: 24px;
-`;
-
 export const RightMenuWrapper = styled.div`
   position: absolute;
   right: 10px;
@@ -61,3 +58,5 @@ export const Button = styled.button`
   font-weight: 500;
   line-height: 31px;
 `;
+
+export const Logo = styled.img.attrs({ src: LogoImg })``;
