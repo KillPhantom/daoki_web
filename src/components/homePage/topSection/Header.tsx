@@ -30,7 +30,6 @@ const Header = ({ isOfficial }: PropsType) => {
   return (
     <HeaderWrapper>
       <HeaderContainer>
-        <LogoIcon />
         {isOfficial && (
           <MenuContainer>
             <MenuText>My Project</MenuText>
