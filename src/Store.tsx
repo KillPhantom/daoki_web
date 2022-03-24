@@ -11,6 +11,7 @@ import { StateType } from "./data/types/StateType";
 const STORE_INITIAL = {};
 const logger = createLogger();
 const storeCreator = () => {
+  const isProdEnv = process.env.NODE_ENV;
   const reducers = {
     homePage: HomePageReducer,
     createPage: CreatePageReducer,
