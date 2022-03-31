@@ -12,7 +12,7 @@ import SearchSection from "./searchSection/SearchSection";
 import EarlyStageHomePage from "./EarlyStageHomePage";
 
 const HomePage = () => {
-  const isOfficial = false;
+  const isOfficial = process.env.REACT_APP_IS_OFFICIAL;
   return isOfficial ? (
     <>
       <TopSection>

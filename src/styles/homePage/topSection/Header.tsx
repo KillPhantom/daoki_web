@@ -8,9 +8,10 @@ export const HeaderWrapper = styled.div`
   align-items: center;
 `;
 export const HeaderContainer = styled.div`
+  position: relative;
   margin: 0 10%;
   padding-top: 40px;
-  padding-bottom: 30px;
+  padding-bottom: 60px;
   border-bottom: 1px solid #000000;
   display: flex;
   position: relative;

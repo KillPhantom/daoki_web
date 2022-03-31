@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 
 /* Styled Components */
 import {
-  Logo,
   HeaderContainer,
   IconWrapper,
   MenuText,
@@ -17,7 +16,6 @@ import {
 import TwitterIcon from "../../common/icons/TwitterIcon";
 import GithubIcon from "../../common/icons/GithubIcon";
 import DiscordIcon from "../../common/icons/DiscordIcon";
-import LogoIcon from "../../common/icons/LogoIcon";
 /* Routes */
 import { isOnHomePage, isOnCreateProjectPage } from "../../../routes";
 

@@ -1,5 +1,11 @@
-import type { RichTextType } from "./CommonTypes";
+import type {
+  RichTextType,
+  CodeTextType,
+  TwitterWidgetType,
+} from "./CommonTypes";
 
 export type StateType = {
-  richText: Array<RichTextType | null | undefined>;
+  data: Array<
+    RichTextType | CodeTextType | TwitterWidgetType | null | undefined
+  >;
 };

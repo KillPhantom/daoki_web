@@ -5,3 +5,27 @@ export const MENU_KEY = {
 };
 
 export const LINK_TYPE = "link";
+
+export const PRISM_SUPPORT_LANGUAGE = [
+  { value: "markup" },
+  { value: "bash" },
+  { value: "c" },
+  { value: "cpp" },
+  { value: "css" },
+  { value: "javascript" },
+  { value: "jsx" },
+  { value: "git" },
+  { value: "go" },
+  { value: "graphql" },
+  { value: "json" },
+  { value: "makefile" },
+  { value: "markdown" },
+  { value: "objectivec" },
+  { value: "ocaml" },
+  { value: "python" },
+  { value: "scss" },
+  { value: "sql" },
+  { value: "tsx" },
+  { value: "typescript" },
+  { value: "yaml" },
+];

@@ -4,6 +4,18 @@ export type MenuItemType = {
 };
 
 export type RichTextType = {
+  title: string;
   text: any; // TODO decouple it to be more specific type
-  position: number;
+  id: number;
+};
+
+export type CodeTextType = {
+  language: string;
+  content: string;
+  id: number;
+};
+
+export type TwitterWidgetType = {
+  twitterId: string;
+  id: number;
 };

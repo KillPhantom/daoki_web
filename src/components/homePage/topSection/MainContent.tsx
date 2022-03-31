@@ -1,3 +1,4 @@
+import { connect } from "react-redux";
 import { useState } from "react";
 import { Button, Modal } from "antd";
 
@@ -17,11 +18,18 @@ import {
 
 import { emailValidationCheck } from "../../common/Helper";
 
+import { submitCollaboratorInfo } from "../../../data/actions/HomePageActions";
+
+const mapDispatchToProps = (dispatch: any) => ({
+  submitInfo: (email: string, detail: string) =>
+    dispatch(submitCollaboratorInfo(email, detail)),
+});
+
 type PropsType = {
   isOfficial?: boolean;
-};
+} & ReturnType<typeof mapDispatchToProps>;
 
-const MainContent = ({ isOfficial }: PropsType) => {
+const MainContent = ({ isOfficial, submitInfo }: PropsType) => {
   const [emailInputValue, setEmailInputValue] = useState("");
   const [textInputValue, setTextInputValue] = useState("");
 
@@ -37,7 +45,7 @@ const MainContent = ({ isOfficial }: PropsType) => {
       setTextInputError("Please provide more information.");
       return;
     }
-
+    submitInfo(emailInputValue, textInputValue);
     Modal.success({
       content: "Thanks for you participation!",
     });
@@ -128,4 +136,4 @@ const MainContent = ({ isOfficial }: PropsType) => {
   );
 };
 
-export default MainContent;
+export default connect(null, mapDispatchToProps)(MainContent);

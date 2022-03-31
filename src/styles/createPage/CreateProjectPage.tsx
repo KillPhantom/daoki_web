@@ -1,16 +1,10 @@
 import styled from "styled-components";
 
 /* Images */
-import BackgroundImg from "../../assets/images/background.png";
 
 export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  background: url(${BackgroundImg}) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
 `;
 
 export const ContentWrapper = styled.div`
@@ -61,6 +55,15 @@ export const ModuleContextContainer = styled.div`
 `;
 export const ModuleContentContainer = styled.div``;
 
+export const ContextTitle = styled.div`
+  font-size: 16px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #142542;
+  line-height: 22px;
+  text-align: left;
+  margin: 16px 16px 0;
+`;
 export const ModuleQuoteWrapper = styled.div`
   width: 240px;
   margin-left: 14px;
@@ -103,11 +106,17 @@ export const ProjectTitleInput = styled.input.attrs({ type: "text" })`
 `;
 
 export const RichTextWrapper = styled.div`
-  padding: 20px;
+  padding: 0 20px;
   text-align: left;
   max-width: 768px;
-  margin: 20px;
+  margin: 0 20px;
   background: #f5f7fd;
+`;
+
+export const TwitterWrapper = styled.div`
+  padding: 0 20px;
+  width: 100%;
+  position: relative;
 `;
 
 export const AddMoreButton = styled.div`

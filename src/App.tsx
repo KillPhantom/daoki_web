@@ -8,12 +8,18 @@ import HomePage from "./components/homePage/HomePage";
 import CreateProjectPage from "./components/createPage/CreateProjectPage";
 
 const App = () => {
+  const isOfficial = process.env.REACT_APP_IS_OFFICIAL;
   return (
     <Router>
       <div className="App">
         <Routes>
           <Route path={HOME_ROUTE} element={<HomePage />} />
-          {/* <Route path={CREATE_PROJECT_ROUTE} element={<CreateProjectPage />} /> */}
+          {isOfficial && (
+            <Route
+              path={CREATE_PROJECT_ROUTE}
+              element={<CreateProjectPage />}
+            />
+          )}
         </Routes>
       </div>
     </Router>
