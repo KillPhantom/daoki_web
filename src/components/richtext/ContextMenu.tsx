@@ -5,22 +5,27 @@ import "@szhsin/react-menu/dist/index.css";
 
 type InjectedPropsType = {};
 
-type PropsType = {};
+type HocOnlyPropsType = {
+  onActionClick?: () => void;
+};
 
 const ContextMenuHOC = <P extends InjectedPropsType = InjectedPropsType>(
   WrappedComponents: ComponentType<P>
-): ComponentType<P> => {
-  const ContextMenu = ({ ...propsToPass }: PropsType) => {
+): ComponentType<Omit<P, keyof InjectedPropsType> & HocOnlyPropsType> => {
+  const ContextMenu = ({
+    onActionClick,
+    ...propsToPass
+  }: Omit<P, keyof InjectedPropsType> & HocOnlyPropsType) => {
     const { toggleMenu, ...menuProps } = useMenuState();
     const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
 
-    const onLogClick = () => {
-      let selection = document.getSelection();
-      let selRange = selection?.getRangeAt(0);
-      // do stuff with the range
+    // const onLogClick = () => {
+    //   let selection = document.getSelection();
+    //   let selRange = selection?.getRangeAt(0);
+    //   // do stuff with the range
 
-      console.log(selection?.toString()); // Selection object
-    };
+    //   console.log(selection?.toString()); // Selection object
+    // };
 
     return (
       <div
@@ -30,15 +35,13 @@ const ContextMenuHOC = <P extends InjectedPropsType = InjectedPropsType>(
           toggleMenu(true);
         }}
       >
-        <WrappedComponents {...(propsToPass as P)} />
+        <WrappedComponents {...(propsToPass as unknown as P)} />
         <ControlledMenu
           {...menuProps}
           anchorPoint={anchorPoint}
           onClose={() => toggleMenu(false)}
         >
-          <MenuItem onClick={onLogClick}>Log Select Text</MenuItem>
-          <MenuItem>Copy</MenuItem>
-          <MenuItem>Paste</MenuItem>
+          <MenuItem onClick={() => {}}>Delete</MenuItem>
         </ControlledMenu>
       </div>
     );

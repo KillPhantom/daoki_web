@@ -5,7 +5,6 @@ import {
   Wrapper,
   ContentWrapper,
   Content,
-  RichTextWrapper,
   AddMoreButton,
   ProjectTitleWrapper,
   ProjectTitle,
@@ -28,6 +27,9 @@ import CreateProjectMenu from "./CreateProjectMenu";
 import RichTextEditor from "../richText/RichTextEditor";
 import Header from "../homePage/topSection/Header";
 import ExternalLinkSection from "./ExternalLinksSection";
+import TwitterWidget from "./TwitterWidget";
+import CodeBlock from "./CodeBlock";
+import ContextMenu from "./ContextMenu";
 
 const MODULE_TYPE = {
   TEXT: "Text template",
@@ -41,22 +43,28 @@ const CreateProjectPage = () => {
   const [contentList, setContentList] = useState<Array<any>>([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [positionList, setPositionList] = useState<Array<number>>([]);
-  const [currentPosition, setCurrentPosition] = useState(0);
+  const [currentPositionId, setCurrentPositionId] = useState(0);
 
-  const onTextTemplateClick = () => {
+  const onAddButtonClick = () => {
     setShowInitialPanel(false);
     setShowDropdown(false);
-    setCurrentPosition(currentPosition + 1);
-    positionList.push(currentPosition);
+    setCurrentPositionId(currentPositionId + 1);
+    positionList.push(currentPositionId);
     setPositionList(positionList);
+  };
+  const onItemRemoved = (positionId: number) => {
+    contentList.splice(positionId, 1); // remove the element
+    setContentList(contentList);
+  };
+
+  const onTextTemplateClick = () => {
+    onAddButtonClick();
     // leave time for the dropdown to disappear
     window.setTimeout(
       () =>
         setContentList([
           ...contentList,
-          <RichTextWrapper>
-            <RichTextEditor position={currentPosition} />
-          </RichTextWrapper>,
+          <RichTextEditor position={currentPositionId} />,
         ]),
       10
     );
@@ -64,20 +72,35 @@ const CreateProjectPage = () => {
   };
 
   const onMirrorLinkClick = () => {
-    setShowInitialPanel(false);
-    setShowDropdown(false);
+    onAddButtonClick();
+
     // TODO
   };
 
   const onTwitterLinkClick = () => {
-    setShowInitialPanel(false);
-    setShowDropdown(false);
-    // TODO
+    onAddButtonClick();
+    window.setTimeout(
+      () =>
+        setContentList([
+          ...contentList,
+          <TwitterWidget
+            twitterId="933354946111705097"
+            onDelete={() => onItemRemoved(currentPositionId)}
+          />,
+        ]),
+      10
+    );
   };
   const onCodeTemplateClick = () => {
-    setShowInitialPanel(false);
-    setShowDropdown(false);
-    // TODO
+    onAddButtonClick();
+    window.setTimeout(
+      () =>
+        setContentList([
+          ...contentList,
+          <CodeBlock position={currentPositionId} />,
+        ]),
+      10
+    );
   };
 
   const menu = [
@@ -144,12 +167,7 @@ const CreateProjectPage = () => {
             </ProjectTitleWrapper>
             <EditWrapper>
               <ModuleWrapper>
-                <ModuleContextContainer>
-                  <ModuleTitleWrapper>
-                    <LeftColorBar />
-                    <ModuleTitle>Context</ModuleTitle>
-                  </ModuleTitleWrapper>
-                </ModuleContextContainer>
+                <ContextMenu />
                 <ModuleContentContainer>
                   {contentList.map((item) => item)}
                   <Dropdown

@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div``;
+export const Wrapper = styled.div<{ showToolBar: boolean }>`
+  padding: 20px;
+  text-align: left;
+  max-width: 768px;
+  margin: 20px;
+  ${({ showToolBar }) => showToolBar && "background:#f5f7fd"};
+`;
 
 export const EditorTitleWrapper = styled.div`
   display: flex;
@@ -12,18 +18,17 @@ export const EditorTitleInput = styled.input.attrs((props) => ({
   type: `${props.type}`,
   placeholder: `${props.placeholder}`,
   disabled: props.disabled,
-}))`
+}))<{ disabled: boolean }>`
   font-size: 24px;
   font-weight: 500;
   color: #142542;
   line-height: 33px;
   min-width: 144px;
-  background: #f5f7fd;
+  background: ${({ disabled }) => (disabled ? "white" : "#f5f7fd")};
   border: none;
-  border-bottom: 1px solid rgba(20, 37, 66, 0.1);
   position: absolute;
   top: 4px;
-  left: 4px;
+  left: 0px;
   :focus {
     outline: none;
   }

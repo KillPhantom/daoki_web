@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import { connect } from "react-redux";
 import isHotkey from "is-hotkey";
 import isUrl from "is-url";
@@ -27,9 +27,6 @@ import { withHistory } from "slate-history";
 
 import { Button, Icon, Toolbar } from "./Components";
 import LinkInputBox from "./LinkInputBox";
-
-/* HOCs */
-import ContextMenuHOC from "./ContextMenu";
 
 /* Styled Components */
 import {
@@ -59,11 +56,54 @@ const mapDispatchToProps = (dispatch: any) => ({
 
 type OwnPropsType = {
   position: number;
+  richTextData?: any;
 };
 type PropsType = ReturnType<typeof mapDispatchToProps> & OwnPropsType;
 
-const RichTextEditor = ({ updateText, position }: PropsType) => {
+const RichTextEditor = ({ updateText, position, richTextData }: PropsType) => {
+  const initialValue: Descendant[] = richTextData.text ?? [
+    {
+      type: "paragraph",
+      children: [
+        { text: "This is editable " },
+        { text: "rich", bold: true },
+        { text: " text, " },
+        { text: "much", italic: true },
+        { text: " better than a " },
+        { text: "<textarea>", code: true },
+        { text: "!" },
+      ],
+    },
+    {
+      type: "paragraph",
+      children: [
+        {
+          text: "Since it's rich text, you can do things like turn a selection of text ",
+        },
+        { text: "bold", bold: true },
+        {
+          text: ", or add a semantically rendered block quote in the middle of the page, like this:",
+        },
+      ],
+    },
+    {
+      type: "block-quote",
+      children: [{ text: "A wise quote." }],
+    },
+    {
+      type: "paragraph",
+      children: [{ text: "Try it out for yourself!" }],
+    },
+    {
+      type: "link",
+      url: "https://www.google.com",
+      description: "test",
+      children: [{ text: "Try it out for yourself!" }],
+    },
+  ];
+
   const [value, setValue] = useState<Descendant[]>(initialValue);
+  const [title, setTitle] = useState(richTextData.title ?? "");
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = useMemo(
@@ -71,22 +111,38 @@ const RichTextEditor = ({ updateText, position }: PropsType) => {
     []
   );
   const [showToolBar, setShowToolBar] = useState(true);
-  const onCompleteClick = () => {
-    setShowToolBar(!showToolBar);
-    updateText({ text: value, position });
+  const wrapperRef = useRef(null);
+
+  const handleRichTextClickOutside = (event) => {
+    if (wrapperRef && !wrapperRef.current.contains(event.target)) {
+      setShowToolBar(!showToolBar);
+      updateText({ text: value, id: position, title: title });
+    }
   };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleRichTextClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleRichTextClickOutside);
+    };
+  }, []);
+
   return (
     <>
-      <Wrapper>
+      <Wrapper
+        ref={wrapperRef}
+        onClick={() => setShowToolBar(true)}
+        showToolBar={showToolBar}
+        id={`#${richTextData.id}`}
+      >
         <EditorTitleWrapper>
           <EditorTitleInput
             type="text"
             placeholder="Put down your title"
             disabled={!showToolBar}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
-          <CompleteButton onClick={onCompleteClick}>
-            {showToolBar ? "Complete" : "Edit"}
-          </CompleteButton>
         </EditorTitleWrapper>
         <Slate
           editor={editor}
@@ -427,47 +483,6 @@ const insertImage = (editor, url) => {
   const image = { type: "image", url, children: [text] };
   Transforms.insertNodes(editor, image);
 };
-
-const initialValue: Descendant[] = [
-  {
-    type: "paragraph",
-    children: [
-      { text: "This is editable " },
-      { text: "rich", bold: true },
-      { text: " text, " },
-      { text: "much", italic: true },
-      { text: " better than a " },
-      { text: "<textarea>", code: true },
-      { text: "!" },
-    ],
-  },
-  {
-    type: "paragraph",
-    children: [
-      {
-        text: "Since it's rich text, you can do things like turn a selection of text ",
-      },
-      { text: "bold", bold: true },
-      {
-        text: ", or add a semantically rendered block quote in the middle of the page, like this:",
-      },
-    ],
-  },
-  {
-    type: "block-quote",
-    children: [{ text: "A wise quote." }],
-  },
-  {
-    type: "paragraph",
-    children: [{ text: "Try it out for yourself!" }],
-  },
-  {
-    type: "link",
-    url: "https://www.google.com",
-    description: "test",
-    children: [{ text: "Try it out for yourself!" }],
-  },
-];
 
 /* Insert Link Logic  */
 

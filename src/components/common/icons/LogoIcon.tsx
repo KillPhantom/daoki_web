@@ -9,6 +9,7 @@ const LogoIcon = ({ overrideStyle }: PropsType) => {
       zoomAndPan="magnify"
       viewBox="0 0 375 374.999991"
       height="200"
+      style={{ ...overrideStyle }}
     >
       <defs>
         <filter
