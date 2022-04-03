@@ -1,5 +1,11 @@
 /* Styled Components */
-import { TopSection } from "../../styles/homePage/HomePage";
+import {
+  TopSection,
+  RotateWrapper,
+  Wrapper,
+  TopBgLeft,
+  TopBgRight,
+} from "../../styles/homePage/HomePage";
 
 /* Child Components */
 // import RichTextEditor from "./richtext/RichTextEditor";
@@ -10,15 +16,18 @@ import DAOkiDaoSection from "./DAOkiDaoSection";
 
 const EarlyStageHomePage = () => {
   return (
-    <>
+    <Wrapper>
       <TopSection>
-        <Header />
-        <MainContent />
+        <RotateWrapper>
+          <TopBgLeft />
+          <TopBgRight />
+          <Header />
+          <MainContent />
+        </RotateWrapper>
       </TopSection>
       <IntroductionSection />
       <DAOkiDaoSection />
-      <div style={{ height: "400px", width: "100%" }} />
-    </>
+    </Wrapper>
   );
 };
 

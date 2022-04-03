@@ -22,4 +22,8 @@ export const ExternalLink = styled.div`
   color: #1e60da;
   line-height: 22px;
   text-align: left;
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

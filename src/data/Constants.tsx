@@ -29,3 +29,9 @@ export const PRISM_SUPPORT_LANGUAGE = [
   { value: "typescript" },
   { value: "yaml" },
 ];
+
+export const DATA_TYPE = {
+  RICH_TEXT: 0,
+  TWITTER_WIDGET: 1,
+  CODE: 2,
+};

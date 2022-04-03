@@ -22,14 +22,21 @@ const mapStateToProps = (state: StateType) => ({
   externalLinks: getExternalLinks(state),
 });
 
-type PropsType = ReturnType<typeof mapStateToProps>;
+type OwnPropsType = {
+  overrideExternalLinks?: any;
+};
+type PropsType = ReturnType<typeof mapStateToProps> & OwnPropsType;
 
-const ExternalLinkSection = ({ externalLinks }: PropsType) => {
+const ExternalLinkSection = ({
+  externalLinks,
+  overrideExternalLinks,
+}: PropsType) => {
   const getChunkArray = (array: Array<any>, size: number) =>
     array?.reduce((acc, _, i) => {
       if (i % size === 0) acc.push(array.slice(i, i + size));
       return acc;
     }, []);
+  const links = overrideExternalLinks ?? externalLinks;
   return (
     <ExternalLinkMainWrapper>
       <ExternalLinksWrapper>
@@ -38,8 +45,8 @@ const ExternalLinkSection = ({ externalLinks }: PropsType) => {
           <ModuleTitle>External Links</ModuleTitle>
         </ModuleTitleWrapper>
         <ExternalLinkContentWrapper>
-          {externalLinks &&
-            getChunkArray(externalLinks, 3).map((chunk: any) => (
+          {links &&
+            getChunkArray(links, 3).map((chunk: any) => (
               <ExternalLinkContentRow>
                 {chunk.map((item: any) => (
                   <ExternalLinkComponent

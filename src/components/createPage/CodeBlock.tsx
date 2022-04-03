@@ -13,7 +13,7 @@ import {
 } from "../../styles/createPage/CodeBlock";
 
 /* Constants */
-import { PRISM_SUPPORT_LANGUAGE } from "../../data/Constants";
+import { DATA_TYPE, PRISM_SUPPORT_LANGUAGE } from "../../data/Constants";
 
 /* Actions */
 import { updateCodeSnippet } from "../../data/actions/CreatePageActions";
@@ -74,6 +74,7 @@ const CodeBlock = ({ position, updateCode }: PropsType) => {
         content: code,
         language: language,
         id: position,
+        type: DATA_TYPE.CODE,
       });
     }
   }, [enableEdit]);
