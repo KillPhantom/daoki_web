@@ -92,7 +92,11 @@ export const ProjectTitle = styled.div`
   margin-right: 40px;
 `;
 
-export const ProjectTitleInput = styled.input.attrs({ type: "text" })`
+export const ProjectTitleInput = styled.input.attrs((props) => ({
+  type: `${props.type}`,
+  placeholder: `${props.placeholder}`,
+  disabled: props.disabled,
+}))`
   border: none;
   font-size: 28px;
   font-weight: 500;

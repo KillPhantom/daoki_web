@@ -41,11 +41,14 @@ import { updateTextContent } from "../../data/actions/CreatePageActions";
 
 import type { RichTextType } from "../../data/types/CommonTypes";
 
+import { PageOne } from "../../data/Example";
+import { DATA_TYPE } from "../../data/Constants";
+
 const HOTKEYS = {
   "mod+b": "bold",
   "mod+i": "italic",
   "mod+u": "underline",
-  "mod+`": "code",
+  "mod+s": "strike",
 };
 
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
@@ -61,7 +64,7 @@ type OwnPropsType = {
 type PropsType = ReturnType<typeof mapDispatchToProps> & OwnPropsType;
 
 const RichTextEditor = ({ updateText, position, richTextData }: PropsType) => {
-  const initialValue: Descendant[] = richTextData.text ?? [
+  const initialValue: Descendant[] = richTextData?.text ?? [
     {
       type: "paragraph",
       children: [
@@ -103,20 +106,30 @@ const RichTextEditor = ({ updateText, position, richTextData }: PropsType) => {
   ];
 
   const [value, setValue] = useState<Descendant[]>(initialValue);
-  const [title, setTitle] = useState(richTextData.title ?? "");
+  const [title, setTitle] = useState(richTextData?.title ?? "");
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = useMemo(
-    () => withImages(withHistory(withReact(createEditor()))),
+    () => withImages(withInlines(withHistory(withReact(createEditor())))),
     []
   );
   const [showToolBar, setShowToolBar] = useState(true);
+  const [showLinkInputBox, setShowInputBox] = useState(false);
   const wrapperRef = useRef(null);
 
   const handleRichTextClickOutside = (event) => {
-    if (wrapperRef && !wrapperRef.current.contains(event.target)) {
+    if (
+      wrapperRef &&
+      !wrapperRef.current.contains(event.target) &&
+      !showLinkInputBox
+    ) {
       setShowToolBar(!showToolBar);
-      updateText({ text: value, id: position, title: title });
+      updateText({
+        text: value,
+        id: position,
+        title: title,
+        type: DATA_TYPE.RICH_TEXT,
+      });
     }
   };
 
@@ -125,7 +138,7 @@ const RichTextEditor = ({ updateText, position, richTextData }: PropsType) => {
     return () => {
       document.removeEventListener("mousedown", handleRichTextClickOutside);
     };
-  }, []);
+  }, [showLinkInputBox, value]);
 
   return (
     <>
@@ -133,17 +146,19 @@ const RichTextEditor = ({ updateText, position, richTextData }: PropsType) => {
         ref={wrapperRef}
         onClick={() => setShowToolBar(true)}
         showToolBar={showToolBar}
-        id={`#${richTextData.id}`}
+        id={`#${richTextData?.id}`}
       >
-        <EditorTitleWrapper>
-          <EditorTitleInput
-            type="text"
-            placeholder="Put down your title"
-            disabled={!showToolBar}
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </EditorTitleWrapper>
+        {(showToolBar || title) && (
+          <EditorTitleWrapper>
+            <EditorTitleInput
+              type="text"
+              placeholder="Put down your title"
+              disabled={!showToolBar}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </EditorTitleWrapper>
+        )}
         <Slate
           editor={editor}
           value={value}
@@ -156,13 +171,18 @@ const RichTextEditor = ({ updateText, position, richTextData }: PropsType) => {
               <MarkButton format="bold" icon="format_bold" />
               <MarkButton format="italic" icon="format_italic" />
               <MarkButton format="underline" icon="format_underlined" />
-              <MarkButton format="code" icon="code" />
+              <MarkButton format="strike" icon="strikethrough_s" />
               <BlockButton format="heading-one" icon="looks_one" />
               <BlockButton format="heading-two" icon="looks_two" />
               <BlockButton format="block-quote" icon="format_quote" />
               <BlockButton format="numbered-list" icon="format_list_numbered" />
               <BlockButton format="bulleted-list" icon="format_list_bulleted" />
-              <AddLinkButton format="link" icon="link" />
+              <AddLinkButton
+                format="link"
+                icon="link"
+                showLinkInputBox={showLinkInputBox}
+                setShowInputBox={setShowInputBox}
+              />
               <InsertImageButton />
             </Toolbar>
           )}
@@ -238,7 +258,9 @@ const isBlockActive = (editor, format) => {
 
 const isImageUrl = (url) => {
   if (!url) return false;
+
   if (!isUrl(url)) return false;
+  return true;
   const ext = new URL(url).pathname.split(".").pop();
   return imageExtensions.includes(ext);
 };
@@ -323,6 +345,9 @@ const Leaf = ({ attributes, children, leaf }) => {
   if (leaf.underline) {
     children = <u>{children}</u>;
   }
+  if (leaf.strike) {
+    children = <s>{children}</s>;
+  }
 
   return <span {...attributes}>{children}</span>;
 };
@@ -342,9 +367,8 @@ const BlockButton = ({ format, icon }) => {
   );
 };
 
-const AddLinkButton = ({ format, icon }) => {
+const AddLinkButton = ({ format, icon, showLinkInputBox, setShowInputBox }) => {
   const editor = useSlate();
-  const [showLinkInputBox, setShowInputBox] = useState(false);
   // TODO add type for the link spec
   const [linkSpec, setLinkSpec] = useState({});
 
@@ -485,6 +509,33 @@ const insertImage = (editor, url) => {
 };
 
 /* Insert Link Logic  */
+
+const withInlines = (editor) => {
+  const { insertData, insertText, isInline } = editor;
+
+  editor.isInline = (element) =>
+    ["link"].includes(element.type) || isInline(element);
+
+  editor.insertText = (text) => {
+    if (text && isUrl(text)) {
+      wrapLink(editor, text);
+    } else {
+      insertText(text);
+    }
+  };
+
+  editor.insertData = (data) => {
+    const text = data.getData("text/plain");
+
+    if (text && isUrl(text)) {
+      wrapLink(editor, text);
+    } else {
+      insertData(data);
+    }
+  };
+
+  return editor;
+};
 
 const insertLink = (editor, url, description) => {
   if (editor.selection) {

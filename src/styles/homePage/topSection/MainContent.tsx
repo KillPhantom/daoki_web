@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 import MyProjectBackground from "../../../assets/images/my_project_background.png";
+import CircleBlue from "../../../assets/images/circle_blue.png";
+import DotSquare from "../../../assets/images/dot_top.png";
 
 export const MyProjectCard = styled.img.attrs({ src: MyProjectBackground })`
   margin: 80px auto 0;
@@ -47,6 +49,7 @@ export const FormContentWrapper = styled.div`
   background: #ffffff;
   box-shadow: 0px 14px 28px 0px rgba(30, 96, 218, 0.14);
   padding: 24px;
+  position: relative;
 `;
 
 export const FormTitle = styled.div`
@@ -75,4 +78,18 @@ export const ErrorText = styled.div`
   color: red;
   font-weight: 400;
   line-height: 21px;
+`;
+
+export const TopCircle = styled.img.attrs({ src: CircleBlue })`
+  position: absolute;
+  top: -90px;
+  right: 20px;
+  z-index: -1;
+`;
+
+export const TopDot = styled.img.attrs({ src: DotSquare })`
+  position: absolute;
+  bottom: -60px;
+  left: -60px;
+  z-index: -1;
 `;

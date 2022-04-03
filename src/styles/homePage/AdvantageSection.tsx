@@ -1,13 +1,11 @@
 import styled from "styled-components";
 
 /* Assets */
-import AdvantageBackground from "../../assets/images/advantage_background.png";
 
 export const SectionWrapper = styled.div`
   width: 100%;
   height: 848px;
   padding-top: 110px;
-  background-image: url(${AdvantageBackground});
 `;
 
 export const SectionTitleTopLine = styled.div`

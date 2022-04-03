@@ -11,14 +11,7 @@ import {
   ProjectTitleInput,
   EditWrapper,
   ModuleWrapper,
-  ModuleContextContainer,
   ModuleContentContainer,
-  ModuleQuoteWrapper,
-  ModuleQuoteContainer,
-  ModuleQuotedContainer,
-  ModuleTitleWrapper,
-  ModuleTitle,
-  LeftColorBar,
 } from "../../styles/createPage/CreateProjectPage";
 
 /* Child Components */
@@ -30,6 +23,17 @@ import ExternalLinkSection from "./ExternalLinksSection";
 import TwitterWidget from "./TwitterWidget";
 import CodeBlock from "./CodeBlock";
 import ContextMenu from "./ContextMenu";
+import QuoteTopicMenu from "../createPage/QuoteTopicMenu";
+
+/* Constants */
+import { PageOneData } from "../../data/Example";
+import { DATA_TYPE } from "../../data/Constants";
+
+import {
+  CodeTextType,
+  RichTextType,
+  TwitterWidgetType,
+} from "../../data/types/CommonTypes";
 
 const MODULE_TYPE = {
   TEXT: "Text template",
@@ -39,8 +43,20 @@ const MODULE_TYPE = {
 };
 
 const CreateProjectPage = () => {
+  const topic = PageOneData;
+  const contentListOriginal = topic.data.map(
+    (item: RichTextType | TwitterWidgetType | CodeTextType, index: number) => {
+      switch (item.type) {
+        case DATA_TYPE.RICH_TEXT:
+          return <RichTextEditor richTextData={item} position={index} />;
+        default:
+          return null;
+      }
+    }
+  );
   const [showInitialPanel, setShowInitialPanel] = useState(true);
-  const [contentList, setContentList] = useState<Array<any>>([]);
+  const [contentList, setContentList] =
+    useState<Array<any>>(contentListOriginal);
   const [showDropdown, setShowDropdown] = useState(false);
   const [positionList, setPositionList] = useState<Array<number>>([]);
   const [currentPositionId, setCurrentPositionId] = useState(0);
@@ -180,20 +196,7 @@ const CreateProjectPage = () => {
                   </Dropdown>
                 </ModuleContentContainer>
               </ModuleWrapper>
-              <ModuleQuoteWrapper>
-                <ModuleQuoteContainer>
-                  <ModuleTitleWrapper>
-                    <LeftColorBar />
-                    <ModuleTitle>Quote topic</ModuleTitle>
-                  </ModuleTitleWrapper>
-                </ModuleQuoteContainer>
-                <ModuleQuotedContainer>
-                  <ModuleTitleWrapper>
-                    <LeftColorBar />
-                    <ModuleTitle>Quoted topic</ModuleTitle>
-                  </ModuleTitleWrapper>
-                </ModuleQuotedContainer>
-              </ModuleQuoteWrapper>
+              <QuoteTopicMenu />
             </EditWrapper>
             <ExternalLinkSection />
           </>

@@ -1,11 +1,30 @@
 import styled from "styled-components";
 
+import BgLeft from "../../assets/images/middle_bg_left.png";
+import BgRight from "../../assets/images/middle_bg_right.png";
+
 export const Wrapper = styled.div`
+  padding-top: 88px;
+  background: linear-gradient(
+    73deg,
+    rgba(58, 194, 141, 0.06) 0%,
+    rgba(30, 96, 218, 0.04) 100%
+  );
+  min-height: 900px;
+  z-index: 1;
+  transform: rotate(-2deg);
+  width: 100%;
+  margin-top: -4px;
+  margin-left: 20px;
+  position: relative;
+`;
+
+export const RotateWrapper = styled.div`
+  transform: rotate(2deg);
+  width: 100%;
   display: flex;
-  margin: 0 10%;
-  margin: 88px 0;
-  text-align: left;
   justify-content: center;
+  text-align: left;
 `;
 
 export const LeftPanel = styled.div``;
@@ -81,4 +100,16 @@ export const IconTextBody = styled.div`
   color: #142542;
   line-height: 23px;
   margin-top: 14px;
+`;
+
+export const MiddleBgRight = styled.img.attrs({ src: BgRight })`
+  position: absolute;
+  top: -130px;
+  right: 20px;
+`;
+
+export const MiddleBgLeft = styled.img.attrs({ src: BgLeft })`
+  position: absolute;
+  bottom: -400px;
+  left: 0px;
 `;

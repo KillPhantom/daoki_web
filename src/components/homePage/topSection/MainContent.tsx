@@ -14,6 +14,8 @@ import {
   FormTitle,
   MyProjectCard,
   ErrorText,
+  TopCircle,
+  TopDot,
 } from "../../../styles/homePage/topSection/MainContent";
 
 import { emailValidationCheck } from "../../common/Helper";
@@ -74,6 +76,8 @@ const MainContent = ({ isOfficial, submitInfo }: PropsType) => {
         </FormContentWrapper>
       ) : (
         <FormContentWrapper>
+          <TopCircle />
+          <TopDot />
           <FormTitle>Become an early community builder</FormTitle>
           <FormUnorderedList>
             <li>
