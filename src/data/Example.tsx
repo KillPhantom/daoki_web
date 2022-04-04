@@ -63,7 +63,8 @@ const PageOneTextData = [
           { text: "的进一步深入核实：是在" },
           {
             type: "link",
-            url: "https://nftx.io/",
+            url: "/example-page-2",
+            isInternal: true,
             description: "NFTX",
             children: [{ text: "NFTX" }],
           },
@@ -368,4 +369,548 @@ const PageOneTextData = [
 export const PageOneData = {
   title: "在NFT一哥BAYC头上套利80万美金的技术真相",
   data: PageOneTextData,
+  quoteTopics: [
+    {
+      title: "NFTX 官方中文介绍",
+      link: "/example-page-2",
+    },
+  ],
+};
+
+const PageTwoTextData = [
+  {
+    text: [
+      {
+        type: "paragraph",
+        children: [{ text: "NFTX是一个为 NFTs创建流动性市场的平台。" }],
+      },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "用户将他们的NFT存储到一个NFTXvault 中，并创建一个可替换的ERC20令牌(vToken)，该令牌表示对该vault 中随机资产的索赔。vTokens也可以用于从该vault 赎回特定的NFT。",
+          },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "优势包括：" }] },
+      {
+        type: "bulleted-list",
+        children: [
+          {
+            type: "list-item",
+            children: [{ text: "为vToken创造LP并stake，以赚取收益；" }],
+          },
+          {
+            type: "list-item",
+            children: [{ text: "为NFT项目提供更好的分配和价格发现机制；" }],
+          },
+          {
+            type: "list-item",
+            children: [
+              {
+                text: "通过将任何NFT铸成ERC20并通过Sushiswap进行兑换，即时销售任何NFT；",
+              },
+            ],
+          },
+          {
+            type: "list-item",
+            children: [{ text: "为NFT投资者和投机者增加流动性，" }],
+          },
+        ],
+      },
+    ],
+    id: 0,
+    title: "NFTX简介",
+    type: 0,
+  },
+  {
+    text: [
+      { type: "heading-two", children: [{ text: "创建vault ", bold: true }] },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: '任何人都可以为以太坊上的任何NFT资产创建vault 。一旦创建了vault ，任何用户都可以将符合条件的NFT存入保险vault ，以铸造一个可替代的NFT支持的代币，被称为 "vToken"。',
+          },
+          {
+            type: "link",
+            url: "https://docs.nftx.io/tutorials/vault-creation",
+            description: "创建vault",
+            children: [{ text: "查看更多" }],
+          },
+          { text: "" },
+        ],
+      },
+      { type: "heading-two", children: [{ bold: true, text: "铸造vToken" }] },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "任何人都可以将NFT存入现有的vault （或他们已创建的vault ），以便铸造一个FT vToken，代表对vault 内的随机NFT的1:1索赔。",
+          },
+          {
+            type: "link",
+            url: "https://docs.nftx.io/tutorials/minting",
+            description: "铸造vToken",
+            children: [{ text: "查看更多" }],
+          },
+          { text: "" },
+        ],
+      },
+      { type: "heading-two", children: [{ text: "地板价", bold: true }] },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: '然后，用户可以在Sushiswap等自动做市商（AMM）中将他们铸造的vToken Pool化，为其他用户的交易创造一个流动市场。随着流动性和交易量的建立，由NFT支持的vToken进入价格发现阶段，"地板价"被发现。',
+          },
+        ],
+      },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "地板价是指某一特定NFT的最低价格。用户通过在他们认为自己的NFT被高估的市场上铸造和出售vToken来建立一个地板价。",
+          },
+        ],
+      },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "NFTX正在帮助建立可靠的NFT底价，使其在以太坊的去中心化金融中得到更广泛的应用。例如，一个用户有5个Hashmasks，并对其中的两个估值很高。然而，他们认为另外3个Hashmasks的价值低于Sushiswap上的Mask vault的市场价格。用户将这3个Hashmasks存入Sushiswap，并在Sushiswap上出售他们的3个MASK代币，降低了它的价格，有助于价格发现。",
+          },
+        ],
+      },
+      {
+        type: "paragraph",
+        children: [{ text: "上述过程将继续进行，直到达到一个底价。" }],
+      },
+      { type: "heading-two", children: [{ bold: true, text: "资格" }] },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "Mask vault 允许任何Hashmask 存入其中， 然而，其他的vaults 使用一个资格列表，只允许存放特定的子类别的NFT。 例如，Kitty第0代vault 有一个资格列表，只包括元数据为第0代的Kitty，其他Kitty不能存入该vault 。",
+          },
+        ],
+      },
+    ],
+    id: 1,
+    title: "如何工作？",
+    type: 0,
+  },
+];
+
+export const PageTwoData = {
+  title: "NFTX官方doc 中文版",
+  data: PageTwoTextData,
+  quotedTopics: [
+    {
+      title: "在NFT一哥BAYC头上套利80万美金的技术真相",
+      link: "/example-page-1",
+    },
+    {
+      title: "簡評超過四十個NFTFi項目，小浣熊的第一眼印象 - Raccoon Chan",
+      link: "/example-page-4",
+    },
+  ],
+};
+
+const PageThreeTextData = [
+  {
+    text: [
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "NFTX是一种促进NFT买卖的市场和流动性协议，允许NFT持有者将NFTX存入某个金库并铸造出可以互换的代币 vTokens（可用额外费赎回特定的NFT）。同时，他们的vTokens质押至流动性池中赚取收益。此外，NFTX 还与去中心化期货平台Futureswap合作推出基于 NFT 的杠杆永续合约，可做空或做多指定的NFT。 简单易懂的机制，NFTX把地板价的NFT转换成Fungible的ERC20，然后用AMM收手续费；FloorDAO就加入ve Tokenomics和OHM机制降低参与门槛，同时发展NFT指数领域。可组合性高，规模效应也强，一旦做起来了，其他地板ERC20流动性很难追得上。优点是NFTX库房的钱比FDV还要多，缺点是NFTX没有Tokenomics",
+          },
+        ],
+      },
+    ],
+    id: 0,
+    title: "",
+    type: 0,
+  },
+];
+
+export const PageThreeData = {
+  title: "NFTX 介绍",
+  data: PageThreeTextData,
+};
+
+const PageFourTextData = [
+  {
+    text: [
+      {
+        type: "paragraph",
+        children: [
+          { text: "我是" },
+          {
+            type: "link",
+            url: "/example-page-5",
+            isInternal: true,
+            description: "个人介绍",
+            children: [{ text: "小浣熊" }],
+          },
+          {
+            text: "，由於我堅定不移看好NFTFi，又有很多人問我NFTFi要看什麼項目，所以花了一段時間挑了些我有掃過幾眼的項目，一次過無保留的分享，大家記得一鍵三連支持。",
+          },
+        ],
+      },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "頭盔：還有很多項目我聽説過，但嫌太土Skip了，沒寫進來的，也許是我走漏眼，我評分低的項目也有可能大逆襲打我臉，項目方和持分者歡迎説服我改正我的觀點，畢竟我只是掃兩眼，認知一定沒專注一個項目的人深。",
+          },
+        ],
+      },
+      {
+        type: "paragraph",
+        children: [
+          { text: "" },
+          {
+            type: "link",
+            url: "/example-page-2",
+            description: "NFTX 官方中文介绍",
+            isInternal: true,
+            children: [{ text: "NFTX/FloorDAO（⭐️⭐️⭐️⭐️⭐️）：" }],
+          },
+          {
+            text: "簡單易懂的機制，NFTX把地板價的NFT轉換成Fungible的ERC20，然後用AMM收手續費；FloorDAO就加入ve Tokenomics和OHM機制降低參與門檻，同時發展NFT指數領域。可組合性高，規模效應也強，一旦做起來了，其他地板ERC20流動性很難追得上。優點是NFTX庫房的錢比FDV還要多，缺點是NFTX沒有Tokenomics",
+          },
+        ],
+      },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "Abacus（⭐️⭐️⭐️⭐️+0.5⭐）：Abacus Crowds透過羣眾質押估值再加權，去為NFT提供類似預言機服務的，有望讓稀有NFT也能得到準確估值，已經推出；Abacus Spot就是透過類似沽空期權池子的形式去為NFT賺取年化同時精確估值，尚未推出。機制相當複雜，應該比較能直接To C，也許能作為NFTFi的底層協議去捕獲價值，但不是一時三刻，確定性也稍低，但這賽道只有它，不卷，而且機制是創新的。",
+          },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "…………" }] },
+      { type: "paragraph", children: [{ text: "總結：" }] },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "這麼多競爭對手，成功的大概只有三五家，其他的命運都是歸零，謹記不要上頭，控制注碼適量分注梭哈好了。大盤如何，小浣熊也會一直在大家枕邊的。",
+          },
+        ],
+      },
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "加入浣熊不同渠道（Telegram, Twitter, Mirror…）的社群，互相交流學習：",
+          },
+          {
+            type: "link",
+            url: "https://y.at/%F0%9F%8D%9C%F0%9F%90%BB%F0%9F%98%98",
+            description: "个人网站",
+            children: [{ text: "https://y.at/🍜🐻😘" }],
+          },
+          { text: "" },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "使用邀請鏈結支持小浣熊：" }] },
+      {
+        type: "paragraph",
+        children: [
+          { text: "Binance交易所：" },
+          {
+            type: "link",
+            url: "https://accounts.binance.com/zh-TC/register?ref=43274886",
+            description: "币安注册",
+            children: [
+              {
+                text: "https://accounts.binance.com/zh-TC/register?ref=43274886",
+              },
+            ],
+          },
+          { text: "" },
+        ],
+      },
+      {
+        type: "paragraph",
+        children: [
+          { text: "FTX交易所：" },
+          {
+            type: "link",
+            url: "https://ftx.com/#6=8260237",
+            description: "FTX注册",
+            children: [{ text: "https://ftx.com/#6=8260237" }],
+          },
+          { text: "" },
+        ],
+      },
+      {
+        type: "paragraph",
+        children: [
+          { text: "WhaleFin理財：" },
+          {
+            type: "link",
+            url: "https://h5.whalefin.com/register?referral_code=5AQwIH",
+            description: "WhaleFin",
+            children: [
+              { text: "https://h5.whalefin.com/register?referral_code=5AQwIH" },
+            ],
+          },
+          { text: "" },
+        ],
+      },
+      {
+        type: "paragraph",
+        children: [
+          { text: "合作接洽：Telegram @RaccoonChan or " },
+          {
+            type: "link",
+            url: "raccooncrypto314@gmail.com",
+            description: "个人邮箱",
+            children: [{ text: "raccooncrypto314@gmail.com" }],
+          },
+          { text: "" },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "02/03/2021" }] },
+      { type: "paragraph", children: [{ text: "Raccoon Chan小浣熊" }] },
+      { type: "paragraph", children: [{ text: "" }] },
+    ],
+    id: 0,
+    title: "",
+    type: 0,
+  },
+];
+
+export const PageFourData = {
+  title: "簡評超過四十個NFTFi項目，小浣熊的第一眼印象 - Raccoon Chan",
+  data: PageFourTextData,
+  quoteTopics: [
+    {
+      title: "NFTX 官方中文介绍",
+      link: "/example-page-2",
+    },
+    {
+      title: "Raccoon Chan 小浣熊",
+      link: "/example-page-5",
+    },
+  ],
+};
+
+const PageFiveTextData = [
+  {
+    text: [
+      { type: "paragraph", children: [{ text: "🔗Twitter" }] },
+      {
+        type: "paragraph",
+        children: [
+          { text: "" },
+          {
+            type: "link",
+            url: "twitter.com/RaccoonHKG/",
+            description: "Twitter",
+            children: [{ text: "twitter.com/RaccoonHKG/" }],
+          },
+          { text: "" },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      {
+        type: "paragraph",
+        children: [
+          { text: "🔗Telegram 交流群" },
+          {
+            type: "link",
+            url: "medium.com/@RaccoonHKG/",
+            description: "Medium",
+            children: [{ text: "" }],
+          },
+          { text: "" },
+        ],
+      },
+      {
+        type: "paragraph",
+        children: [
+          { text: "" },
+          {
+            type: "link",
+            url: "t.me/raccoondegen",
+            description: "Telegram Group",
+            children: [{ text: "t.me/raccoondegen" }],
+          },
+          { text: "" },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      { type: "paragraph", children: [{ text: "🔗Telegram 頻道" }] },
+      {
+        type: "paragraph",
+        children: [
+          { text: "" },
+          {
+            type: "link",
+            url: "t.me/raccoonhkg",
+            description: "Telegram Channel",
+            children: [{ text: "t.me/raccoonhkg" }],
+          },
+          { text: "" },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      { type: "paragraph", children: [{ text: "🔗網站" }] },
+      {
+        type: "paragraph",
+        children: [
+          { text: "" },
+          {
+            type: "link",
+            url: "decentralizedcitadel.com/",
+            description: "Personal website",
+            children: [{ text: "decentralizedcitadel.com/" }],
+          },
+          { text: "" },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      { type: "paragraph", children: [{ text: "🔗Mirror" }] },
+      {
+        type: "paragraph",
+        children: [
+          { text: "" },
+          {
+            type: "link",
+            url: "mirror.xyz/raccooncrypto.eth",
+            description: "Mirror",
+            children: [{ text: "mirror.xyz/raccooncrypto.eth" }],
+          },
+          { text: "" },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      { type: "paragraph", children: [{ text: "🔗Medium" }] },
+      {
+        type: "paragraph",
+        children: [
+          { text: "" },
+          {
+            type: "link",
+            url: "medium.com/@RaccoonHKG/",
+            description: "Medium",
+            children: [{ text: "medium.com/@RaccoonHKG/" }],
+          },
+          { text: "" },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      { type: "paragraph", children: [{ text: "🔗Buji DAO Discord" }] },
+      {
+        type: "paragraph",
+        children: [
+          { text: "" },
+          {
+            type: "link",
+            url: "discord.gg/bujidao",
+            description: "Buji Dao Discord",
+            children: [{ text: "discord.gg/bujidao" }],
+          },
+          { text: "" },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      { type: "paragraph", children: [{ text: "🔗幣安邀請鏈結" }] },
+      {
+        type: "paragraph",
+        children: [
+          { text: "" },
+          {
+            type: "link",
+            url: "accounts.binance.com/zh-TC/register?ref=43274886",
+            description: "Binance invitation link",
+            children: [
+              { text: "accounts.binance.com/zh-TC/register?ref=43274886" },
+            ],
+          },
+          { text: "" },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      { type: "paragraph", children: [{ text: "🔗Bybit邀請鏈結" }] },
+      { type: "paragraph", children: [{ text: "香港人用這個" }] },
+      {
+        type: "paragraph",
+        children: [
+          { text: "" },
+          {
+            type: "link",
+            url: "bybit.com/en-US/invite?ref=D1VGZA",
+            description: "Bybit invitation",
+            children: [{ text: "bybit.com/en-US/invite?ref=D1VGZA" }],
+          },
+          { text: "" },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      { type: "paragraph", children: [{ text: "🔗FTX邀請鏈結" }] },
+      {
+        type: "paragraph",
+        children: [
+          { text: "" },
+          {
+            type: "link",
+            url: "ftx.com/profile#a=raccooncrypto",
+            description: "FTX invitation",
+            children: [{ text: "ftx.com/profile#a=raccooncrypto" }],
+          },
+          { text: "" },
+        ],
+      },
+      { type: "paragraph", children: [{ text: "" }] },
+      { type: "paragraph", children: [{ text: "🔗WhaleFin理財邀請鏈結" }] },
+      {
+        type: "paragraph",
+        children: [
+          { text: "" },
+          {
+            type: "link",
+            url: "https://h5.whalefin.com/register/?referral_code=5AQwIH",
+            children: [
+              {
+                text: "https://h5.whalefin.com/register/?referral_code=5AQwIH",
+              },
+            ],
+          },
+          { text: "" },
+        ],
+      },
+      {
+        type: "paragraph",
+        children: [
+          { text: "" },
+          {
+            type: "link",
+            url: "https://h5.whalefin.com/register/?referral_code=5AQwIH",
+            children: [{ text: "" }],
+          },
+          { text: "" },
+        ],
+      },
+    ],
+    id: 0,
+    title: "",
+    type: 0,
+  },
+];
+
+export const PageFiveData = {
+  title: "Raccoon Chan 小浣熊",
+  data: PageFiveTextData,
+  quotedTopics: [
+    {
+      title: "簡評超過四十個NFTFi項目，小浣熊的第一眼印象 - Raccoon Chan",
+      link: "/example-page-4",
+    },
+  ],
 };

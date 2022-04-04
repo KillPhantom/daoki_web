@@ -45,7 +45,7 @@ const RichTextViewer = ({ richTextData }: PropsType) => {
             <Title>{richTextData.title}</Title>
           </TitleWrapper>
         )}
-        <Slate editor={editor} value={value}>
+        <Slate editor={editor} value={value} onChange={() => {}}>
           <Editable
             readOnly
             renderElement={renderElement}
