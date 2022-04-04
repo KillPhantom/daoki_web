@@ -44,19 +44,19 @@ const MODULE_TYPE = {
 
 const CreateProjectPage = () => {
   const topic = PageOneData;
-  const contentListOriginal = topic.data.map(
-    (item: RichTextType | TwitterWidgetType | CodeTextType, index: number) => {
-      switch (item.type) {
-        case DATA_TYPE.RICH_TEXT:
-          return <RichTextEditor richTextData={item} position={index} />;
-        default:
-          return null;
-      }
-    }
-  );
+  // const contentListOriginal = topic.data.map(
+  //   (item: RichTextType | TwitterWidgetType | CodeTextType, index: number) => {
+  //     switch (item.type) {
+  //       case DATA_TYPE.RICH_TEXT:
+  //         return <RichTextEditor richTextData={item} position={index} />;
+  //       default:
+  //         return null;
+  //     }
+  //   }
+  // );
   const [showInitialPanel, setShowInitialPanel] = useState(true);
   const [contentList, setContentList] =
-    useState<Array<any>>(contentListOriginal);
+    useState<Array<any>>([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [positionList, setPositionList] = useState<Array<number>>([]);
   const [currentPositionId, setCurrentPositionId] = useState(0);

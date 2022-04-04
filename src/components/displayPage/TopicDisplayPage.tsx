@@ -29,6 +29,7 @@ type PropsType = {
   topic: any;
 };
 const TopicDisplayPage = ({ topic }: PropsType) => {
+
   const contentList = topic.data.map(
     (item: RichTextType | TwitterWidgetType | CodeTextType) => {
       switch (item.type) {
@@ -47,7 +48,7 @@ const TopicDisplayPage = ({ topic }: PropsType) => {
     if (data) {
       const textData = data.text;
       for (const allTypeData of textData) {
-        if (allTypeData.type === LINK_TYPE) {
+        if (allTypeData.type === LINK_TYPE && !allTypeData.isInternal) {
           result.push({
             index: currentIndex,
             url: allTypeData.url,
@@ -57,7 +58,7 @@ const TopicDisplayPage = ({ topic }: PropsType) => {
         }
         // find link in the nested children data
         const childrenLinks = allTypeData?.children?.filter(
-          (item: any) => item.type === LINK_TYPE
+          (item: any) => item.type === LINK_TYPE && !item.isInternal
         );
         for (const linkItem of childrenLinks) {
           result.push({
@@ -70,6 +71,7 @@ const TopicDisplayPage = ({ topic }: PropsType) => {
       }
     }
   }
+
   return (
     <Wrapper>
       <Header isOfficial />
@@ -86,9 +88,8 @@ const TopicDisplayPage = ({ topic }: PropsType) => {
               </ModuleContentContainer>
             </ModuleWrapper>
             <QuoteTopicMenu
-              quoteTopics={[
-                { title: "NFTX 官方中文版", link: "/example-page-2" },
-              ]}
+              quoteTopics={topic.quoteTopics}
+              quotedTopics={topic.quotedTopics}
             />
           </MainBodyWrapper>
           <ExternalLinkSection overrideExternalLinks={result} />

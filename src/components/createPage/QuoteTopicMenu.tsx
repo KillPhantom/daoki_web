@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 
 /* Types */
 import type { QuoteTopicType } from "../../data/types/CommonTypes";
@@ -23,7 +22,10 @@ type PropsType = {
 };
 
 const QuoteTopicMenu = ({ quotedTopics, quoteTopics }: PropsType) => {
-  const navigate = useNavigate();
+  const navigate = (url: string) => {
+    window.location.href = url;
+  };
+
   return (
     <ModuleQuoteWrapper>
       <ModuleQuoteContainer>

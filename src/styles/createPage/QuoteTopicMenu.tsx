@@ -52,4 +52,5 @@ export const QuoteTitle = styled.div`
   color: #142542;
   line-height: 22px;
   margin-left: 8px;
+  cursor: pointer;
 `;
