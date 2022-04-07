@@ -5,14 +5,11 @@ export default (async function SubmitCollaboratorInfo(
   collaboratorDetail: string
 ): Promise<any> {
   await axios({
-    url: "/daoki/collaborator/submit-info",
+    method: "post",
+    url: `${process.env.REACT_APP_BACKEND_URL}/daoki/collaborator/submit-info`,
     data: {
       description: collaboratorDetail,
       email: collaboratorEmail,
-    },
-    headers: {
-      "Content-Type": "application/x-www.form-urlencoded",
-      "Access-Control-Allow-Origin": "*",
     },
   });
 });

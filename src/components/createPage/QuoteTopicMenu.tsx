@@ -1,4 +1,3 @@
-
 /* Types */
 import type { QuoteTopicType } from "../../data/types/CommonTypes";
 
@@ -17,8 +16,8 @@ import {
 import ShieldIcon from "../common/icons/ShiedIcon";
 
 type PropsType = {
-  quotedTopics?: Array<QuoteTopicType>;
-  quoteTopics?: Array<QuoteTopicType>;
+  quotedTopics?: Array<QuoteTopicType | null | undefined>;
+  quoteTopics?: Array<QuoteTopicType | null | undefined>;
 };
 
 const QuoteTopicMenu = ({ quotedTopics, quoteTopics }: PropsType) => {
@@ -33,28 +32,34 @@ const QuoteTopicMenu = ({ quotedTopics, quoteTopics }: PropsType) => {
           <LeftColorBar />
           <ModuleTitle>Quote topic</ModuleTitle>
         </ModuleTitleWrapper>
-        {quoteTopics?.map((item: QuoteTopicType) => (
-          <QuoteTitleWrapper>
-            <ShieldIcon overrideStyle={{ width: "20px", height: "20px" }} />
-            <QuoteTitle onClick={() => navigate(item.link)}>
-              {item.title}
-            </QuoteTitle>
-          </QuoteTitleWrapper>
-        ))}
+        {quoteTopics?.map(
+          (item: QuoteTopicType | null | undefined) =>
+            item && (
+              <QuoteTitleWrapper>
+                <ShieldIcon overrideStyle={{ width: "20px", height: "20px" }} />
+                <QuoteTitle onClick={() => navigate(item.link)}>
+                  {item.title}
+                </QuoteTitle>
+              </QuoteTitleWrapper>
+            )
+        )}
       </ModuleQuoteContainer>
       <ModuleQuotedContainer>
         <ModuleTitleWrapper>
           <LeftColorBar />
           <ModuleTitle>Quoted topic</ModuleTitle>
         </ModuleTitleWrapper>
-        {quotedTopics?.map((item: QuoteTopicType) => (
-          <QuoteTitleWrapper>
-            <ShieldIcon overrideStyle={{ width: "26px", height: "26px" }} />
-            <QuoteTitle onClick={() => navigate(item.link)}>
-              {item.title}
-            </QuoteTitle>
-          </QuoteTitleWrapper>
-        ))}
+        {quotedTopics?.map(
+          (item: QuoteTopicType | null | undefined) =>
+            item && (
+              <QuoteTitleWrapper>
+                <ShieldIcon overrideStyle={{ width: "26px", height: "26px" }} />
+                <QuoteTitle onClick={() => navigate(item.link)}>
+                  {item.title}
+                </QuoteTitle>
+              </QuoteTitleWrapper>
+            )
+        )}
       </ModuleQuotedContainer>
     </ModuleQuoteWrapper>
   );

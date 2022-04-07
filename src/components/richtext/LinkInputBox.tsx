@@ -1,12 +1,25 @@
 import { useState } from "react";
 import { Modal } from "antd";
+import { connect } from "react-redux";
 
 /* Styled Components */
 import {
   LinkInputTitle,
   LinkInput,
   RecommendLink,
+  RecommendLinkWrapper,
+  RecommendLinkScore,
+  PreviewButtonWrapper,
 } from "../../styles/createPage/RichTextEditor";
+import BookShelfIcon from "../common/icons/BookShelfIcon";
+import { Icon } from "./Components";
+import { updateQuoteTopic } from "../../data/actions/CreatePageActions";
+import { QuoteTopicType } from "../../data/types/CommonTypes";
+
+const mapDispatchToProps = (dispatch: any) => ({
+  addQuoteTopic: (quoteTopic: QuoteTopicType) =>
+    dispatch(updateQuoteTopic(quoteTopic)),
+});
 
 type PropsType = {
   visible: boolean;
@@ -14,8 +27,13 @@ type PropsType = {
   initialUrl?: string;
   initialDescription?: string;
   onCancelClick?: () => void;
-  setInputValue?: (value: string, description: string) => void;
-};
+  setInputValue?: (
+    value: string,
+    description: string,
+    isInternal: boolean
+  ) => void;
+} & ReturnType<typeof mapDispatchToProps>;
+
 const LinkInputBox = ({
   visible,
   initialUrl = "",
@@ -23,9 +41,13 @@ const LinkInputBox = ({
   onClose,
   setInputValue,
   onCancelClick,
+  addQuoteTopic,
 }: PropsType) => {
   const [linkValue, setLinkValue] = useState(initialUrl);
-  const [suggestLinks, setSuggestLinks] = useState(["https:www.google.com"]);
+  const [suggestTopics, setSuggestTopics] = useState([
+    { title: "NFTX 官方中文版", link: "/example-page-2", score: 3320 },
+    { title: "NFTX 简介", link: "/example-page-3", score: 10 },
+  ]);
   const [description, setDescription] = useState(initialDescription);
 
   const onLinkChange = (event: any) => {
@@ -36,7 +58,7 @@ const LinkInputBox = ({
   return (
     <Modal
       style={{
-        maxWidth: "410px",
+        minWidth: "410px",
         boxShadow: "0px 14px 28px 0px rgba(30, 96, 218, 0.1)",
         borderRadius: "4px",
       }}
@@ -45,7 +67,7 @@ const LinkInputBox = ({
       okText="Save"
       onOk={() => {
         if (setInputValue) {
-          setInputValue(linkValue, description);
+          setInputValue(linkValue, description, true);
         }
         onClose();
       }}
@@ -70,20 +92,36 @@ const LinkInputBox = ({
         onChange={(e) => setDescription(e.target.value)}
         value={description}
       />
-      <LinkInputTitle>Chose recommend links</LinkInputTitle>
-      {suggestLinks.map((item) => (
-        <div>
+      <LinkInputTitle>Or chose recommended daoki topics for </LinkInputTitle>
+      <LinkInputTitle incline>
+        {window.getSelection()?.toString()}
+      </LinkInputTitle>
+      {suggestTopics.map((item) => (
+        <RecommendLinkWrapper>
+          <BookShelfIcon overrideStyle={{ width: "24px", height: "24px" }} />
           <RecommendLink
             onClick={() => {
-              setLinkValue(item);
+              addQuoteTopic(item);
+              if (setInputValue) {
+                setInputValue(item.link, item.title, true);
+              }
+              onClose();
             }}
           >
-            {item}
+            {item.title}
           </RecommendLink>
-        </div>
+          <RecommendLinkScore>{item.score} quote score</RecommendLinkScore>
+          <PreviewButtonWrapper
+            onClick={() => {
+              window.open(item.link);
+            }}
+          >
+            <Icon>visibility</Icon>
+          </PreviewButtonWrapper>
+        </RecommendLinkWrapper>
       ))}
     </Modal>
   );
 };
 
-export default LinkInputBox;
+export default connect(null, mapDispatchToProps)(LinkInputBox);

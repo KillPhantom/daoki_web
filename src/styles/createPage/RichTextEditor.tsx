@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div<{ showToolBar: boolean }>`
   padding: 20px;
   text-align: left;
-  max-width: 768px;
+  min-width: 768px;
   margin: 20px;
   ${({ showToolBar }) => showToolBar && "background:#f5f7fd"};
 `;
@@ -54,7 +54,7 @@ export const CompleteButton = styled.button`
 
 export const LinkInputBoxWrapper = styled.div``;
 
-export const LinkInputTitle = styled.div`
+export const LinkInputTitle = styled.div<{ incline?: boolean }>`
   font-size: 16px;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
@@ -62,6 +62,7 @@ export const LinkInputTitle = styled.div`
   line-height: 22px;
   text-align: left;
   margin-top: 6px;
+  ${({ incline }) => incline && "font-style: italic; font-weight:bold;"}
 `;
 
 export const LinkInput = styled.input.attrs((props) => ({
@@ -70,17 +71,42 @@ export const LinkInput = styled.input.attrs((props) => ({
 }))`
   margin-top: 8px;
   padding-left: 6px;
-  width: 356px;
+  width: 100%;
   height: 40px;
   background: #f5f7fd;
   border-radius: 4px;
   border: 1px solid #c9d9f7;
 `;
 
-export const RecommendLink = styled.a`
-  margin-top: 8px;
+export const RecommendLink = styled.div`
   font-size: 16px;
   font-weight: 400;
   color: #1e60da;
   line-height: 22px;
+  margin-left: 10px;
+  cursor: pointer;
+`;
+
+export const RecommendLinkWrapper = styled.div`
+  display: flex;
+  margin-top: 12px;
+  position: relative;
+`;
+
+export const RecommendLinkScore = styled.div`
+  font-size: 16px;
+  font-weight: 400;
+  color: black;
+  margin-left: 10px;
+  line-height: 22px;
+  padding: 0 10px;
+  border: 1px solid pink;
+  border-radius: 20px;
+`;
+
+export const PreviewButtonWrapper = styled.div`
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  cursor: pointer;
 `;

@@ -25,7 +25,7 @@ export const getExternalLinks = (state: StateType) => {
     if (data) {
       const textData = data.text;
       for (const allTypeData of textData) {
-        if (allTypeData.type === LINK_TYPE) {
+        if (allTypeData.type === LINK_TYPE && !allTypeData.isInternal) {
           result.push({
             index: currentIndex,
             url: allTypeData.url,
@@ -35,7 +35,7 @@ export const getExternalLinks = (state: StateType) => {
         }
         // find link in the nested children data
         const childrenLinks = allTypeData?.children?.filter(
-          (item: any) => item.type === LINK_TYPE
+          (item: any) => item.type === LINK_TYPE && !item.isInternal
         );
         for (const linkItem of childrenLinks) {
           result.push({
@@ -50,3 +50,6 @@ export const getExternalLinks = (state: StateType) => {
   }
   return result;
 };
+
+export const getCreatePageQuoteTopics = (state: StateType) =>
+  getCreatePageData(state).quoteTopic;

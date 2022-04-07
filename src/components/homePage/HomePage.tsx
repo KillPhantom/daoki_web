@@ -1,12 +1,11 @@
 /* Styled Components */
-import { TopSection } from "../../styles/homePage/HomePage";
+import { TopSection, RotateWrapper } from "../../styles/homePage/HomePage";
 
 /* Child Components */
 // import RichTextEditor from "./richtext/RichTextEditor";
 import Header from "./topSection/Header";
 import MainContent from "./topSection/MainContent";
 import IntroductionSection from "./IntroductionSection";
-import AdvantageSection from "./AdvantangeSection";
 import DAOkiDaoSection from "./DAOkiDaoSection";
 import SearchSection from "./searchSection/SearchSection";
 import EarlyStageHomePage from "./EarlyStageHomePage";
@@ -16,12 +15,13 @@ const HomePage = () => {
   return isOfficial ? (
     <>
       <TopSection>
-        <Header isOfficial />
-        <MainContent isOfficial />
+        <RotateWrapper>
+          <Header isOfficial />
+          <MainContent isOfficial />
+        </RotateWrapper>
       </TopSection>
-      <IntroductionSection />
       <SearchSection />
-      <AdvantageSection />
+      <IntroductionSection />
       <DAOkiDaoSection />
     </>
   ) : (

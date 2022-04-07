@@ -29,7 +29,6 @@ type PropsType = {
   topic: any;
 };
 const TopicDisplayPage = ({ topic }: PropsType) => {
-
   const contentList = topic.data.map(
     (item: RichTextType | TwitterWidgetType | CodeTextType) => {
       switch (item.type) {

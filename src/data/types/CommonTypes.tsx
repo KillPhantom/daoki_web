@@ -26,4 +26,5 @@ export type TwitterWidgetType = {
 export type QuoteTopicType = {
   title: string;
   link: string;
+  score: number;
 };
