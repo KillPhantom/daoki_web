@@ -4,6 +4,7 @@ import {
   UPDATE_TWITTER_WIDGET,
   updateTwitterWidget,
   DELETE_CONTENT,
+  UPDATE_QUOTE_TOPIC,
 } from "../actions/CreatePageActions";
 
 /* Types */
@@ -18,6 +19,7 @@ import type { StateType } from "../types/CreatePageStateType";
 import { DATA_TYPE } from "../Constants";
 const DEFAULT_STATE = {
   data: [],
+  quoteTopic: [],
 };
 
 const updateDataArrayHelper = (
@@ -75,6 +77,11 @@ const CreatePageReducer = (
         ),
       };
 
+    case UPDATE_QUOTE_TOPIC:
+      return {
+        ...state,
+        quoteTopic: [...state.quoteTopic, action.payload],
+      };
     default:
       //   ((checkType: never) => checkType)(action);
       break;

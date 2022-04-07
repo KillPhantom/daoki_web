@@ -97,12 +97,6 @@ const RichTextEditor = ({ updateText, position, richTextData }: PropsType) => {
       type: "paragraph",
       children: [{ text: "Try it out for yourself!" }],
     },
-    {
-      type: "link",
-      url: "https://www.google.com",
-      description: "test",
-      children: [{ text: "Try it out for yourself!" }],
-    },
   ];
 
   const [value, setValue] = useState<Descendant[]>(initialValue);
@@ -127,7 +121,7 @@ const RichTextEditor = ({ updateText, position, richTextData }: PropsType) => {
       updateText({
         text: value,
         id: position,
-        title: title,
+        title,
         type: DATA_TYPE.RICH_TEXT,
       });
     }
@@ -138,7 +132,7 @@ const RichTextEditor = ({ updateText, position, richTextData }: PropsType) => {
     return () => {
       document.removeEventListener("mousedown", handleRichTextClickOutside);
     };
-  }, [showLinkInputBox, value]);
+  }, [showLinkInputBox, value, title]);
 
   return (
     <>
@@ -374,7 +368,7 @@ const AddLinkButton = ({ format, icon, showLinkInputBox, setShowInputBox }) => {
 
   const getLinkOfSelection = (editor) => {
     const { selection } = editor;
-    if (!selection) return { value: "", description: "" };
+    if (!selection) return { value: "", description: "", isInternal: false };
     const [match] = Array.from(
       Editor.nodes(editor, {
         at: Editor.unhangRange(editor, selection),
@@ -383,16 +377,29 @@ const AddLinkButton = ({ format, icon, showLinkInputBox, setShowInputBox }) => {
       })
     );
     if (match) {
-      return { value: match[0].url, description: match[0].description };
+      console.log(">>>>>>>", match[0]);
+      return {
+        value: match[0].url,
+        description: match[0].description,
+        isInternal: match[0].isInternal,
+      };
     }
-    return { value: "", description: "" };
+    return { value: "", description: "", isInternal: false };
   };
 
-  const { value: initialUrl, description: initialDescription } =
-    getLinkOfSelection(editor);
+  const {
+    value: initialUrl,
+    description: initialDescription,
+    isInternal, // TODO figure out a way to let user edit the internal look and the input book UI
+  } = getLinkOfSelection(editor);
   useEffect(() => {
     if (linkSpec.value) {
-      insertLink(editor, linkSpec.value, linkSpec.description);
+      insertLink(
+        editor,
+        linkSpec.value,
+        linkSpec.description,
+        linkSpec.isInternal
+      );
     }
   }, [linkSpec, editor]);
 
@@ -413,12 +420,17 @@ const AddLinkButton = ({ format, icon, showLinkInputBox, setShowInputBox }) => {
           initialUrl={initialUrl}
           initialDescription={initialDescription}
           onClose={() => setShowInputBox(false)}
-          setInputValue={(value: string, description: string) =>
+          setInputValue={(
+            value: string,
+            description: string,
+            isInternal: boolean
+          ) => {
             setLinkSpec({
               value,
               description,
-            })
-          }
+              isInternal,
+            });
+          }}
         />
       )}
     </>
@@ -537,9 +549,9 @@ const withInlines = (editor) => {
   return editor;
 };
 
-const insertLink = (editor, url, description) => {
+const insertLink = (editor, url, description, isInternal) => {
   if (editor.selection) {
-    wrapLink(editor, url, description);
+    wrapLink(editor, url, description, isInternal);
   }
 };
 const isLinkActive = (editor) => {
@@ -557,7 +569,12 @@ const unwrapLink = (editor) => {
   });
 };
 
-const wrapLink = (editor, url: string, description: string) => {
+const wrapLink = (
+  editor,
+  url: string,
+  description: string,
+  isInternal: boolean
+) => {
   if (isLinkActive(editor)) {
     unwrapLink(editor);
   }
@@ -568,6 +585,7 @@ const wrapLink = (editor, url: string, description: string) => {
     type: "link",
     url,
     description,
+    isInternal,
     children: isCollapsed ? [{ text: url }] : [],
   };
 

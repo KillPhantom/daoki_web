@@ -4,6 +4,7 @@ import {
   UPDATE_CODE_SNIPPET,
   UPDATE_TWITTER_WIDGET,
   DELETE_CONTENT,
+  UPDATE_QUOTE_TOPIC,
 } from "./CreatePageActions";
 
 /* Types */
@@ -12,6 +13,7 @@ import type {
   RichTextType,
   CodeTextType,
   TwitterWidgetType,
+  QuoteTopicType,
 } from "../types/CommonTypes";
 
 export type updateTextContentType = {
@@ -34,8 +36,14 @@ export type deleteContentType = {
   payload: number;
 };
 
+export type updateQuoteTopicType = {
+  type: typeof UPDATE_QUOTE_TOPIC;
+  payload: QuoteTopicType;
+};
+
 export type ActionType =
   | updateTextContentType
   | updateCodeSnippetType
   | updateTwitterWidgetType
-  | deleteContentType;
+  | deleteContentType
+  | updateQuoteTopicType;

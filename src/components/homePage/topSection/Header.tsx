@@ -10,12 +10,14 @@ import {
   Button,
   RightMenuWrapper,
   HeaderWrapper,
+  Logo,
 } from "../../../styles/homePage/topSection/Header";
 
 /* Child Component */
 import TwitterIcon from "../../common/icons/TwitterIcon";
 import GithubIcon from "../../common/icons/GithubIcon";
 import DiscordIcon from "../../common/icons/DiscordIcon";
+import WalletButton from "./WalletButton";
 /* Routes */
 import { isOnHomePage, isOnCreateProjectPage } from "../../../routes";
 
@@ -28,6 +30,7 @@ const Header = ({ isOfficial }: PropsType) => {
   return (
     <HeaderWrapper>
       <HeaderContainer>
+        <Logo />
         {isOfficial && (
           <MenuContainer>
             <MenuText>My Project</MenuText>
@@ -42,7 +45,7 @@ const Header = ({ isOfficial }: PropsType) => {
             <DiscordIcon overrideStyle={{ marginRight: "32px" }} />
             <GithubIcon />
           </IconWrapper>
-          {isOfficial && <Button>Connect Wallet</Button>}
+          {isOfficial && <WalletButton />}
         </RightMenuWrapper>
       </HeaderContainer>
     </HeaderWrapper>

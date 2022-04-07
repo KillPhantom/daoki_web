@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { connect } from "react-redux";
 
 /* Styled Components */
 import {
@@ -26,7 +27,6 @@ import ContextMenu from "./ContextMenu";
 import QuoteTopicMenu from "../createPage/QuoteTopicMenu";
 
 /* Constants */
-import { PageOneData } from "../../data/Example";
 import { DATA_TYPE } from "../../data/Constants";
 
 import {
@@ -34,6 +34,8 @@ import {
   RichTextType,
   TwitterWidgetType,
 } from "../../data/types/CommonTypes";
+import { StateType } from "../../data/types/StateType";
+import { getCreatePageQuoteTopics } from "../../data/selectors/CreatePageSelectors";
 
 const MODULE_TYPE = {
   TEXT: "Text template",
@@ -42,21 +44,15 @@ const MODULE_TYPE = {
   CODE: "Code template",
 };
 
-const CreateProjectPage = () => {
-  const topic = PageOneData;
-  // const contentListOriginal = topic.data.map(
-  //   (item: RichTextType | TwitterWidgetType | CodeTextType, index: number) => {
-  //     switch (item.type) {
-  //       case DATA_TYPE.RICH_TEXT:
-  //         return <RichTextEditor richTextData={item} position={index} />;
-  //       default:
-  //         return null;
-  //     }
-  //   }
-  // );
+const mapStateToProps = (state: StateType) => ({
+  quoteTopics: getCreatePageQuoteTopics(state),
+});
+
+type PropsType = ReturnType<typeof mapStateToProps>;
+
+const CreateProjectPage = ({ quoteTopics }: PropsType) => {
   const [showInitialPanel, setShowInitialPanel] = useState(true);
-  const [contentList, setContentList] =
-    useState<Array<any>>([]);
+  const [contentList, setContentList] = useState<Array<any>>([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [positionList, setPositionList] = useState<Array<number>>([]);
   const [currentPositionId, setCurrentPositionId] = useState(0);
@@ -196,7 +192,7 @@ const CreateProjectPage = () => {
                   </Dropdown>
                 </ModuleContentContainer>
               </ModuleWrapper>
-              <QuoteTopicMenu />
+              <QuoteTopicMenu quoteTopics={quoteTopics} />
             </EditWrapper>
             <ExternalLinkSection />
           </>
@@ -206,4 +202,4 @@ const CreateProjectPage = () => {
   );
 };
 
-export default CreateProjectPage;
+export default connect(mapStateToProps)(CreateProjectPage);

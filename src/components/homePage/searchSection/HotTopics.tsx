@@ -43,7 +43,6 @@ const HotTopics = ({ hotTopics, fetchInitialData }: PropsType) => {
     fetchInitialData();
   }, []);
 
-  console.log(">>>> hotopcis is ", hotTopics);
   const getBulletIcon = (position: number) => {
     switch (position) {
       case 0:

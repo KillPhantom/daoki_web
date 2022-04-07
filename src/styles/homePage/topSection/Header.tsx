@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import LogoImg from "../../../assets/icons/logo.png";
+import LogoIcon from "../../../assets/icons/logo.gif";
 
 export const HeaderWrapper = styled.div`
   display: flex;
@@ -11,7 +11,6 @@ export const HeaderContainer = styled.div`
   position: relative;
   margin: 0 10%;
   padding-top: 40px;
-  padding-bottom: 30px;
   border-bottom: 1px solid #000000;
   display: flex;
   position: relative;
@@ -58,6 +57,13 @@ export const Button = styled.button`
   font-size: 24px;
   font-weight: 500;
   line-height: 31px;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
-export const Logo = styled.img.attrs({ src: LogoImg })``;
+export const Logo = styled.img.attrs({ src: LogoIcon })`
+  width: 200px;
+  margin-top: -14px;
+`;
