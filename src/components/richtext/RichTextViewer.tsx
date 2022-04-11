@@ -26,7 +26,7 @@ type OwnPropsType = {
 type PropsType = OwnPropsType;
 
 const RichTextViewer = ({ richTextData }: PropsType) => {
-  const value: Descendant[] = richTextData.text;
+  const value: Descendant[] = richTextData.body;
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = useMemo(

@@ -1,9 +1,10 @@
 import { useState } from "react";
 type PropsType = {
   overrideStyle?: any;
+  onClick?: any;
 };
 
-const TwitterIcon = ({ overrideStyle }: PropsType) => {
+const TwitterIcon = ({ overrideStyle, onClick }: PropsType) => {
   const [isHover, setIsHover] = useState(false);
 
   return (
@@ -12,6 +13,7 @@ const TwitterIcon = ({ overrideStyle }: PropsType) => {
       style={{ height: "32px", width: "32px", ...overrideStyle }}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
+      onClick={onClick}
     >
       {isHover ? (
         <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">

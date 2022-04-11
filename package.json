@@ -67,7 +67,7 @@
     ]
   },
   "devDependencies": {
-    "@types/prismjs": "1.26.0",
+    "@types/prismjs": "^1.26.0",
     "@types/react": "17.0.31",
     "@types/redux-logger": "3.0.9",
     "@types/styled-components": "5.1.15"

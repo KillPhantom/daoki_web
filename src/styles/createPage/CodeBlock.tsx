@@ -4,11 +4,12 @@ export const CodeBlockWrapper = styled.div`
   padding: 0 20px;
   width: 100%;
   position: relative;
+  min-width: 768px;
 `;
 
 export const CodeBlockLanguageInputWrapper = styled.div`
   position: absolute;
-  right: 20px;
-  top: 0;
+  right: 30px;
+  top: 10px;
   z-index: 1;
 `;

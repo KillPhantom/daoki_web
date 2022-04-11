@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 /* Styled Components */
 import {
@@ -7,7 +7,6 @@ import {
   IconWrapper,
   MenuText,
   MenuContainer,
-  Button,
   RightMenuWrapper,
   HeaderWrapper,
   Logo,
@@ -18,8 +17,12 @@ import TwitterIcon from "../../common/icons/TwitterIcon";
 import GithubIcon from "../../common/icons/GithubIcon";
 import DiscordIcon from "../../common/icons/DiscordIcon";
 import WalletButton from "./WalletButton";
+import { Modal } from "antd";
+
 /* Routes */
 import { isOnHomePage, isOnCreateProjectPage } from "../../../routes";
+
+import { CREATE_PROJECT_ROUTE, DEMO_ROUTE } from "../../../routes";
 
 type PropsType = {
   isOfficial?: boolean;
@@ -27,23 +30,47 @@ type PropsType = {
 
 const Header = ({ isOfficial }: PropsType) => {
   const location = useLocation();
+  const navigate = useNavigate();
   return (
     <HeaderWrapper>
       <HeaderContainer>
-        <Logo />
+        <Logo onClick={() => navigate(DEMO_ROUTE)} />
         {isOfficial && (
           <MenuContainer>
-            <MenuText>My Project</MenuText>
-            <MenuText isSelected={isOnCreateProjectPage(location)}>
+            <MenuText
+              onClick={() =>
+                Modal.info({
+                  content: "Coming soon",
+                })
+              }
+            >
+              My Project
+            </MenuText>
+            <MenuText
+              isSelected={isOnCreateProjectPage(location)}
+              onClick={() => navigate(CREATE_PROJECT_ROUTE)}
+            >
               Create Project
             </MenuText>
           </MenuContainer>
         )}
         <RightMenuWrapper>
           <IconWrapper>
-            <TwitterIcon overrideStyle={{ marginRight: "32px" }} />
-            <DiscordIcon overrideStyle={{ marginRight: "32px" }} />
-            <GithubIcon />
+            <TwitterIcon
+              overrideStyle={{ marginRight: "32px" }}
+              onClick={() => window.open("https://twitter.com/DAOki_DAO")}
+            />
+            <DiscordIcon
+              overrideStyle={{ marginRight: "32px" }}
+              onClick={() => window.open("https://discord.gg/6YnradNndM")}
+            />
+            <GithubIcon
+              onClick={() => {
+                Modal.info({
+                  content: "Coming soon",
+                });
+              }}
+            />
           </IconWrapper>
           {isOfficial && <WalletButton />}
         </RightMenuWrapper>

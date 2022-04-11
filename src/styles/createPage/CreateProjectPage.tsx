@@ -119,14 +119,16 @@ export const RichTextWrapper = styled.div`
 
 export const TwitterWrapper = styled.div`
   padding: 0 20px;
-  width: 100%;
   position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-width: 768px;
 `;
 
 export const AddMoreButton = styled.div`
   margin: 0 20px;
   height: 40px;
-  max-width: 764px;
   background: rgba(58, 194, 141, 0.08);
   border-radius: 4px;
   border: 1px solid rgba(58, 194, 141, 0.14);
@@ -138,6 +140,7 @@ export const AddMoreButton = styled.div`
   padding-top: 6px;
   margin-top: 10px;
   margin-bottom: 10px;
+  min-width: 768px;
 `;
 
 export const ExternalLinkMainWrapper = styled.div`

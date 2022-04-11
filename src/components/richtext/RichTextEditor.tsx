@@ -27,13 +27,13 @@ import { withHistory } from "slate-history";
 
 import { Button, Icon, Toolbar } from "./Components";
 import LinkInputBox from "./LinkInputBox";
+import EditSideBarHOC from "../common/hoc/EditSideBarHOC";
 
 /* Styled Components */
 import {
   Wrapper,
   EditorTitleWrapper,
   EditorTitleInput,
-  CompleteButton,
 } from "../../styles/createPage/RichTextEditor";
 
 /* Actions */
@@ -41,7 +41,6 @@ import { updateTextContent } from "../../data/actions/CreatePageActions";
 
 import type { RichTextType } from "../../data/types/CommonTypes";
 
-import { PageOne } from "../../data/Example";
 import { DATA_TYPE } from "../../data/Constants";
 
 const HOTKEYS = {
@@ -64,40 +63,7 @@ type OwnPropsType = {
 type PropsType = ReturnType<typeof mapDispatchToProps> & OwnPropsType;
 
 const RichTextEditor = ({ updateText, position, richTextData }: PropsType) => {
-  const initialValue: Descendant[] = richTextData?.text ?? [
-    {
-      type: "paragraph",
-      children: [
-        { text: "This is editable " },
-        { text: "rich", bold: true },
-        { text: " text, " },
-        { text: "much", italic: true },
-        { text: " better than a " },
-        { text: "<textarea>", code: true },
-        { text: "!" },
-      ],
-    },
-    {
-      type: "paragraph",
-      children: [
-        {
-          text: "Since it's rich text, you can do things like turn a selection of text ",
-        },
-        { text: "bold", bold: true },
-        {
-          text: ", or add a semantically rendered block quote in the middle of the page, like this:",
-        },
-      ],
-    },
-    {
-      type: "block-quote",
-      children: [{ text: "A wise quote." }],
-    },
-    {
-      type: "paragraph",
-      children: [{ text: "Try it out for yourself!" }],
-    },
-  ];
+  const initialValue: Descendant[] = richTextData?.body;
 
   const [value, setValue] = useState<Descendant[]>(initialValue);
   const [title, setTitle] = useState(richTextData?.title ?? "");
@@ -119,20 +85,24 @@ const RichTextEditor = ({ updateText, position, richTextData }: PropsType) => {
     ) {
       setShowToolBar(!showToolBar);
       updateText({
-        text: value,
+        body: value,
         id: position,
         title,
         type: DATA_TYPE.RICH_TEXT,
       });
+      document.removeEventListener("mousedown", handleRichTextClickOutside);
     }
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleRichTextClickOutside);
+    if (showToolBar) {
+      document.addEventListener("mousedown", handleRichTextClickOutside);
+    }
+
     return () => {
       document.removeEventListener("mousedown", handleRichTextClickOutside);
     };
-  }, [showLinkInputBox, value, title]);
+  }, [showLinkInputBox, showToolBar, value, title]);
 
   return (
     <>
@@ -377,7 +347,6 @@ const AddLinkButton = ({ format, icon, showLinkInputBox, setShowInputBox }) => {
       })
     );
     if (match) {
-      console.log(">>>>>>>", match[0]);
       return {
         value: match[0].url,
         description: match[0].description,
@@ -618,4 +587,7 @@ const LinkComponent = ({ attributes, children, element }) => {
   );
 };
 
-export default connect(null, mapDispatchToProps)(RichTextEditor);
+export default connect(
+  null,
+  mapDispatchToProps
+)(EditSideBarHOC(RichTextEditor));

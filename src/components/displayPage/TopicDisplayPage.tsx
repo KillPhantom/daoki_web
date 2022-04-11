@@ -1,3 +1,6 @@
+import { useParams } from "react-router-dom";
+import { connect } from "react-redux";
+
 /* Styled Components */
 import {
   Wrapper,
@@ -24,11 +27,36 @@ import {
   RichTextType,
   TwitterWidgetType,
 } from "../../data/types/CommonTypes";
+import { fetchTopicDetail } from "../../data/actions/CreatePageActions";
+import { useEffect } from "react";
+import { StateType } from "../../data/types/StateType";
+
+import { getCreatePageState } from "../../data/selectors/CreatePageSelectors";
+
+const mapStateToProps = (state: StateType) => ({
+  topicData: getCreatePageState(state),
+});
+const mapDispatchToProps = (dispatch: any) => ({
+  fetchTopic: (topicId: string) => dispatch(fetchTopicDetail(topicId)),
+});
 
 type PropsType = {
-  topic: any;
-};
-const TopicDisplayPage = ({ topic }: PropsType) => {
+  topic?: any;
+} & ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
+
+const TopicDisplayPage = ({
+  topic: OverrideTopicData,
+  fetchTopic,
+  topicData,
+}: PropsType) => {
+  const { topicId } = useParams<{ topicId: string }>();
+  useEffect(() => {
+    if (topicId) {
+      fetchTopic(topicId);
+    }
+  }, [topicId]);
+  const topic = OverrideTopicData ?? topicData;
   const contentList = topic.data.map(
     (item: RichTextType | TwitterWidgetType | CodeTextType) => {
       switch (item.type) {
@@ -39,37 +67,6 @@ const TopicDisplayPage = ({ topic }: PropsType) => {
       }
     }
   );
-  // override external link to this page
-  const result = [];
-  const richTextData = topic.data;
-  let currentIndex = 0;
-  for (const data of richTextData) {
-    if (data) {
-      const textData = data.text;
-      for (const allTypeData of textData) {
-        if (allTypeData.type === LINK_TYPE && !allTypeData.isInternal) {
-          result.push({
-            index: currentIndex,
-            url: allTypeData.url,
-            description: allTypeData.description,
-          });
-          currentIndex++;
-        }
-        // find link in the nested children data
-        const childrenLinks = allTypeData?.children?.filter(
-          (item: any) => item.type === LINK_TYPE && !item.isInternal
-        );
-        for (const linkItem of childrenLinks) {
-          result.push({
-            index: currentIndex,
-            url: linkItem.url,
-            description: linkItem.description,
-          });
-          currentIndex++;
-        }
-      }
-    }
-  }
 
   return (
     <Wrapper>
@@ -81,7 +78,7 @@ const TopicDisplayPage = ({ topic }: PropsType) => {
           </ProjectTitleWrapper>
           <MainBodyWrapper>
             <ModuleWrapper>
-              <ContextMenu overrideRichTexts={richTextData} />
+              <ContextMenu />
               <ModuleContentContainer>
                 {contentList.map((item: any) => item)}
               </ModuleContentContainer>
@@ -91,11 +88,11 @@ const TopicDisplayPage = ({ topic }: PropsType) => {
               quotedTopics={topic.quotedTopics}
             />
           </MainBodyWrapper>
-          <ExternalLinkSection overrideExternalLinks={result} />
+          <ExternalLinkSection />
         </>
       </ContentWrapper>
     </Wrapper>
   );
 };
 
-export default TopicDisplayPage;
+export default connect(mapStateToProps, mapDispatchToProps)(TopicDisplayPage);
