@@ -6,7 +6,7 @@ export default (async function SubmitCollaboratorInfo(
 ): Promise<any> {
   await axios({
     method: "post",
-    url: `daoki/collaborator/submit-info`,
+    url: `api/daoki/collaborator/submit-info`,
     data: {
       description: collaboratorDetail,
       email: collaboratorEmail,

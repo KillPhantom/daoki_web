@@ -21,7 +21,7 @@ const WalletButton = ({ onLoggedIn }: PropsType) => {
     publicAddress: string;
     signature: string;
   }) =>
-    fetch(`daoki/auth`, {
+    fetch(`api/auth`, {
       body: JSON.stringify({ publicAddress, signature }),
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +50,7 @@ const WalletButton = ({ onLoggedIn }: PropsType) => {
   };
 
   const handleSignup = (publicAddress: string) =>
-    fetch(`daoki/users`, {
+    fetch(`api/users`, {
       body: JSON.stringify({ publicAddress }),
       headers: {
         "Content-Type": "application/json",
@@ -90,7 +90,7 @@ const WalletButton = ({ onLoggedIn }: PropsType) => {
     setPublicAddress(publicAddress);
 
     // Look if user with current publicAddress is already present on backend
-    fetch(`daoki/users?publicAddress=${publicAddress}`)
+    fetch(`api/users?publicAddress=${publicAddress}`)
       .then((response) => response.json())
       // If yes, retrieve it. If no, create it.
       .then((users) => (users.length ? users[0] : handleSignup(publicAddress)))
