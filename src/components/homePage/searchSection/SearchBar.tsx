@@ -7,6 +7,9 @@ import {
 } from "../../../styles/homePage/SearchSection";
 
 /* Child Components */
+import { Modal } from "antd";
+
+/* Child Components */
 import SearchIcon from "../../common/icons/SearchIcon";
 
 const SearchBar = () => {
@@ -15,7 +18,15 @@ const SearchBar = () => {
     <SearchBarWrapper>
       <SearchIcon overrideStyle={{ margin: "28px" }} />
       <SearchBarInput />
-      <SearchButton>Search</SearchButton>
+      <SearchButton
+        onClick={() =>
+          Modal.info({
+            content: "Coming soon",
+          })
+        }
+      >
+        Search
+      </SearchButton>
     </SearchBarWrapper>
   );
 };

@@ -34,6 +34,7 @@ export const MenuText = styled.div<{ isSelected?: boolean }>`
   line-height: 31px;
   text-align: center;
   margin-left: 55px;
+  cursor: pointer;
   ${({ isSelected }) => isSelected && "color:#3AC28D"};
 `;
 

@@ -8,11 +8,9 @@ import MainContent from "./topSection/MainContent";
 import IntroductionSection from "./IntroductionSection";
 import DAOkiDaoSection from "./DAOkiDaoSection";
 import SearchSection from "./searchSection/SearchSection";
-import EarlyStageHomePage from "./EarlyStageHomePage";
 
 const HomePage = () => {
-  const isOfficial = process.env.REACT_APP_IS_OFFICIAL;
-  return isOfficial ? (
+  return (
     <>
       <TopSection>
         <RotateWrapper>
@@ -24,8 +22,6 @@ const HomePage = () => {
       <IntroductionSection />
       <DAOkiDaoSection />
     </>
-  ) : (
-    <EarlyStageHomePage />
   );
 };
 

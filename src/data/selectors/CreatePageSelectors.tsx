@@ -5,13 +5,18 @@ import type { StateType } from "../types/StateType";
 import { DATA_TYPE, LINK_TYPE } from "../Constants";
 import { RichTextType } from "../types/CommonTypes";
 // Selectors
-export const getCreatePageData = (state: StateType) => state.createPage;
+export const getCreatePageState = (state: StateType) => state.createPage;
+
+export const getCreatePageData = (state: StateType) => state.createPage.data;
+
+export const getCreatePageTopic = (state: StateType) =>
+  getCreatePageState(state).title;
 
 export const getCreatePageRichText = (
   state: StateType
 ): Array<RichTextType | null | undefined> =>
   //@ts-ignore
-  getCreatePageData(state)?.data?.filter(
+  getCreatePageData(state)?.filter(
     (item) => item?.type === DATA_TYPE.RICH_TEXT
   );
 
@@ -23,7 +28,7 @@ export const getExternalLinks = (state: StateType) => {
   let currentIndex = 0;
   for (const data of richTextData) {
     if (data) {
-      const textData = data.text;
+      const textData = data.body;
       for (const allTypeData of textData) {
         if (allTypeData.type === LINK_TYPE && !allTypeData.isInternal) {
           result.push({
@@ -52,4 +57,4 @@ export const getExternalLinks = (state: StateType) => {
 };
 
 export const getCreatePageQuoteTopics = (state: StateType) =>
-  getCreatePageData(state).quoteTopic;
+  getCreatePageState(state).quoteTopic;

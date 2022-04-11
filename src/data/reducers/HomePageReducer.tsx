@@ -16,24 +16,24 @@ const DEFAULT_STATE = {
       title: "Top six Citation Index",
       data: [
         {
-          title: "Hot Topics",
+          title: "Coming soon",
           link: "#",
-          description: "Brief introduction ....",
+          description: "...",
         },
         {
-          title: "Hot Topics",
+          title: "Coming soon",
           link: "#",
-          description: "Brief introduction ....",
+          description: "...",
         },
         {
-          title: "Hot Topics",
+          title: "Coming soon",
           link: "#",
-          description: "Brief introduction ....",
+          description: "...",
         },
         {
-          title: "Hot Topics",
+          title: "Coming soon",
           link: "#",
-          description: "Brief introduction ....",
+          description: "...",
         },
       ],
     },
@@ -41,19 +41,19 @@ const DEFAULT_STATE = {
       title: "Top six Citation Index",
       data: [
         {
-          title: "Hot Topics",
+          title: "Coming soon",
           link: "#",
-          description: "Brief introduction ....",
+          description: "...",
         },
         {
-          title: "Hot Topics",
+          title: "Coming soon",
           link: "#",
-          description: "Brief introduction ....",
+          description: "...",
         },
         {
-          title: "Hot Topics",
+          title: "Coming soon",
           link: "#",
-          description: "Brief introduction ....",
+          description: "...",
         },
       ],
     },
@@ -62,17 +62,17 @@ const DEFAULT_STATE = {
     {
       title: "Reward List",
       link: "#",
-      description: "Brief introduction ....",
+      description: "...",
     },
     {
       title: "Reward List",
       link: "#",
-      description: "Brief introduction ....",
+      description: "...",
     },
     {
       title: "Reward List",
       link: "#",
-      description: "Brief introduction ....",
+      description: "...",
     },
   ],
 };

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { connect } from "react-redux";
+import { useEffect, useState } from "react";
+import { connect, MapDispatchToProps } from "react-redux";
 
 /* Styled Components */
 import {
@@ -27,59 +27,120 @@ import ContextMenu from "./ContextMenu";
 import QuoteTopicMenu from "../createPage/QuoteTopicMenu";
 
 /* Constants */
-import { DATA_TYPE } from "../../data/Constants";
-
-import {
-  CodeTextType,
-  RichTextType,
-  TwitterWidgetType,
-} from "../../data/types/CommonTypes";
+import { DATA_TYPE, RICH_TEXT_DEFAULT_DATA } from "../../data/Constants";
+import { ContentType } from "../../data/types/CommonTypes";
 import { StateType } from "../../data/types/StateType";
-import { getCreatePageQuoteTopics } from "../../data/selectors/CreatePageSelectors";
+
+/* Selectors */
+import {
+  getCreatePageQuoteTopics,
+  getCreatePageData,
+  getCreatePageTopic,
+} from "../../data/selectors/CreatePageSelectors";
+
+/* Actions */
+import {
+  moveContentUp,
+  moveContentDown,
+  deleteContent,
+  updateTextContent,
+  updateCodeSnippet,
+  updateTwitterWidget,
+  createTopic,
+  updateTopicTitle,
+  resetState,
+} from "../../data/actions/CreatePageActions";
 
 const MODULE_TYPE = {
   TEXT: "Text template",
-  MIRROR: "Mirror link",
   TWITTER: "Twitter link",
   CODE: "Code template",
 };
 
 const mapStateToProps = (state: StateType) => ({
   quoteTopics: getCreatePageQuoteTopics(state),
+  contentList: getCreatePageData(state),
+  topicTitle: getCreatePageTopic(state),
 });
 
-type PropsType = ReturnType<typeof mapStateToProps>;
+const mapDispatchToProps = (dispatch: any) => ({
+  createNewTopic: (
+    title: string,
+    content: Array<ContentType>,
+    operator: string
+  ) => dispatch(createTopic(title, content, operator)),
+  moveItemUp: (id: number) => dispatch(moveContentUp(id)),
+  moveItemDown: (id: number) => dispatch(moveContentDown(id)),
+  deleteItem: (id: number) => dispatch(deleteContent(id)),
+  addNewTextEditor: (id: number) =>
+    dispatch(
+      updateTextContent({
+        title: "",
+        body: RICH_TEXT_DEFAULT_DATA,
+        type: DATA_TYPE.RICH_TEXT,
+        id,
+      })
+    ),
+  addNewTwitterWidget: (twitterId: string, id: number) =>
+    dispatch(
+      updateTwitterWidget({
+        body: twitterId,
+        id,
+        type: DATA_TYPE.TWITTER_WIDGET,
+      })
+    ),
+  addNewCodeSnippet: (id: number) =>
+    dispatch(
+      updateCodeSnippet({
+        body: "",
+        id,
+        type: DATA_TYPE.CODE,
+        language: "js",
+      })
+    ),
+  updateTitle: (title: string) => dispatch(updateTopicTitle(title)),
+  resetData: () => dispatch(resetState()),
+});
 
-const CreateProjectPage = ({ quoteTopics }: PropsType) => {
+type PropsType = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
+
+const CreateProjectPage = ({
+  addNewTwitterWidget,
+  addNewCodeSnippet,
+  addNewTextEditor,
+  quoteTopics,
+  moveItemUp,
+  moveItemDown,
+  deleteItem,
+  contentList,
+  createNewTopic,
+  updateTitle,
+  topicTitle,
+  resetData,
+}: PropsType) => {
   const [showInitialPanel, setShowInitialPanel] = useState(true);
-  const [contentList, setContentList] = useState<Array<any>>([]);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [positionList, setPositionList] = useState<Array<number>>([]);
   const [currentPositionId, setCurrentPositionId] = useState(0);
+
+  useEffect(() => {
+    return () => {
+      resetData();
+    };
+  }, []);
+  const onSubmitClick = () => {
+    createNewTopic(topicTitle, contentList, "1231231231231231232asfsfwef23");
+  };
 
   const onAddButtonClick = () => {
     setShowInitialPanel(false);
     setShowDropdown(false);
     setCurrentPositionId(currentPositionId + 1);
-    positionList.push(currentPositionId);
-    setPositionList(positionList);
   };
-  const onItemRemoved = (positionId: number) => {
-    contentList.splice(positionId, 1); // remove the element
-    setContentList(contentList);
-  };
-
   const onTextTemplateClick = () => {
     onAddButtonClick();
     // leave time for the dropdown to disappear
-    window.setTimeout(
-      () =>
-        setContentList([
-          ...contentList,
-          <RichTextEditor position={currentPositionId} />,
-        ]),
-      10
-    );
+    addNewTextEditor(currentPositionId);
     // TODO add logic
   };
 
@@ -91,33 +152,15 @@ const CreateProjectPage = ({ quoteTopics }: PropsType) => {
 
   const onTwitterLinkClick = () => {
     onAddButtonClick();
-    window.setTimeout(
-      () =>
-        setContentList([
-          ...contentList,
-          <TwitterWidget
-            twitterId="933354946111705097"
-            onDelete={() => onItemRemoved(currentPositionId)}
-          />,
-        ]),
-      10
-    );
+    addNewTwitterWidget("1511654147363246081", currentPositionId);
   };
   const onCodeTemplateClick = () => {
     onAddButtonClick();
-    window.setTimeout(
-      () =>
-        setContentList([
-          ...contentList,
-          <CodeBlock position={currentPositionId} />,
-        ]),
-      10
-    );
+    addNewCodeSnippet(currentPositionId);
   };
 
   const menu = [
     { menuText: MODULE_TYPE.TEXT, menuOnClick: onTextTemplateClick },
-    { menuText: MODULE_TYPE.MIRROR, menuOnClick: onMirrorLinkClick },
     { menuText: MODULE_TYPE.TWITTER, menuOnClick: onTwitterLinkClick },
     { menuText: MODULE_TYPE.CODE, menuOnClick: onCodeTemplateClick },
   ];
@@ -149,10 +192,15 @@ const CreateProjectPage = ({ quoteTopics }: PropsType) => {
           <>
             <ProjectTitleWrapper>
               <ProjectTitle>
-                <ProjectTitleInput placeholder="Put your title here" />
+                <ProjectTitleInput
+                  placeholder="Put your title here"
+                  value={topicTitle}
+                  onChange={(event) => updateTitle(event.target.value)}
+                />
               </ProjectTitle>
 
               <Button
+                disabled
                 style={{
                   background: "rgba(30, 96, 218, 0.1)",
                   border: "1px solid #1E60DA",
@@ -173,6 +221,7 @@ const CreateProjectPage = ({ quoteTopics }: PropsType) => {
                   height: "40px",
                   marginTop: "20px ",
                 }}
+                onClick={onSubmitClick}
               >
                 Submit
               </Button>
@@ -181,7 +230,33 @@ const CreateProjectPage = ({ quoteTopics }: PropsType) => {
               <ModuleWrapper>
                 <ContextMenu />
                 <ModuleContentContainer>
-                  {contentList.map((item) => item)}
+                  {contentList.map((item: any) => {
+                    switch (item?.type) {
+                      case DATA_TYPE.RICH_TEXT:
+                        return (
+                          <RichTextEditor
+                            richTextData={item}
+                            position={item.id}
+                            onDelete={() => deleteItem(item.id)}
+                            onMoveItemUp={() => moveItemUp(item.id)}
+                            onMoveItemDown={() => moveItemDown(item.id)}
+                          />
+                        );
+                      case DATA_TYPE.CODE:
+                        return <CodeBlock id={item.id} />;
+                      case DATA_TYPE.TWITTER_WIDGET:
+                        return (
+                          <TwitterWidget
+                            twitterId={item.body}
+                            onDelete={() => deleteItem(item.id)}
+                            onMoveItemUp={() => moveItemUp(item.id)}
+                            onMoveItemDown={() => moveItemDown(item.id)}
+                          />
+                        );
+                      default:
+                        return null;
+                    }
+                  })}
                   <Dropdown
                     overlay={<CreateProjectMenu menu={menu} />}
                     trigger={["click"]}
@@ -202,4 +277,4 @@ const CreateProjectPage = ({ quoteTopics }: PropsType) => {
   );
 };
 
-export default connect(mapStateToProps)(CreateProjectPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateProjectPage);

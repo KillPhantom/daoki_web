@@ -6,6 +6,7 @@ export const Wrapper = styled.div<{ showToolBar: boolean }>`
   min-width: 768px;
   margin: 20px;
   ${({ showToolBar }) => showToolBar && "background:#f5f7fd"};
+  position: relative;
 `;
 
 export const EditorTitleWrapper = styled.div`

@@ -11,7 +11,6 @@ import { StateType } from "./data/types/StateType";
 const STORE_INITIAL = {};
 const logger = createLogger();
 const storeCreator = () => {
-  const isProdEnv = process.env.NODE_ENV;
   const reducers = {
     homePage: HomePageReducer,
     createPage: CreatePageReducer,
@@ -20,7 +19,9 @@ const storeCreator = () => {
     //@ts-ignore
     combineReducers<StateType>(reducers),
     STORE_INITIAL as Partial<StateType>,
-    applyMiddleware(...[thunk, promise, logger])
+    process.env.NODE_ENV === "production"
+      ? applyMiddleware(...[thunk, promise])
+      : applyMiddleware(...[thunk, promise, logger])
   );
   return store;
 };

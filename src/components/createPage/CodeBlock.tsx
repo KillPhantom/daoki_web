@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import Editor from "react-simple-code-editor";
 import Highlight, { defaultProps } from "prism-react-renderer";
 import theme from "prism-react-renderer/themes/nightOwlLight";
-import darkTheme from "prism-react-renderer/themes/vsDark";
 import { AutoComplete } from "antd";
 
 /* Styled Components */
@@ -19,6 +18,9 @@ import { DATA_TYPE, PRISM_SUPPORT_LANGUAGE } from "../../data/Constants";
 import { updateCodeSnippet } from "../../data/actions/CreatePageActions";
 import { CodeTextType } from "../../data/types/CommonTypes";
 
+/* Child Components */
+import EditSideBarHOC from "../common/hoc/EditSideBarHOC";
+
 const exampleCode = `
 (function someDemo() {
   var test = "Hello World!";
@@ -33,10 +35,10 @@ const mapDispatchToProps = (dispatch: any) => ({
 });
 
 type PropsType = {
-  position: number;
+  id: number;
 } & ReturnType<typeof mapDispatchToProps>;
 
-const CodeBlock = ({ position, updateCode }: PropsType) => {
+const CodeBlock = ({ id, updateCode }: PropsType) => {
   const [code, setCode] = useState(exampleCode);
   const [language, setLanguage] = useState("javascript");
   const [enableEdit, setEnableEdit] = useState(true);
@@ -71,9 +73,9 @@ const CodeBlock = ({ position, updateCode }: PropsType) => {
   useEffect(() => {
     if (!enableEdit) {
       updateCode({
-        content: code,
+        body: code,
         language: language,
-        id: position,
+        id,
         type: DATA_TYPE.CODE,
       });
     }
@@ -82,14 +84,14 @@ const CodeBlock = ({ position, updateCode }: PropsType) => {
   const highlight = () => (
     <Highlight
       {...defaultProps}
-      theme={enableEdit ? darkTheme : theme}
+      theme={theme}
       code={code}
       // @ts-ignore
       language={language}
     >
-      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+      {({ className, tokens, getLineProps, getTokenProps }) => (
         <Fragment>
-          <pre className={className} style={{ ...style }}>
+          <pre className={className}>
             {tokens.map((line, i) => (
               <div {...getLineProps({ line, key: i })}>
                 {line.map((token, key) => (
@@ -120,7 +122,6 @@ const CodeBlock = ({ position, updateCode }: PropsType) => {
         onValueChange={onValueChange}
         highlight={highlight}
         padding={10}
-        //@ts-ignore
         style={{
           boxSizing: "border-box",
           fontFamily: '"Dank Mono", "Fira Code", monospace',
@@ -131,4 +132,4 @@ const CodeBlock = ({ position, updateCode }: PropsType) => {
   );
 };
 
-export default connect(null, mapDispatchToProps)(CodeBlock);
+export default connect(null, mapDispatchToProps)(EditSideBarHOC(CodeBlock));

@@ -50,7 +50,7 @@ export const ItemBulletPoint = styled.div`
   height: 8px;
   border-radius: 4px;
   background: #1e60da;
-  margin-top: 14px;
+  margin: 14px 0 0 10px;
 `;
 
 export const PreviewInfoItemHeader = styled.div`

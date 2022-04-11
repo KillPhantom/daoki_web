@@ -1,7 +1,7 @@
 import { DATA_TYPE } from "./Constants";
 const PageOneTextData = [
   {
-    text: [
+    body: [
       { type: "paragraph", children: [{ text: "1.套利交易：" }] },
       {
         type: "paragraph",
@@ -105,10 +105,10 @@ const PageOneTextData = [
     ],
     id: 1,
     title: "",
-    type: 0,
+    type: DATA_TYPE.RICH_TEXT,
   },
   {
-    text: [
+    body: [
       {
         type: "bulleted-list",
         children: [
@@ -229,10 +229,10 @@ const PageOneTextData = [
     ],
     id: 2,
     title: "具体的技术原理和流程如下",
-    type: 0,
+    type: DATA_TYPE.RICH_TEXT,
   },
   {
-    text: [
+    body: [
       {
         type: "heading-two",
         children: [
@@ -256,10 +256,10 @@ const PageOneTextData = [
     ],
     id: 3,
     title: "",
-    type: 0,
+    type: DATA_TYPE.RICH_TEXT,
   },
   {
-    text: [
+    body: [
       {
         type: "paragraph",
         children: [{ text: "感谢 @twodam.eth 的进一步深入核实：" }],
@@ -362,7 +362,7 @@ const PageOneTextData = [
     ],
     id: 4,
     title: "深入堆栈",
-    type: 0,
+    type: DATA_TYPE.RICH_TEXT,
   },
 ];
 
@@ -379,7 +379,7 @@ export const PageOneData = {
 
 const PageTwoTextData = [
   {
-    text: [
+    body: [
       {
         type: "paragraph",
         children: [{ text: "NFTX是一个为 NFTs创建流动性市场的平台。" }],
@@ -421,10 +421,10 @@ const PageTwoTextData = [
     ],
     id: 0,
     title: "NFTX简介",
-    type: 0,
+    type: DATA_TYPE.RICH_TEXT,
   },
   {
-    text: [
+    body: [
       { type: "heading-two", children: [{ text: "创建vault ", bold: true }] },
       {
         type: "paragraph",
@@ -498,7 +498,7 @@ const PageTwoTextData = [
     ],
     id: 1,
     title: "如何工作？",
-    type: 0,
+    type: DATA_TYPE.RICH_TEXT,
   },
 ];
 
@@ -519,7 +519,7 @@ export const PageTwoData = {
 
 const PageThreeTextData = [
   {
-    text: [
+    body: [
       {
         type: "paragraph",
         children: [
@@ -531,7 +531,7 @@ const PageThreeTextData = [
     ],
     id: 0,
     title: "",
-    type: 0,
+    type: DATA_TYPE.RICH_TEXT,
   },
 ];
 
@@ -542,7 +542,7 @@ export const PageThreeData = {
 
 const PageFourTextData = [
   {
-    text: [
+    body: [
       {
         type: "paragraph",
         children: [
@@ -681,7 +681,7 @@ const PageFourTextData = [
     ],
     id: 0,
     title: "",
-    type: 0,
+    type: DATA_TYPE.RICH_TEXT,
   },
 ];
 
@@ -702,7 +702,7 @@ export const PageFourData = {
 
 const PageFiveTextData = [
   {
-    text: [
+    body: [
       { type: "paragraph", children: [{ text: "🔗Twitter" }] },
       {
         type: "paragraph",
@@ -900,7 +900,7 @@ const PageFiveTextData = [
     ],
     id: 0,
     title: "",
-    type: 0,
+    type: DATA_TYPE.RICH_TEXT,
   },
 ];
 

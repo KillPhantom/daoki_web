@@ -1,9 +1,10 @@
 import { useState } from "react";
 type PropsType = {
   overrideStyle?: any;
+  onClick?: () => void;
 };
 
-const GithubIcon = ({ overrideStyle }: PropsType) => {
+const GithubIcon = ({ overrideStyle, onClick }: PropsType) => {
   const [isHover, setIsHover] = useState(false);
   return (
     <svg
@@ -11,6 +12,7 @@ const GithubIcon = ({ overrideStyle }: PropsType) => {
       style={{ height: "32px", width: "32px", ...overrideStyle }}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
+      onClick={onClick}
     >
       {isHover ? (
         <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
