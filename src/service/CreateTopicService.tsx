@@ -8,7 +8,7 @@ export default (async function CreateTopicService(
 ): Promise<any> {
   await axios({
     method: "post",
-    url: `${process.env.REACT_APP_BACKEND_URL}/topic/create`,
+    url: `daoki/topic/create`,
     data: {
       name: title,
       content,

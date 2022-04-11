@@ -5,10 +5,7 @@ export default (async function CreateTopicService(
   topicId: string
 ): Promise<TopicDetailType> {
   const params = { id: topicId };
-  const { data } = await axios.get(
-    `${process.env.REACT_APP_BACKEND_URL}/topic/id`,
-    { params }
-  );
+  const { data } = await axios.get(`daoki/topic/id`, { params });
   // @ts-ignore
   return data.data;
 });
