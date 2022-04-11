@@ -67,4 +67,5 @@ export const Button = styled.button`
 export const Logo = styled.img.attrs({ src: LogoIcon })`
   width: 200px;
   margin-top: -14px;
+  cursor: pointer;
 `;

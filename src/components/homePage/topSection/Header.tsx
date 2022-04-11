@@ -34,7 +34,13 @@ const Header = ({ isOfficial }: PropsType) => {
   return (
     <HeaderWrapper>
       <HeaderContainer>
-        <Logo onClick={() => navigate(DEMO_ROUTE)} />
+        <Logo
+          onClick={() => {
+            if (!isOnHomePage(location)) {
+              navigate(DEMO_ROUTE);
+            }
+          }}
+        />
         {isOfficial && (
           <MenuContainer>
             <MenuText
