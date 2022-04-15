@@ -4,6 +4,7 @@ import type { Location } from "react-router-dom";
 /* Routes */
 export const HOME_ROUTE = "/";
 export const DEMO_ROUTE = "/demo";
+export const MY_PROJECT_ROUTE = "/my-project-page";
 export const CREATE_PROJECT_ROUTE = "/create-project";
 export const EXAMPLE_PAGE_1 = "/example-page-1";
 export const EXAMPLE_PAGE_2 = "/example-page-2";

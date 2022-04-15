@@ -1,4 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
 /* Actions */
 import {
   SUBMIT_COLLABORATOR_INFO_SERVICES_FULFILLED,
@@ -16,23 +15,23 @@ const DEFAULT_STATE = {
       title: "Top six Citation Index",
       data: [
         {
-          title: "Coming soon",
-          link: "#",
+          title: "在NFT一哥BAYC头上套利80万美金的技术真相",
+          link: "/example-page-1",
           description: "...",
         },
         {
-          title: "Coming soon",
-          link: "#",
+          title: "NFTX 官方中文介绍",
+          link: "/example-page-2",
+          description: "NFTX 中文介绍",
+        },
+        {
+          title: "小浣熊第一印象",
+          link: "/example-page-4",
           description: "...",
         },
         {
-          title: "Coming soon",
-          link: "#",
-          description: "...",
-        },
-        {
-          title: "Coming soon",
-          link: "#",
+          title: "Raccoon Chan 小浣熊",
+          link: "/example-page-5",
           description: "...",
         },
       ],
@@ -77,7 +76,10 @@ const DEFAULT_STATE = {
   ],
 };
 
-export default (state: StateType = DEFAULT_STATE, action: ActionType) => {
+const HomePageReducer = (
+  state: StateType = DEFAULT_STATE,
+  action: ActionType
+) => {
   switch (action.type) {
     case SUBMIT_COLLABORATOR_INFO_SERVICES_FULFILLED:
       return state;
@@ -92,3 +94,5 @@ export default (state: StateType = DEFAULT_STATE, action: ActionType) => {
 
   return state;
 };
+
+export default HomePageReducer;

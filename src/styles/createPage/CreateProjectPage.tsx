@@ -5,6 +5,12 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
+  background: linear-gradient(
+    270deg,
+    rgba(227, 247, 255, 0.1) 0%,
+    #e3f7ff 49%,
+    rgba(227, 247, 255, 0) 100%
+  );
 `;
 
 export const ContentWrapper = styled.div`

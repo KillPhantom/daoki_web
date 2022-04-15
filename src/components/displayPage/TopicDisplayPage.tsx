@@ -68,6 +68,41 @@ const TopicDisplayPage = ({
     }
   );
 
+  let result = null;
+  // override external link to this page only for example page
+  if (OverrideTopicData) {
+    result = [];
+    const richTextData = topic.data;
+    let currentIndex = 0;
+    for (const data of richTextData) {
+      if (data) {
+        const textData = data.body;
+        for (const allTypeData of textData) {
+          if (allTypeData.type === LINK_TYPE && !allTypeData.isInternal) {
+            result.push({
+              index: currentIndex,
+              url: allTypeData.url,
+              description: allTypeData.description,
+            });
+            currentIndex++;
+          }
+          // find link in the nested children data
+          const childrenLinks = allTypeData?.children?.filter(
+            (item: any) => item.type === LINK_TYPE && !item.isInternal
+          );
+          for (const linkItem of childrenLinks) {
+            result.push({
+              index: currentIndex,
+              url: linkItem.url,
+              description: linkItem.description,
+            });
+            currentIndex++;
+          }
+        }
+      }
+    }
+  }
+
   return (
     <Wrapper>
       <Header isOfficial />
@@ -88,7 +123,7 @@ const TopicDisplayPage = ({
               quotedTopics={topic.quotedTopics}
             />
           </MainBodyWrapper>
-          <ExternalLinkSection />
+          <ExternalLinkSection overrideExternalLinks={result} />
         </>
       </ContentWrapper>
     </Wrapper>

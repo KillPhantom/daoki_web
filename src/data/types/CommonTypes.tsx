@@ -49,5 +49,16 @@ export type TopicDetailType = {
   topicId: string;
   name: string;
   content: Array<CreateTopicContentType>;
+};
+
+export type TopicAbstractType = {
+  topicId?: string;
+  link: string;
+  title: string;
+  index: number;
   viewCount: string;
+};
+
+export type GetUserTopicServicesType = {
+  topics: Array<TopicAbstractType>;
 };

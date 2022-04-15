@@ -16,7 +16,7 @@ import {
 } from "../../styles/createPage/CreateProjectPage";
 
 /* Child Components */
-import { Button, Dropdown } from "antd";
+import { Button, Dropdown, Modal } from "antd";
 import CreateProjectMenu from "./CreateProjectMenu";
 import RichTextEditor from "../richText/RichTextEditor";
 import Header from "../homePage/topSection/Header";
@@ -25,6 +25,7 @@ import TwitterWidget from "./TwitterWidget";
 import CodeBlock from "./CodeBlock";
 import ContextMenu from "./ContextMenu";
 import QuoteTopicMenu from "../createPage/QuoteTopicMenu";
+import TwitterLinkInputModal from "./TwitterLinkInputModal";
 
 /* Constants */
 import { DATA_TYPE, RICH_TEXT_DEFAULT_DATA } from "../../data/Constants";
@@ -37,6 +38,7 @@ import {
   getCreatePageData,
   getCreatePageTopic,
 } from "../../data/selectors/CreatePageSelectors";
+import { getUserAuthToken } from "../../data/selectors/UserSelectors";
 
 /* Actions */
 import {
@@ -61,14 +63,12 @@ const mapStateToProps = (state: StateType) => ({
   quoteTopics: getCreatePageQuoteTopics(state),
   contentList: getCreatePageData(state),
   topicTitle: getCreatePageTopic(state),
+  userAuthToken: getUserAuthToken(state),
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  createNewTopic: (
-    title: string,
-    content: Array<ContentType>,
-    operator: string
-  ) => dispatch(createTopic(title, content, operator)),
+  createNewTopic: (title: string, content: Array<ContentType>, token: string) =>
+    dispatch(createTopic(title, content, token)),
   moveItemUp: (id: number) => dispatch(moveContentUp(id)),
   moveItemDown: (id: number) => dispatch(moveContentDown(id)),
   deleteItem: (id: number) => dispatch(deleteContent(id)),
@@ -109,19 +109,22 @@ const CreateProjectPage = ({
   addNewTwitterWidget,
   addNewCodeSnippet,
   addNewTextEditor,
-  quoteTopics,
   moveItemUp,
   moveItemDown,
   deleteItem,
-  contentList,
   createNewTopic,
   updateTitle,
-  topicTitle,
   resetData,
+  quoteTopics,
+  contentList,
+  topicTitle,
+  userAuthToken,
 }: PropsType) => {
   const [showInitialPanel, setShowInitialPanel] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
   const [currentPositionId, setCurrentPositionId] = useState(0);
+  const [showTwitterLinkInputModal, setShowTwitterLinkInputModal] =
+    useState(false);
 
   useEffect(() => {
     return () => {
@@ -129,7 +132,14 @@ const CreateProjectPage = ({
     };
   }, []);
   const onSubmitClick = () => {
-    createNewTopic(topicTitle, contentList, "1231231231231231232asfsfwef23");
+    if (!userAuthToken) {
+      Modal.warning({
+        title: "Connect wallet to submit your work!",
+        content: "You are not logged in yet",
+      });
+      return;
+    }
+    createNewTopic(topicTitle, contentList, userAuthToken);
   };
 
   const onAddButtonClick = () => {
@@ -152,7 +162,8 @@ const CreateProjectPage = ({
 
   const onTwitterLinkClick = () => {
     onAddButtonClick();
-    addNewTwitterWidget("1511654147363246081", currentPositionId);
+    setShowTwitterLinkInputModal(true);
+    // addNewTwitterWidget("1511654147363246081", currentPositionId);
   };
   const onCodeTemplateClick = () => {
     onAddButtonClick();
@@ -273,6 +284,11 @@ const CreateProjectPage = ({
           </>
         )}
       </ContentWrapper>
+      <TwitterLinkInputModal
+        visible={showTwitterLinkInputModal}
+        onClose={() => setShowTwitterLinkInputModal(false)}
+        positionId={currentPositionId}
+      />
     </Wrapper>
   );
 };

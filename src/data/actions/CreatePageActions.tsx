@@ -69,7 +69,7 @@ export const updateQuoteTopic = (quoteTopic: QuoteTopicType) => ({
 export const createTopic = (
   title: string,
   content: Array<ContentType>,
-  operator: string
+  token: string
 ) => ({
   type: CREATE_TOPIC,
   payload: () => {
@@ -99,7 +99,7 @@ export const createTopic = (
         });
       }
     }
-    return CreateTopicService(title, body, operator);
+    return CreateTopicService(title, body, token);
   },
 });
 
