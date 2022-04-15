@@ -92,7 +92,9 @@ const LinkInputBox = ({
         onChange={(e) => setDescription(e.target.value)}
         value={description}
       />
-      <LinkInputTitle>Or chose recommended daoki topics for </LinkInputTitle>
+      <LinkInputTitle>
+        Or chose recommended daoki topics for(demo only)
+      </LinkInputTitle>
       <LinkInputTitle incline>
         {window.getSelection()?.toString()}
       </LinkInputTitle>

@@ -1,4 +1,3 @@
-import Item from "antd/lib/list/Item";
 import {
   UPDATE_TEXT_CONTENT,
   UPDATE_CODE_SNIPPET,
@@ -103,7 +102,6 @@ const buildStateByTopicData = (data: TopicDetailType) => {
         continue;
     }
   }
-  console.log(">>> >I was here");
   return {
     title: data.name,
     data: result,
@@ -189,7 +187,6 @@ const CreatePageReducer = (
       };
     case FETCH_TOPIC_DETAIL_FULFILLED:
       const newState = buildStateByTopicData(action.payload);
-      console.log(">>>>>>>> data is ", newState);
       return newState;
     default:
       //   ((checkType: never) => checkType)(action);

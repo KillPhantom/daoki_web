@@ -20,7 +20,11 @@ import WalletButton from "./WalletButton";
 import { Modal } from "antd";
 
 /* Routes */
-import { isOnHomePage, isOnCreateProjectPage } from "../../../routes";
+import {
+  isOnHomePage,
+  isOnCreateProjectPage,
+  MY_PROJECT_ROUTE,
+} from "../../../routes";
 
 import { CREATE_PROJECT_ROUTE, DEMO_ROUTE } from "../../../routes";
 
@@ -43,13 +47,7 @@ const Header = ({ isOfficial }: PropsType) => {
         />
         {isOfficial && (
           <MenuContainer>
-            <MenuText
-              onClick={() =>
-                Modal.info({
-                  content: "Coming soon",
-                })
-              }
-            >
+            <MenuText onClick={() => navigate(MY_PROJECT_ROUTE)}>
               My Project
             </MenuText>
             <MenuText

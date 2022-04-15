@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { useState } from "react";
 import { Button, Modal } from "antd";
+import { useNavigate } from "react-router-dom";
 
 /* Styled Components */
 import {
@@ -21,6 +22,7 @@ import {
 import { emailValidationCheck } from "../../common/Helper";
 
 import { submitCollaboratorInfo } from "../../../data/actions/HomePageActions";
+import { MY_PROJECT_ROUTE } from "../../../routes";
 
 const mapDispatchToProps = (dispatch: any) => ({
   submitInfo: (email: string, detail: string) =>
@@ -32,9 +34,9 @@ type PropsType = {
 } & ReturnType<typeof mapDispatchToProps>;
 
 const MainContent = ({ isOfficial, submitInfo }: PropsType) => {
+  const navigate = useNavigate();
   const [emailInputValue, setEmailInputValue] = useState("");
   const [textInputValue, setTextInputValue] = useState("");
-
   const [emailInputError, setEmailInputError] = useState<string | null>(null);
   const [textInputError, setTextInputError] = useState<string | null>(null);
 
@@ -70,6 +72,7 @@ const MainContent = ({ isOfficial, submitInfo }: PropsType) => {
               width: "100%",
               marginTop: "100px",
             }}
+            onClick={() => navigate(MY_PROJECT_ROUTE)}
           >
             My Project
           </Button>

@@ -65,6 +65,9 @@ export const PreviewInfoItemHeaderTitle = styled.div`
   line-height: 31px;
   padding: 0 4px 4px;
   margin-left: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const PreviewInfoItemBody = styled.div`

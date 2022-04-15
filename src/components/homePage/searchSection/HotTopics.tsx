@@ -68,7 +68,13 @@ const HotTopics = ({ hotTopics, fetchInitialData }: PropsType) => {
                 <HotTopicCardTitle>{item.title}</HotTopicCardTitle>
                 {item.data.map((info, index) => {
                   return (
-                    <PreviewInfoItem>
+                    <PreviewInfoItem
+                      onClick={() => {
+                        if (info?.link) {
+                          window.open(info.link);
+                        }
+                      }}
+                    >
                       <PreviewInfoItemHeader>
                         {getBulletIcon(index)}
                         <PreviewInfoItemHeaderTitle>
