@@ -11,6 +11,7 @@ import {
   UPDATE_TOPIC_TITLE,
   RESET_STATE,
   FETCH_TOPIC_DETAIL_FULFILLED,
+  UPDATE_TOPIC_FULFILLED,
 } from "../actions/CreatePageActions";
 
 /* Types */
@@ -107,6 +108,8 @@ const buildStateByTopicData = (data: TopicDetailType) => {
     data: result,
     quoteTopic: [],
     isUploading: false,
+    userId: data.contributor.userId,
+    authorPublicAddress: data.contributor.walletPublicAddress,
   };
 };
 
@@ -168,6 +171,12 @@ const CreatePageReducer = (
         isUploading: true,
       };
     case CREATE_TOPIC_FULFILLED:
+    case UPDATE_TOPIC_FULFILLED:
+      const response = action.payload;
+      console.log(">>>> response is ", response);
+      if (response) {
+        window.location.href = "/topic/" + response.data.data;
+      }
       return {
         ...state,
         isUploading: false,
@@ -186,8 +195,12 @@ const CreatePageReducer = (
         isUploading: false,
       };
     case FETCH_TOPIC_DETAIL_FULFILLED:
-      const newState = buildStateByTopicData(action.payload);
-      return newState;
+      if (action.payload) {
+        const newState = buildStateByTopicData(action.payload);
+        return newState;
+      }
+      return state;
+
     default:
       //   ((checkType: never) => checkType)(action);
       break;

@@ -25,7 +25,7 @@ const UserInfoReducer = (
         authToken: action.payload,
       };
     case GET_USER_TOPICS_FULFILLED:
-      return { ...state, userTopics: action.payload };
+      return { ...state, userTopics: action.payload?.items };
     default:
       //   ((checkType: never) => checkType)(action);
       break;

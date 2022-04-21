@@ -7,7 +7,12 @@ import { ethers } from "ethers";
 import { Modal } from "antd";
 
 /* Utils */
-import { setAuthTokenCookie } from "../../../utils/Cookie";
+import {
+  setAuthTokenCookie,
+  setPublicAddressCookie,
+  getPublicAddressCookie,
+  setUserIdCookie,
+} from "../../../utils/Cookie";
 
 type PropsType = {};
 
@@ -15,11 +20,15 @@ let web3: Web3 | undefined = undefined; // Will hold the web3 instance
 
 const WalletButton = ({}: PropsType) => {
   const [loading, setLoading] = useState(false); // Loading button state
-  const [publicAddress, setPublicAddress] = useState<string | null>(null);
+  const [publicAddress, setPublicAddress] = useState<string | null | undefined>(
+    getPublicAddressCookie()
+  );
 
   const onLoggedIn = (response: any) => {
     if (response?.data.token) {
+      console.log(">>>>>> i am here");
       setAuthTokenCookie(response.data.token);
+      setUserIdCookie(response.data.userId);
     }
   };
 
@@ -104,6 +113,7 @@ const WalletButton = ({}: PropsType) => {
     const publicAddress = coinbase.toLowerCase();
     setLoading(true);
     setPublicAddress(publicAddress);
+    setPublicAddressCookie(publicAddress);
 
     // Look if user with current publicAddress is already present on backend
 
@@ -142,7 +152,7 @@ const WalletButton = ({}: PropsType) => {
   };
 
   return (
-    <Button onClick={onDemoClick}>
+    <Button onClick={handleClick}>
       {publicAddress ? publicAddress : loading ? "......" : "Connect Wallet"}
     </Button>
   );

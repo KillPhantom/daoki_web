@@ -1,4 +1,6 @@
 export const USER_SESSION_COOKIE = "session_id";
+export const USER_PUBLIC_ADDRESS_COOKIE = "pub_id";
+export const USER_ID_COOKIE = "tmp_id";
 const USER_SESSION_COOKIE_TIME = 30;
 
 export const setCookie = (
@@ -37,4 +39,21 @@ export const setAuthTokenCookie = (token: string) => {
   setCookie(USER_SESSION_COOKIE, token, expiryTime);
 };
 
+export const setPublicAddressCookie = (address: string) => {
+  const expiryTime = new Date();
+  expiryTime.setMinutes(expiryTime.getMinutes() + USER_SESSION_COOKIE_TIME);
+  setCookie(USER_PUBLIC_ADDRESS_COOKIE, address, expiryTime);
+};
+
+export const setUserIdCookie = (userId: string) => {
+  const expiryTime = new Date();
+  expiryTime.setMinutes(expiryTime.getMinutes() + USER_SESSION_COOKIE_TIME);
+  setCookie(USER_ID_COOKIE, userId, expiryTime);
+};
+
 export const getAuthTokenCookie = () => getCookie(USER_SESSION_COOKIE);
+
+export const getPublicAddressCookie = () =>
+  getCookie(USER_PUBLIC_ADDRESS_COOKIE);
+
+export const getUserIdCookie = () => getCookie(USER_ID_COOKIE);

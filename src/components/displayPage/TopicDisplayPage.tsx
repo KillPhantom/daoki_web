@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 /* Styled Components */
@@ -18,6 +18,7 @@ import ExternalLinkSection from "../createPage/ExternalLinksSection";
 import ContextMenu from "../createPage/ContextMenu";
 import RichTextViewer from "../richText/RichTextViewer";
 import QuoteTopicMenu from "../createPage/QuoteTopicMenu";
+import { Button, Modal } from "antd";
 
 /* Constants */
 
@@ -32,6 +33,8 @@ import { useEffect } from "react";
 import { StateType } from "../../data/types/StateType";
 
 import { getCreatePageState } from "../../data/selectors/CreatePageSelectors";
+import { getPublicAddressCookie } from "../../utils/Cookie";
+import { CREATE_PROJECT_ROUTE } from "../../routes";
 
 const mapStateToProps = (state: StateType) => ({
   topicData: getCreatePageState(state),
@@ -51,6 +54,7 @@ const TopicDisplayPage = ({
   topicData,
 }: PropsType) => {
   const { topicId } = useParams<{ topicId: string }>();
+  const navigate = useNavigate();
   useEffect(() => {
     if (topicId) {
       fetchTopic(topicId);
@@ -102,7 +106,6 @@ const TopicDisplayPage = ({
       }
     }
   }
-
   return (
     <Wrapper>
       <Header isOfficial />
@@ -110,6 +113,29 @@ const TopicDisplayPage = ({
         <>
           <ProjectTitleWrapper>
             <ProjectTitle>{topic.title}</ProjectTitle>
+            {topic.authorPublicAddress === getPublicAddressCookie() && (
+              <Button
+                style={{
+                  background: "rgba(30, 96, 218, 0.1)",
+                  border: "1px solid #1E60DA",
+                  borderRadius: "4px",
+                  width: "116px",
+                  height: "40px",
+                  margin: "20px 10px 0 0 ",
+                }}
+                onClick={() => {
+                  Modal.info({
+                    title: "Coming soon",
+                    content: "Under deployment",
+                  });
+                  // navigate(CREATE_PROJECT_ROUTE, {
+                  //   state: { isUpdate: true, topicId },
+                  // });
+                }}
+              >
+                Edit
+              </Button>
+            )}
           </ProjectTitleWrapper>
           <MainBodyWrapper>
             <ModuleWrapper>

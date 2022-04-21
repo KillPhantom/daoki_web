@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { connect, MapDispatchToProps } from "react-redux";
+import { connect } from "react-redux";
 
 /* Styled Components */
 import {
@@ -47,11 +47,12 @@ import {
   deleteContent,
   updateTextContent,
   updateCodeSnippet,
-  updateTwitterWidget,
   createTopic,
+  updateTopic,
   updateTopicTitle,
   resetState,
 } from "../../data/actions/CreatePageActions";
+import { useLocation } from "react-router-dom";
 
 const MODULE_TYPE = {
   TEXT: "Text template",
@@ -69,6 +70,12 @@ const mapStateToProps = (state: StateType) => ({
 const mapDispatchToProps = (dispatch: any) => ({
   createNewTopic: (title: string, content: Array<ContentType>, token: string) =>
     dispatch(createTopic(title, content, token)),
+  updateTopic: (
+    topicId: string,
+    title: string,
+    content: Array<ContentType>,
+    token: string
+  ) => dispatch(updateTopic(topicId, title, content, token)),
   moveItemUp: (id: number) => dispatch(moveContentUp(id)),
   moveItemDown: (id: number) => dispatch(moveContentDown(id)),
   deleteItem: (id: number) => dispatch(deleteContent(id)),
@@ -79,14 +86,6 @@ const mapDispatchToProps = (dispatch: any) => ({
         body: RICH_TEXT_DEFAULT_DATA,
         type: DATA_TYPE.RICH_TEXT,
         id,
-      })
-    ),
-  addNewTwitterWidget: (twitterId: string, id: number) =>
-    dispatch(
-      updateTwitterWidget({
-        body: twitterId,
-        id,
-        type: DATA_TYPE.TWITTER_WIDGET,
       })
     ),
   addNewCodeSnippet: (id: number) =>
@@ -106,13 +105,13 @@ type PropsType = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const CreateProjectPage = ({
-  addNewTwitterWidget,
   addNewCodeSnippet,
   addNewTextEditor,
   moveItemUp,
   moveItemDown,
   deleteItem,
   createNewTopic,
+  updateTopic,
   updateTitle,
   resetData,
   quoteTopics,
@@ -120,17 +119,23 @@ const CreateProjectPage = ({
   topicTitle,
   userAuthToken,
 }: PropsType) => {
+  const location = useLocation();
   const [showInitialPanel, setShowInitialPanel] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
   const [currentPositionId, setCurrentPositionId] = useState(0);
   const [showTwitterLinkInputModal, setShowTwitterLinkInputModal] =
     useState(false);
+  //@ts-ignore
+  const [isUpdate, _] = useState(location?.state?.isUpdate);
+  //@ts-ignore
+  const [topicId, __] = useState(location?.state?.topicId);
 
   useEffect(() => {
     return () => {
       resetData();
     };
   }, []);
+
   const onSubmitClick = () => {
     if (!userAuthToken) {
       Modal.warning({
@@ -139,7 +144,11 @@ const CreateProjectPage = ({
       });
       return;
     }
-    createNewTopic(topicTitle, contentList, userAuthToken);
+    if (topicId) {
+      updateTopic(topicId, topicTitle, contentList, userAuthToken);
+    } else {
+      createNewTopic(topicTitle, contentList, userAuthToken);
+    }
   };
 
   const onAddButtonClick = () => {
@@ -163,7 +172,6 @@ const CreateProjectPage = ({
   const onTwitterLinkClick = () => {
     onAddButtonClick();
     setShowTwitterLinkInputModal(true);
-    // addNewTwitterWidget("1511654147363246081", currentPositionId);
   };
   const onCodeTemplateClick = () => {
     onAddButtonClick();
@@ -176,11 +184,12 @@ const CreateProjectPage = ({
     { menuText: MODULE_TYPE.CODE, menuOnClick: onCodeTemplateClick },
   ];
 
+  console.log(">>>>>> is Update", isUpdate, topicId);
   return (
     <Wrapper>
       <Header isOfficial />
       <ContentWrapper>
-        {showInitialPanel ? (
+        {showInitialPanel && !isUpdate ? (
           <Content>
             <Dropdown
               overlay={<CreateProjectMenu menu={menu} />}

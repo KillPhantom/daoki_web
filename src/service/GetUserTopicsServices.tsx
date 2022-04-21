@@ -6,13 +6,10 @@ export default (async function GetUserTopicsService(
   userId: string
 ): Promise<GetUserTopicServicesType> {
   const userToken = getAuthTokenCookie();
-  const params = { userId };
-  const config = {
-    headers: {
-      token: String(userToken),
-    },
-  };
-  const { data } = await axios.post(`api/topic/get-all`, params, config);
+  const params = { page: 0, size: 100 };
+  const { data } = await axios.post(`api/topic/get-all-topics`, params, {
+    headers: { token: String(userToken) },
+  });
   // @ts-ignore
   return data.data;
 });

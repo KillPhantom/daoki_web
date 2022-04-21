@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -25,21 +26,53 @@ import {
   getUserTopics,
 } from "../../data/selectors/UserSelectors";
 
+/* Actions */
+import {
+  deleteUserTopic,
+  fetchUserTopics,
+} from "../../data/actions/UserActions";
+import { getUserIdCookie, getAuthTokenCookie } from "../../utils/Cookie";
+
 const mapStateToProps = (state: StateType) => ({
   isLoggedIn: getUserAuthToken(state),
   topics: getUserTopics(state),
 });
 
-type PropsType = ReturnType<typeof mapStateToProps>;
+const mapDispatchToProps = (dispatch: any) => ({
+  fetchUserAllTopics: (userId: string) => dispatch(fetchUserTopics(userId)),
+  deleteTopic: (topicId: string, token: string) =>
+    dispatch(deleteUserTopic(topicId, token)),
+});
 
-const MyProjectPage = ({ isLoggedIn, topics }: PropsType) => {
+type PropsType = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
+
+const MyProjectPage = ({
+  isLoggedIn,
+  topics,
+  fetchUserAllTopics,
+  deleteTopic,
+}: PropsType) => {
   const navigate = useNavigate();
+  const token = getAuthTokenCookie();
+  useEffect(() => {
+    const userID = getUserIdCookie();
+    if (userID && !topics) {
+      fetchUserAllTopics(userID);
+    }
+  }, []);
 
-  const topicContent = topics?.map((item) => <TopicCard topic={item} />);
+  const topicContent = topics?.map((item) => (
+    <TopicCard
+      topic={item}
+      onDelete={token ? () => deleteTopic(item.id, token) : undefined}
+      overrideRight="0px"
+    />
+  ));
 
   const mainContent = isLoggedIn ? (
     <ContentWrapper>
-      {topics.length > 0 ? (
+      {topics && topics.length > 0 ? (
         topicContent
       ) : (
         <InfoText>You have no topic yet</InfoText>
@@ -73,4 +106,4 @@ const MyProjectPage = ({ isLoggedIn, topics }: PropsType) => {
   );
 };
 
-export default connect(mapStateToProps)(MyProjectPage);
+export default connect(mapStateToProps, mapDispatchToProps)(MyProjectPage);
