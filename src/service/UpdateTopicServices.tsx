@@ -13,7 +13,7 @@ export default (async function UpdateTopicService(
 ): Promise<any> {
   const response = await axios({
     method: "post",
-    url: `api/topic/update`,
+    url: `https://daoki.xyz/api/topic/update`,
     data: {
       topicId,
       name: title,

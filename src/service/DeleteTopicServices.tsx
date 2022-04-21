@@ -5,7 +5,7 @@ export default (async function DeleteTopicService(
 ): Promise<any> {
   await axios({
     method: "post",
-    url: `api/topic/delete`,
+    url: `https://daoki.xyz/api/topic/delete`,
     params: {
       id: topicId,
     },
