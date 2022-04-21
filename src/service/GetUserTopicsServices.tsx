@@ -7,9 +7,13 @@ export default (async function GetUserTopicsService(
 ): Promise<GetUserTopicServicesType> {
   const userToken = getAuthTokenCookie();
   const params = { page: 0, size: 100 };
-  const { data } = await axios.post(`api/topic/get-all-topics`, params, {
-    headers: { token: String(userToken) },
-  });
+  const { data } = await axios.post(
+    `https://daoki.xyz/api/topic/get-all-topics`,
+    params,
+    {
+      headers: { token: String(userToken) },
+    }
+  );
   // @ts-ignore
   return data.data;
 });

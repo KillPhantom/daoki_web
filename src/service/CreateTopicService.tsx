@@ -12,7 +12,7 @@ export default (async function CreateTopicService(
 ): Promise<any> {
   const response = await axios({
     method: "post",
-    url: `api/topic/create`,
+    url: `https://daoki.xyz/api/topic/create`,
     data: {
       name: title,
       content,

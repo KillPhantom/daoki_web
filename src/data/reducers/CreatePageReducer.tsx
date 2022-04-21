@@ -173,7 +173,6 @@ const CreatePageReducer = (
     case CREATE_TOPIC_FULFILLED:
     case UPDATE_TOPIC_FULFILLED:
       const response = action.payload;
-      console.log(">>>> response is ", response);
       if (response) {
         window.location.href = "/topic/" + response.data.data;
       }
