@@ -22,14 +22,28 @@ const EditSideBar = ({
 }: PropsType) => {
   return (
     <Wrapper right={overrideRight} bottom={overrideBottom}>
-      <DeleteIcon
-        overrideStyle={{ margin: "2px 0 0 2px" }}
-        onClick={onClickDelete}
-      />
-      <IconDivider />
-      <MoveUpIcon overrideStyle={{ margin: "2px" }} onClick={onClickUp} />
-      <IconDivider />
-      <MoveDownIcon overrideStyle={{ margin: "2px " }} onClick={onClickDown} />
+      {onClickDelete && (
+        <DeleteIcon
+          overrideStyle={{ margin: "2px 0 0 2px" }}
+          onClick={onClickDelete}
+        />
+      )}
+
+      {onClickUp && (
+        <>
+          <IconDivider />
+          <MoveUpIcon overrideStyle={{ margin: "2px" }} onClick={onClickUp} />
+        </>
+      )}
+      {onClickDown && (
+        <>
+          <IconDivider />
+          <MoveDownIcon
+            overrideStyle={{ margin: "2px " }}
+            onClick={onClickDown}
+          />
+        </>
+      )}
     </Wrapper>
   );
 };

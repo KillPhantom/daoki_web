@@ -4,7 +4,8 @@ import {
   QuoteTopicType,
 } from "../data/types/CommonTypes";
 
-export default (async function CreateTopicService(
+export default (async function UpdateTopicService(
+  topicId: string,
   title: string,
   content: Array<CreateTopicContentType>,
   token: string,
@@ -12,8 +13,9 @@ export default (async function CreateTopicService(
 ): Promise<any> {
   const response = await axios({
     method: "post",
-    url: `api/topic/create`,
+    url: `api/topic/update`,
     data: {
+      topicId,
       name: title,
       content,
       quoteTopics,
@@ -24,5 +26,3 @@ export default (async function CreateTopicService(
   });
   return response;
 });
-
-// ("624f6037bb7d1c7d71402208");

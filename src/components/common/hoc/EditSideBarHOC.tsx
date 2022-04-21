@@ -8,6 +8,8 @@ type HocOnlyPropsType = {
   onDelete?: () => void;
   onMoveItemUp?: () => void;
   onMoveItemDown?: () => void;
+  overrideRight?: string;
+  overrideBottom?: string;
 };
 
 const EditSideBarHOC = <P extends InjectedPropsType = InjectedPropsType>(
@@ -17,6 +19,8 @@ const EditSideBarHOC = <P extends InjectedPropsType = InjectedPropsType>(
     onDelete,
     onMoveItemDown,
     onMoveItemUp,
+    overrideRight,
+    overrideBottom,
     ...propsToPass
   }: Omit<P, keyof InjectedPropsType> & HocOnlyPropsType) => {
     const [showEditBar, setShowEditBar] = useState(false);
@@ -32,6 +36,8 @@ const EditSideBarHOC = <P extends InjectedPropsType = InjectedPropsType>(
             onClickDelete={onDelete}
             onClickDown={onMoveItemDown}
             onClickUp={onMoveItemUp}
+            overrideRight={overrideRight}
+            overrideBottom={overrideBottom}
           />
         )}
       </div>

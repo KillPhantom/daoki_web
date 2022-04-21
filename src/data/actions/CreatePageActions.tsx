@@ -1,5 +1,6 @@
 /* Types */
 import CreateTopicService from "../../service/CreateTopicService";
+import UpdateTopicServices from "../../service/UpdateTopicServices";
 import GetTopicDetailService from "../../service/GetTopicDetailService";
 import { DATA_TYPE } from "../Constants";
 import type {
@@ -12,16 +13,22 @@ import type {
 
 // TODO separate display page action out of create page action
 
+/* Content edit local action */
 export const UPDATE_TEXT_CONTENT = "UPDATE_TEXT_CONTENT";
 export const UPDATE_CODE_SNIPPET = "UPDATE_CODE_SNIPPET";
 export const UPDATE_TWITTER_WIDGET = "UPDATE_TWITTER_WIDGET";
 export const DELETE_CONTENT = "DELETE_CONTENT";
 export const MOVE_CONTENT_UP = "MOVE_CONTENT_UP";
 export const MOVE_CONTENT_DOWN = "MOVE_CONTENT_DOWN";
+export const UPDATE_TOPIC_TITLE = "UPDATE_TOPIC_TITLE";
 export const UPDATE_QUOTE_TOPIC = "UPDATE_QUOTE_TOPIC";
+
 export const CREATE_TOPIC = "CREATE_TOPIC";
 export const CREATE_TOPIC_FULFILLED = "CREATE_TOPIC_FULFILLED";
-export const UPDATE_TOPIC_TITLE = "UPDATE_TOPIC_TITLE";
+
+export const UPDATE_TOPIC = "UPDATE_TOPIC";
+export const UPDATE_TOPIC_FULFILLED = "UPDATE_TOPIC_FULFILLED";
+
 export const RESET_STATE = "RESET_STATE";
 
 export const FETCH_TOPIC_DETAIL = "FETCH_TOPIC_DETAIL";
@@ -66,40 +73,59 @@ export const updateQuoteTopic = (quoteTopic: QuoteTopicType) => ({
   payload: quoteTopic,
 });
 
+const topicBodyBuilder = (content: Array<ContentType>) => {
+  let body = [];
+  for (let i = 0; i < content.length; i++) {
+    if (content[i]?.type === DATA_TYPE.RICH_TEXT) {
+      body.push({
+        // @ts-ignore
+        title: content[i]?.title,
+        body: JSON.stringify(content[i]?.body),
+        position: i,
+        type: DATA_TYPE.RICH_TEXT,
+      });
+    } else if (content[i]?.type === DATA_TYPE.TWITTER_WIDGET) {
+      body.push({
+        type: DATA_TYPE.TWITTER_WIDGET,
+        body: content[i]?.body,
+        position: i,
+      });
+    } else if (content[i]?.type === DATA_TYPE.CODE) {
+      body.push({
+        type: DATA_TYPE.CODE,
+        body: content[i]?.body,
+        position: i,
+        // @ts-ignore
+        language: content[i]?.language,
+      });
+    }
+  }
+  return body;
+};
 export const createTopic = (
   title: string,
   content: Array<ContentType>,
-  token: string
+  token: string,
+  quotedTopics?: Array<QuoteTopicType>
 ) => ({
   type: CREATE_TOPIC,
   payload: () => {
-    let body = [];
-    for (let i = 0; i < content.length; i++) {
-      if (content[i]?.type === DATA_TYPE.RICH_TEXT) {
-        body.push({
-          // @ts-ignore
-          title: content[i]?.title,
-          body: JSON.stringify(content[i]?.body),
-          position: i,
-          type: DATA_TYPE.RICH_TEXT,
-        });
-      } else if (content[i]?.type === DATA_TYPE.TWITTER_WIDGET) {
-        body.push({
-          type: DATA_TYPE.TWITTER_WIDGET,
-          body: content[i]?.body,
-          position: i,
-        });
-      } else if (content[i]?.type === DATA_TYPE.CODE) {
-        body.push({
-          type: DATA_TYPE.CODE,
-          body: content[i]?.body,
-          position: i,
-          // @ts-ignore
-          language: content[i]?.language,
-        });
-      }
-    }
+    const body = topicBodyBuilder(content);
     return CreateTopicService(title, body, token);
+  },
+});
+
+export const updateTopic = (
+  topicId: string,
+  title: string,
+  content: Array<ContentType>,
+  token: string,
+  quotedTopics?: Array<QuoteTopicType>
+) => ({
+  type: UPDATE_TOPIC,
+  payload: () => {
+    const body = topicBodyBuilder(content);
+    return UpdateTopicServices(topicId, title, body, token, quotedTopics);
   },
 });
 
@@ -111,7 +137,6 @@ export const fetchTopicDetail = (topicId: string) => ({
   type: FETCH_TOPIC_DETAIL,
   payload: async () => {
     const data = GetTopicDetailService(topicId);
-    console.log(">>>>>> data ", data);
     return data;
   },
 });

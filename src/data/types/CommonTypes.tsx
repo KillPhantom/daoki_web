@@ -49,16 +49,23 @@ export type TopicDetailType = {
   topicId: string;
   name: string;
   content: Array<CreateTopicContentType>;
+  contributor: {
+    userId: string;
+    walletPublicAddress: string;
+  };
 };
 
 export type TopicAbstractType = {
-  topicId?: string;
-  link: string;
+  id: string;
   title: string;
   index: number;
   viewCount: string;
 };
 
 export type GetUserTopicServicesType = {
-  topics: Array<TopicAbstractType>;
+  items: Array<TopicAbstractType> | null | undefined;
+  pageNo: number;
+  pageSiz: number;
+  totalCount: number;
+  totalPage: number;
 };

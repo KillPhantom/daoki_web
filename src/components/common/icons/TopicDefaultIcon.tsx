@@ -1,12 +1,14 @@
 type PropsType = {
   overrideStyle?: any;
+  onClick?: () => void;
 };
 
-const ShareIcon = ({ overrideStyle }: PropsType) => {
+const ShareIcon = ({ overrideStyle, onClick }: PropsType) => {
   return (
     <svg
       viewBox="0 0 161 142"
       style={{ width: "161px", height: "142px", ...overrideStyle }}
+      onClick={onClick}
     >
       <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
         <g transform="translate(-424.000000, -331.000000)" fill-rule="nonzero">

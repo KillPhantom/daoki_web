@@ -12,6 +12,7 @@ import {
   UPDATE_TOPIC_TITLE,
   RESET_STATE,
   fetchTopicDetail,
+  updateTopic,
 } from "./CreatePageActions";
 
 /* Types */
@@ -77,6 +78,7 @@ type fetchTopDetailFulfilledType = GetFulfilledActionType<
   typeof fetchTopicDetail
 >;
 type createTopicFulfilledType = GetFulfilledActionType<typeof createTopic>;
+type updateTopicFulfilledType = GetFulfilledActionType<typeof updateTopic>;
 
 export type ActionType =
   | updateTextContentType
@@ -89,4 +91,5 @@ export type ActionType =
   | updateTopicTitleType
   | createTopicFulfilledType
   | resetStateType
-  | fetchTopDetailFulfilledType;
+  | fetchTopDetailFulfilledType
+  | updateTopicFulfilledType;

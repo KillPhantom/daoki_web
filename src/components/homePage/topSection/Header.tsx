@@ -1,5 +1,5 @@
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
 
 /* Styled Components */
 import {
@@ -27,14 +27,20 @@ import {
 } from "../../../routes";
 
 import { CREATE_PROJECT_ROUTE, DEMO_ROUTE } from "../../../routes";
+import { resetState } from "../../../data/actions/CreatePageActions";
+
+const mapDispatchToProps = (dispatch: any) => ({
+  resetData: () => dispatch(resetState()),
+});
 
 type PropsType = {
   isOfficial?: boolean;
-};
+} & ReturnType<typeof mapDispatchToProps>;
 
-const Header = ({ isOfficial }: PropsType) => {
+const Header = ({ isOfficial, resetData }: PropsType) => {
   const location = useLocation();
   const navigate = useNavigate();
+
   return (
     <HeaderWrapper>
       <HeaderContainer>
@@ -52,7 +58,10 @@ const Header = ({ isOfficial }: PropsType) => {
             </MenuText>
             <MenuText
               isSelected={isOnCreateProjectPage(location)}
-              onClick={() => navigate(CREATE_PROJECT_ROUTE)}
+              onClick={() => {
+                navigate(CREATE_PROJECT_ROUTE);
+                resetData();
+              }}
             >
               Create Project
             </MenuText>
@@ -83,4 +92,4 @@ const Header = ({ isOfficial }: PropsType) => {
   );
 };
 
-export default Header;
+export default connect(null, mapDispatchToProps)(Header);

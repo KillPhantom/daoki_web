@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 /* Styled Components */
 import {
   TopicCardPreview,
@@ -10,6 +12,10 @@ import {
 } from "../../styles/myProjectPage/MyProjectPage";
 import ShareIcon from "../common/icons/ShareIcon";
 import TopicDefaultIcon from "../common/icons/TopicDefaultIcon";
+import { Modal } from "antd";
+
+/* HOCs */
+import EditSideBarHOC from "../common/hoc/EditSideBarHOC";
 
 import type { TopicAbstractType } from "../../data/types/CommonTypes";
 
@@ -17,11 +23,23 @@ type PropsType = {
   topic: TopicAbstractType;
 };
 const TopicCard = ({ topic }: PropsType) => {
+  const navigator = useNavigate();
   return (
-    <TopicCardWrapper>
+    <TopicCardWrapper onClick={() => navigator("/topic/" + topic.id)}>
       <TopicCardPreview>
         <TopicDefaultIcon />
-        <TopicCardShareIconWrapper>
+        <TopicCardShareIconWrapper
+          onClick={(event) => {
+            event.stopPropagation();
+            window.navigator.clipboard.writeText(
+              "https://daoki.xyz/topic/" + topic.id
+            );
+            Modal.info({
+              title: "You have copied the link to clipboard!",
+              content: "Share with your friend for what you've done!",
+            });
+          }}
+        >
           <ShareIcon />
         </TopicCardShareIconWrapper>
       </TopicCardPreview>
@@ -29,7 +47,9 @@ const TopicCard = ({ topic }: PropsType) => {
       <TopicCardTitle>{topic.title}</TopicCardTitle>
       <TopicAttributeWrapper>
         <TopicAttributeTitle>Quote index</TopicAttributeTitle>
-        <TopicAttributeValue>{topic.index}</TopicAttributeValue>
+        <TopicAttributeValue>
+          {topic.index ?? "Coming soon"}
+        </TopicAttributeValue>
       </TopicAttributeWrapper>
       <TopicAttributeWrapper>
         <TopicAttributeTitle>View count</TopicAttributeTitle>
@@ -39,4 +59,4 @@ const TopicCard = ({ topic }: PropsType) => {
   );
 };
 
-export default TopicCard;
+export default EditSideBarHOC(TopicCard);
