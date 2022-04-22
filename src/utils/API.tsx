@@ -8,8 +8,8 @@ export const post = async (
 ): Promise<any> => {
   const host =
     process.env.NODE_ENV === "production"
-      ? "https://daoki.xyz/api/"
-      : "http://127.0.0.1:8080/daoki/";
+      ? "https://daoki.xyz/api"
+      : "http://127.0.0.1:8080/daoki";
   const response = await axios({
     method: "post",
     url: `${host}${url}`,
@@ -23,8 +23,8 @@ export const post = async (
 export const get = async (url: string, params?: any): Promise<any> => {
   const host =
     process.env.NODE_ENV === "production"
-      ? "https://daoki.xyz/api/"
-      : "http://127.0.0.1:8080/daoki/";
+      ? "https://daoki.xyz/api"
+      : "http://127.0.0.1:8080/daoki";
   const response = await axios.get(`${host}${url}`, {
     params,
   });
