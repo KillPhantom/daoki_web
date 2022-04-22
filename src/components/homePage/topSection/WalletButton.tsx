@@ -79,7 +79,7 @@ const WalletButton = ({}: PropsType) => {
   };
 
   const handleSignup = (publicAddress: string) =>
-    fetch(`${host}/daoki/user/create-user`, {
+    fetch(`${host}/user/create-user`, {
       body: JSON.stringify({ publicAddress }),
       headers: {
         "Content-Type": "application/json",
@@ -121,7 +121,7 @@ const WalletButton = ({}: PropsType) => {
 
     // Look if user with current publicAddress is already present on backend
 
-    fetch(`${host}/daoki/user/get-user-info`, {
+    fetch(`${host}/user/get-user-info`, {
       body: JSON.stringify({ publicAddress }),
       headers: {
         "Content-Type": "application/json",
