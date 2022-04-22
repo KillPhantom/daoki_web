@@ -75,7 +75,7 @@ const CodeBlock = ({ id, updateCode }: PropsType) => {
       updateCode({
         body: code,
         language: language,
-        id,
+        id: String(id),
         type: DATA_TYPE.CODE,
       });
     }

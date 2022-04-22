@@ -9,6 +9,9 @@ export const getCreatePageState = (state: StateType) => state.createPage;
 
 export const getCreatePageData = (state: StateType) => state.createPage.data;
 
+export const getIsUploadingTopicContent = (state: StateType) =>
+  state.createPage.isUploading;
+
 export const getCreatePageTopic = (state: StateType) =>
   getCreatePageState(state).title;
 

@@ -70,3 +70,10 @@ export const RICH_TEXT_DEFAULT_DATA = [
     children: [{ text: "Try it out for yourself!" }],
   },
 ];
+
+export const RICH_TEXT_EMPTY_BODY = [
+  {
+    type: "paragraph",
+    children: [{ text: "" }],
+  },
+];

@@ -1,5 +1,8 @@
 /* Styled Components */
-import { Button } from "../../../styles/homePage/topSection/Header";
+import {
+  Button,
+  LoadingCircle,
+} from "../../../styles/homePage/topSection/Header";
 
 import { useState } from "react";
 import Web3 from "web3";
@@ -13,6 +16,7 @@ import {
   getPublicAddressCookie,
   setUserIdCookie,
 } from "../../../utils/Cookie";
+import { getUserAuthToken } from "../../../data/selectors/UserSelectors";
 
 type PropsType = {};
 
@@ -20,15 +24,17 @@ let web3: Web3 | undefined = undefined; // Will hold the web3 instance
 
 const WalletButton = ({}: PropsType) => {
   const [loading, setLoading] = useState(false); // Loading button state
+  const [authSuccess, setAuthSuccess] = useState(Boolean(getUserAuthToken));
   const [publicAddress, setPublicAddress] = useState<string | null | undefined>(
     getPublicAddressCookie()
   );
 
   const onLoggedIn = (response: any) => {
     if (response?.data.token) {
-      console.log(">>>>>> i am here");
       setAuthTokenCookie(response.data.token);
       setUserIdCookie(response.data.userId);
+      setAuthSuccess(true);
+      setLoading(false);
     }
   };
 
@@ -41,7 +47,7 @@ const WalletButton = ({}: PropsType) => {
     signature: string;
     msgHash: any;
   }) =>
-    fetch(`api/user/authentication`, {
+    fetch(`http://127.0.0.1:8080/daoki/user/authentication`, {
       body: JSON.stringify({ publicAddress, signature, message: msgHash }),
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +75,7 @@ const WalletButton = ({}: PropsType) => {
   };
 
   const handleSignup = (publicAddress: string) =>
-    fetch(`api/user/create-user`, {
+    fetch(`http://127.0.0.1:8080/daoki/user/create-user`, {
       body: JSON.stringify({ publicAddress }),
       headers: {
         "Content-Type": "application/json",
@@ -117,7 +123,7 @@ const WalletButton = ({}: PropsType) => {
 
     // Look if user with current publicAddress is already present on backend
 
-    fetch(`api/user/get-user-info`, {
+    fetch(`http://127.0.0.1:8080/daoki/user/get-user-info`, {
       body: JSON.stringify({ publicAddress }),
       headers: {
         "Content-Type": "application/json",
@@ -151,11 +157,12 @@ const WalletButton = ({}: PropsType) => {
       });
   };
 
-  return (
+  const button = (
     <Button onClick={handleClick}>
-      {publicAddress ? publicAddress : loading ? "......" : "Connect Wallet"}
+      {publicAddress && authSuccess ? publicAddress : "Connect Wallet"}
     </Button>
   );
+  return loading ? <LoadingCircle /> : button;
 };
 
 export default WalletButton;

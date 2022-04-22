@@ -1,15 +1,11 @@
-import axios from "axios";
+import { post } from "../utils/API";
 
 export default (async function SubmitCollaboratorInfo(
   collaboratorEmail: string,
   collaboratorDetail: string
 ): Promise<any> {
-  await axios({
-    method: "post",
-    url: `https://daoki.xyz/api/collaborator/submit-info`,
-    data: {
-      description: collaboratorDetail,
-      email: collaboratorEmail,
-    },
+  await post("/collaborator/submit-info", {
+    description: collaboratorDetail,
+    email: collaboratorEmail,
   });
 });

@@ -31,6 +31,7 @@ import {
   deleteUserTopic,
   fetchUserTopics,
 } from "../../data/actions/UserActions";
+import { resetState } from "../../data/actions/CreatePageActions";
 import { getUserIdCookie, getAuthTokenCookie } from "../../utils/Cookie";
 
 const mapStateToProps = (state: StateType) => ({
@@ -42,6 +43,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   fetchUserAllTopics: (userId: string) => dispatch(fetchUserTopics(userId)),
   deleteTopic: (topicId: string, token: string) =>
     dispatch(deleteUserTopic(topicId, token)),
+  resetData: () => dispatch(resetState()),
 });
 
 type PropsType = ReturnType<typeof mapStateToProps> &
@@ -52,6 +54,7 @@ const MyProjectPage = ({
   topics,
   fetchUserAllTopics,
   deleteTopic,
+  resetData,
 }: PropsType) => {
   const navigate = useNavigate();
   const token = getAuthTokenCookie();
@@ -93,6 +96,7 @@ const MyProjectPage = ({
             <Title>My Project</Title>
             <Button
               onClick={() => {
+                resetData();
                 navigate(CREATE_PROJECT_ROUTE);
               }}
             >

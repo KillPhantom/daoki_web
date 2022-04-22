@@ -6,27 +6,31 @@ export type MenuItemType = {
 export type RichTextType = {
   title: string;
   body: any; // TODO decouple it to be more specific type
-  id: number;
+  id: string;
   type: number;
+  topicId?: string;
 };
 
 export type CodeTextType = {
   language: string;
   body: string;
-  id: number;
+  id: string;
   type: number;
+  topicId?: string;
 };
 
 export type TwitterWidgetType = {
   body: string;
-  id: number;
+  id: string;
   type: number;
+  topicId?: string;
 };
 
 export type QuoteTopicType = {
   title: string;
   link: string;
   score: number;
+  topicId?: string;
 };
 
 export type ContentType =
@@ -43,6 +47,7 @@ export type CreateTopicContentType = {
   body: string;
   type: number;
   contentId?: string;
+  topicId?: string;
 };
 
 export type TopicDetailType = {

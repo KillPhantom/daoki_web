@@ -1,4 +1,4 @@
-import axios from "axios";
+import { post } from "../utils/API";
 import {
   CreateTopicContentType,
   QuoteTopicType,
@@ -11,18 +11,13 @@ export default (async function UpdateTopicService(
   token: string,
   quoteTopics?: Array<QuoteTopicType>
 ): Promise<any> {
-  const response = await axios({
-    method: "post",
-    url: `https://daoki.xyz/api/topic/update`,
-    data: {
-      topicId,
-      name: title,
-      content,
-      quoteTopics,
-    },
-    headers: {
-      token,
-    },
-  });
+  const data = {
+    topicId,
+    name: title,
+    content,
+    quoteTopics,
+  };
+  const headers = { token };
+  const response = await post("/topic/update", data, null, headers);
   return response;
 });

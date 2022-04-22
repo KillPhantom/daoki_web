@@ -28,7 +28,7 @@ import QuoteTopicMenu from "../createPage/QuoteTopicMenu";
 import TwitterLinkInputModal from "./TwitterLinkInputModal";
 
 /* Constants */
-import { DATA_TYPE, RICH_TEXT_DEFAULT_DATA } from "../../data/Constants";
+import { DATA_TYPE, RICH_TEXT_EMPTY_BODY } from "../../data/Constants";
 import { ContentType } from "../../data/types/CommonTypes";
 import { StateType } from "../../data/types/StateType";
 
@@ -37,6 +37,7 @@ import {
   getCreatePageQuoteTopics,
   getCreatePageData,
   getCreatePageTopic,
+  getIsUploadingTopicContent,
 } from "../../data/selectors/CreatePageSelectors";
 import { getUserAuthToken } from "../../data/selectors/UserSelectors";
 
@@ -53,6 +54,7 @@ import {
   resetState,
 } from "../../data/actions/CreatePageActions";
 import { useLocation } from "react-router-dom";
+import { LoadingCircle } from "../../styles/homePage/topSection/Header";
 
 const MODULE_TYPE = {
   TEXT: "Text template",
@@ -65,6 +67,7 @@ const mapStateToProps = (state: StateType) => ({
   contentList: getCreatePageData(state),
   topicTitle: getCreatePageTopic(state),
   userAuthToken: getUserAuthToken(state),
+  isUploadingContent: getIsUploadingTopicContent(state),
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
@@ -76,19 +79,19 @@ const mapDispatchToProps = (dispatch: any) => ({
     content: Array<ContentType>,
     token: string
   ) => dispatch(updateTopic(topicId, title, content, token)),
-  moveItemUp: (id: number) => dispatch(moveContentUp(id)),
-  moveItemDown: (id: number) => dispatch(moveContentDown(id)),
-  deleteItem: (id: number) => dispatch(deleteContent(id)),
-  addNewTextEditor: (id: number) =>
+  moveItemUp: (id: string) => dispatch(moveContentUp(id)),
+  moveItemDown: (id: string) => dispatch(moveContentDown(id)),
+  deleteItem: (id: string) => dispatch(deleteContent(id)),
+  addNewTextEditor: (id: string) =>
     dispatch(
       updateTextContent({
         title: "",
-        body: RICH_TEXT_DEFAULT_DATA,
+        body: RICH_TEXT_EMPTY_BODY,
         type: DATA_TYPE.RICH_TEXT,
         id,
       })
     ),
-  addNewCodeSnippet: (id: number) =>
+  addNewCodeSnippet: (id: string) =>
     dispatch(
       updateCodeSnippet({
         body: "",
@@ -118,6 +121,7 @@ const CreateProjectPage = ({
   contentList,
   topicTitle,
   userAuthToken,
+  isUploadingContent,
 }: PropsType) => {
   const location = useLocation();
   const [showInitialPanel, setShowInitialPanel] = useState(true);
@@ -159,7 +163,7 @@ const CreateProjectPage = ({
   const onTextTemplateClick = () => {
     onAddButtonClick();
     // leave time for the dropdown to disappear
-    addNewTextEditor(currentPositionId);
+    addNewTextEditor(String(currentPositionId));
     // TODO add logic
   };
 
@@ -175,7 +179,7 @@ const CreateProjectPage = ({
   };
   const onCodeTemplateClick = () => {
     onAddButtonClick();
-    addNewCodeSnippet(currentPositionId);
+    addNewCodeSnippet(String(currentPositionId));
   };
 
   const menu = [
@@ -184,7 +188,6 @@ const CreateProjectPage = ({
     { menuText: MODULE_TYPE.CODE, menuOnClick: onCodeTemplateClick },
   ];
 
-  console.log(">>>>>> is Update", isUpdate, topicId);
   return (
     <Wrapper>
       <Header isOfficial />
@@ -232,19 +235,23 @@ const CreateProjectPage = ({
               >
                 Save to AR
               </Button>
-              <Button
-                style={{
-                  background: "#3AC28D",
-                  color: "white",
-                  borderRadius: "4px",
-                  width: "116px",
-                  height: "40px",
-                  marginTop: "20px ",
-                }}
-                onClick={onSubmitClick}
-              >
-                Submit
-              </Button>
+              {isUploadingContent ? (
+                <LoadingCircle />
+              ) : (
+                <Button
+                  style={{
+                    background: "#3AC28D",
+                    color: "white",
+                    borderRadius: "4px",
+                    width: "116px",
+                    height: "40px",
+                    marginTop: "20px ",
+                  }}
+                  onClick={onSubmitClick}
+                >
+                  Submit
+                </Button>
+              )}
             </ProjectTitleWrapper>
             <EditWrapper>
               <ModuleWrapper>
@@ -260,6 +267,7 @@ const CreateProjectPage = ({
                             onDelete={() => deleteItem(item.id)}
                             onMoveItemUp={() => moveItemUp(item.id)}
                             onMoveItemDown={() => moveItemDown(item.id)}
+                            overrideRight={"-10px"}
                           />
                         );
                       case DATA_TYPE.CODE:
