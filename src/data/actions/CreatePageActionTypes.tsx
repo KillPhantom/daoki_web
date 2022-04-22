@@ -41,17 +41,17 @@ export type updateTwitterWidgetType = {
 
 export type deleteContentType = {
   type: typeof DELETE_CONTENT;
-  payload: number;
+  payload: string;
 };
 
 type moveContentUpType = {
   type: typeof MOVE_CONTENT_UP;
-  payload: number;
+  payload: string;
 };
 
 type moveContentDownType = {
   type: typeof MOVE_CONTENT_DOWN;
-  payload: number;
+  payload: string;
 };
 
 export type updateQuoteTopicType = {

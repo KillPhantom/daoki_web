@@ -14,7 +14,7 @@ import { updateTwitterWidget } from "../../data/actions/CreatePageActions";
 import { parseTwitterLink } from "../common/Helper";
 
 const mapDispatchToProps = (dispatch: any) => ({
-  addNewTwitterWidget: (twitterId: string, id: number) =>
+  addNewTwitterWidget: (twitterId: string, id: string) =>
     dispatch(
       updateTwitterWidget({
         body: twitterId,
@@ -47,6 +47,10 @@ const TwitterLinkInputBox = ({
   };
   const onOkClick = () => {
     if (!twitterLink) {
+      Modal.warning({
+        title: "Error",
+        content: "Twitter link cannot be empty",
+      });
       return;
     }
     const parsedTwitterId = parseTwitterLink(twitterLink);
@@ -58,7 +62,7 @@ const TwitterLinkInputBox = ({
       });
       return;
     }
-    addNewTwitterWidget(parsedTwitterId, positionId);
+    addNewTwitterWidget(parsedTwitterId, String(positionId));
     onClose();
   };
 

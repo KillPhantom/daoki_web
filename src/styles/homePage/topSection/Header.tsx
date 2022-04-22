@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import LogoIcon from "../../../assets/icons/logo.gif";
+import LoadingIcon from "../../../assets/icons/loading.gif";
 
 export const HeaderWrapper = styled.div`
   display: flex;
@@ -62,6 +63,12 @@ export const Button = styled.button`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+export const LoadingCircle = styled.img.attrs({ src: LoadingIcon })`
+  width: 88px;
+  height: 44px;
+  cursor: pointer;
 `;
 
 export const Logo = styled.img.attrs({ src: LogoIcon })`

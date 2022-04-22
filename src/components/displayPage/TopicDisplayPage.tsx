@@ -124,13 +124,13 @@ const TopicDisplayPage = ({
                   margin: "20px 10px 0 0 ",
                 }}
                 onClick={() => {
-                  Modal.info({
-                    title: "Coming soon",
-                    content: "Under deployment",
-                  });
-                  // navigate(CREATE_PROJECT_ROUTE, {
-                  //   state: { isUpdate: true, topicId },
+                  // Modal.info({
+                  //   title: "Coming soon",
+                  //   content: "Under deployment",
                   // });
+                  navigate(CREATE_PROJECT_ROUTE, {
+                    state: { isUpdate: true, topicId },
+                  });
                 }}
               >
                 Edit

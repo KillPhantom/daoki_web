@@ -47,7 +47,7 @@ const updateDataArrayHelper = (
   return newDataState;
 };
 
-const moveItemInArrayUp = (state: StateType, id: number) => {
+const moveItemInArrayUp = (state: StateType, id: string) => {
   const dataArray = state.data;
   const item = dataArray.find((item) => item?.id === id);
   const index = dataArray.indexOf(item);
@@ -59,7 +59,7 @@ const moveItemInArrayUp = (state: StateType, id: number) => {
   return dataArray;
 };
 
-const moveItemInArrayDown = (state: StateType, id: number) => {
+const moveItemInArrayDown = (state: StateType, id: string) => {
   const dataArray = state.data;
   const item = dataArray.find((item) => item?.id === id);
   const index = dataArray.indexOf(item);
@@ -110,6 +110,7 @@ const buildStateByTopicData = (data: TopicDetailType) => {
     isUploading: false,
     userId: data.contributor.userId,
     authorPublicAddress: data.contributor.walletPublicAddress,
+    topicId: data.topicId,
   };
 };
 
@@ -173,7 +174,7 @@ const CreatePageReducer = (
     case CREATE_TOPIC_FULFILLED:
     case UPDATE_TOPIC_FULFILLED:
       const response = action.payload;
-      if (response) {
+      if (response?.data?.code === "0") {
         window.location.href = "/topic/" + response.data.data;
       }
       return {

@@ -90,6 +90,7 @@ const RichTextEditor = ({ updateText, position, richTextData }: PropsType) => {
         title,
         type: DATA_TYPE.RICH_TEXT,
       });
+
       document.removeEventListener("mousedown", handleRichTextClickOutside);
     }
   };
@@ -98,7 +99,6 @@ const RichTextEditor = ({ updateText, position, richTextData }: PropsType) => {
     if (showToolBar) {
       document.addEventListener("mousedown", handleRichTextClickOutside);
     }
-
     return () => {
       document.removeEventListener("mousedown", handleRichTextClickOutside);
     };
@@ -131,7 +131,14 @@ const RichTextEditor = ({ updateText, position, richTextData }: PropsType) => {
           }}
         >
           {showToolBar && (
-            <Toolbar>
+            <Toolbar
+              style={{
+                position: "sticky",
+                top: "0",
+                background: "#f5f7fd",
+                zIndex: 1,
+              }}
+            >
               <MarkButton format="bold" icon="format_bold" />
               <MarkButton format="italic" icon="format_italic" />
               <MarkButton format="underline" icon="format_underlined" />

@@ -53,17 +53,17 @@ export const updateTwitterWidget = (twitter: TwitterWidgetType) => ({
   payload: twitter,
 });
 
-export const deleteContent = (id: number) => ({
+export const deleteContent = (id: string) => ({
   type: DELETE_CONTENT,
   payload: id,
 });
 
-export const moveContentUp = (id: number) => ({
+export const moveContentUp = (id: string) => ({
   type: MOVE_CONTENT_UP,
   payload: id,
 });
 
-export const moveContentDown = (id: number) => ({
+export const moveContentDown = (id: string) => ({
   type: MOVE_CONTENT_DOWN,
   payload: id,
 });
@@ -73,7 +73,7 @@ export const updateQuoteTopic = (quoteTopic: QuoteTopicType) => ({
   payload: quoteTopic,
 });
 
-const topicBodyBuilder = (content: Array<ContentType>) => {
+const topicBodyBuilder = (content: Array<ContentType>, topicId?: string) => {
   let body = [];
   for (let i = 0; i < content.length; i++) {
     if (content[i]?.type === DATA_TYPE.RICH_TEXT) {
@@ -83,12 +83,16 @@ const topicBodyBuilder = (content: Array<ContentType>) => {
         body: JSON.stringify(content[i]?.body),
         position: i,
         type: DATA_TYPE.RICH_TEXT,
+        contentId: content[i]?.id,
+        topicId,
       });
     } else if (content[i]?.type === DATA_TYPE.TWITTER_WIDGET) {
       body.push({
         type: DATA_TYPE.TWITTER_WIDGET,
         body: content[i]?.body,
         position: i,
+        contentId: content[i]?.id,
+        topicId,
       });
     } else if (content[i]?.type === DATA_TYPE.CODE) {
       body.push({
@@ -97,6 +101,8 @@ const topicBodyBuilder = (content: Array<ContentType>) => {
         position: i,
         // @ts-ignore
         language: content[i]?.language,
+        contentId: content[i]?.id,
+        topicId,
       });
     }
   }
@@ -124,7 +130,7 @@ export const updateTopic = (
 ) => ({
   type: UPDATE_TOPIC,
   payload: () => {
-    const body = topicBodyBuilder(content);
+    const body = topicBodyBuilder(content, topicId);
     return UpdateTopicServices(topicId, title, body, token, quotedTopics);
   },
 });

@@ -1,16 +1,9 @@
-import axios from "axios";
+import { post } from "../utils/API";
+
 export default (async function DeleteTopicService(
   topicId: string,
   token: string
 ): Promise<any> {
-  await axios({
-    method: "post",
-    url: `https://daoki.xyz/api/topic/delete`,
-    params: {
-      id: topicId,
-    },
-    headers: {
-      token,
-    },
-  });
+  await post("/topic/delete", null, { id: topicId }, { token });
+  window.location.reload();
 });

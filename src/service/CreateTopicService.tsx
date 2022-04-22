@@ -1,8 +1,8 @@
-import axios from "axios";
 import {
   CreateTopicContentType,
   QuoteTopicType,
 } from "../data/types/CommonTypes";
+import { post } from "../utils/API";
 
 export default (async function CreateTopicService(
   title: string,
@@ -10,18 +10,13 @@ export default (async function CreateTopicService(
   token: string,
   quoteTopics?: Array<QuoteTopicType>
 ): Promise<any> {
-  const response = await axios({
-    method: "post",
-    url: `https://daoki.xyz/api/topic/create`,
-    data: {
-      name: title,
-      content,
-      quoteTopics,
-    },
-    headers: {
-      token,
-    },
-  });
+  const data = {
+    name: title,
+    content,
+    quoteTopics,
+  };
+  const headers = { token };
+  const response = await post("/topic/create", data, null, headers);
   return response;
 });
 
