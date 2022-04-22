@@ -23,6 +23,10 @@ type PropsType = {};
 let web3: Web3 | undefined = undefined; // Will hold the web3 instance
 
 const WalletButton = ({}: PropsType) => {
+  const host =
+    process.env.NODE_ENV === "production"
+      ? "https://daoki.xyz/api"
+      : "http://127.0.0.1:8080/daoki";
   const [loading, setLoading] = useState(false); // Loading button state
   const [authSuccess, setAuthSuccess] = useState(Boolean(getUserAuthToken));
   const [publicAddress, setPublicAddress] = useState<string | null | undefined>(
@@ -47,7 +51,7 @@ const WalletButton = ({}: PropsType) => {
     signature: string;
     msgHash: any;
   }) =>
-    fetch(`http://127.0.0.1:8080/daoki/user/authentication`, {
+    fetch(`${host}/user/authentication`, {
       body: JSON.stringify({ publicAddress, signature, message: msgHash }),
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +79,7 @@ const WalletButton = ({}: PropsType) => {
   };
 
   const handleSignup = (publicAddress: string) =>
-    fetch(`http://127.0.0.1:8080/daoki/user/create-user`, {
+    fetch(`${host}/daoki/user/create-user`, {
       body: JSON.stringify({ publicAddress }),
       headers: {
         "Content-Type": "application/json",
@@ -83,12 +87,6 @@ const WalletButton = ({}: PropsType) => {
       method: "POST",
     }).then((response) => response.json());
 
-  const onDemoClick = () => {
-    Modal.info({
-      title: "Coming up soon",
-      content: "function are being developed currently",
-    });
-  };
   const handleClick = async () => {
     // Check if MetaMask is installed
     if (!(window as any).ethereum) {
@@ -123,7 +121,7 @@ const WalletButton = ({}: PropsType) => {
 
     // Look if user with current publicAddress is already present on backend
 
-    fetch(`http://127.0.0.1:8080/daoki/user/get-user-info`, {
+    fetch(`${host}/daoki/user/get-user-info`, {
       body: JSON.stringify({ publicAddress }),
       headers: {
         "Content-Type": "application/json",
