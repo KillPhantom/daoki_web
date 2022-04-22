@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { TwitterTweetEmbed } from "react-twitter-embed";
 
 import { TwitterWrapper } from "../../styles/createPage/CreateProjectPage";

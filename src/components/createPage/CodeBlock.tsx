@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch: any) => ({
 });
 
 type PropsType = {
-  id: number;
+  id: string;
 } & ReturnType<typeof mapDispatchToProps>;
 
 const CodeBlock = ({ id, updateCode }: PropsType) => {

@@ -73,6 +73,11 @@ export const updateQuoteTopic = (quoteTopic: QuoteTopicType) => ({
   payload: quoteTopic,
 });
 
+const getIsUpdateContentId = (id: string | undefined) => {
+  // for newly created content, client will assign a number(string) as id for reference.
+  // we should not pass this custom id when submit request
+  return id?.length === 24;
+};
 const topicBodyBuilder = (content: Array<ContentType>, topicId?: string) => {
   let body = [];
   for (let i = 0; i < content.length; i++) {
@@ -83,7 +88,9 @@ const topicBodyBuilder = (content: Array<ContentType>, topicId?: string) => {
         body: JSON.stringify(content[i]?.body),
         position: i,
         type: DATA_TYPE.RICH_TEXT,
-        contentId: content[i]?.id,
+        contentId: getIsUpdateContentId(content[i]?.id)
+          ? content[i]?.id
+          : undefined,
         topicId,
       });
     } else if (content[i]?.type === DATA_TYPE.TWITTER_WIDGET) {
@@ -91,7 +98,9 @@ const topicBodyBuilder = (content: Array<ContentType>, topicId?: string) => {
         type: DATA_TYPE.TWITTER_WIDGET,
         body: content[i]?.body,
         position: i,
-        contentId: content[i]?.id,
+        contentId: getIsUpdateContentId(content[i]?.id)
+          ? content[i]?.id
+          : undefined,
         topicId,
       });
     } else if (content[i]?.type === DATA_TYPE.CODE) {
@@ -101,7 +110,9 @@ const topicBodyBuilder = (content: Array<ContentType>, topicId?: string) => {
         position: i,
         // @ts-ignore
         language: content[i]?.language,
-        contentId: content[i]?.id,
+        contentId: getIsUpdateContentId(content[i]?.id)
+          ? content[i]?.id
+          : undefined,
         topicId,
       });
     }

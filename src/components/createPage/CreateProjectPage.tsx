@@ -271,7 +271,14 @@ const CreateProjectPage = ({
                           />
                         );
                       case DATA_TYPE.CODE:
-                        return <CodeBlock id={item.id} />;
+                        return (
+                          <CodeBlock
+                            id={item.id}
+                            onDelete={() => deleteItem(item.id)}
+                            onMoveItemUp={() => moveItemUp(item.id)}
+                            onMoveItemDown={() => moveItemDown(item.id)}
+                          />
+                        );
                       case DATA_TYPE.TWITTER_WIDGET:
                         return (
                           <TwitterWidget
@@ -304,7 +311,7 @@ const CreateProjectPage = ({
       <TwitterLinkInputModal
         visible={showTwitterLinkInputModal}
         onClose={() => setShowTwitterLinkInputModal(false)}
-        positionId={currentPositionId}
+        positionId={currentPositionId + 1}
       />
     </Wrapper>
   );

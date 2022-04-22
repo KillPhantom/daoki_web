@@ -64,6 +64,7 @@ const TwitterLinkInputBox = ({
     }
     addNewTwitterWidget(parsedTwitterId, String(positionId));
     onClose();
+    setTwitterLink("");
   };
 
   useEffect(() => {
@@ -88,6 +89,7 @@ const TwitterLinkInputBox = ({
           onCancelClick();
         }
         onClose();
+        setTwitterLink("");
       }}
     >
       <LinkInputTitle>Twitter Link</LinkInputTitle>

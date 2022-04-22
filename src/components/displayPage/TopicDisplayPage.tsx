@@ -17,8 +17,10 @@ import Header from "../homePage/topSection/Header";
 import ExternalLinkSection from "../createPage/ExternalLinksSection";
 import ContextMenu from "../createPage/ContextMenu";
 import RichTextViewer from "../richText/RichTextViewer";
+import CodeBlock from "../createPage/CodeBlock";
+import TwitterWidget from "../createPage/TwitterWidget";
 import QuoteTopicMenu from "../createPage/QuoteTopicMenu";
-import { Button, Modal } from "antd";
+import { Button } from "antd";
 
 /* Constants */
 
@@ -66,6 +68,10 @@ const TopicDisplayPage = ({
       switch (item.type) {
         case DATA_TYPE.RICH_TEXT:
           return <RichTextViewer richTextData={item} />;
+        case DATA_TYPE.CODE:
+          return <CodeBlock id={item.id} />;
+        case DATA_TYPE.TWITTER_WIDGET:
+          return <TwitterWidget twitterId={item.body} />;
         default:
           return null;
       }
