@@ -176,6 +176,8 @@ const CreatePageReducer = (
       const response = action.payload;
       if (response?.data?.code === "0") {
         window.location.href = "/topic/" + response.data.data;
+      } else if (response?.data?.message) {
+        alert(response.data.message);
       }
       return {
         ...state,

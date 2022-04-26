@@ -28,8 +28,13 @@ import EarlyStageHomePage from "./components/homePage/EarlyStageHomePage";
 import CreateProjectPage from "./components/createPage/CreateProjectPage";
 import TopicDisplayPage from "./components/displayPage/TopicDisplayPage";
 import MyProjectPage from "./components/myProjectPage/MyProjectPage";
+import { getIsMobileBrowser } from "./utils/Device";
+import MobileHomePage from "./mobile/components/MobileHomePage";
 
 const App = () => {
+  if (getIsMobileBrowser()) {
+    return <MobileHomePage />;
+  }
   return (
     <Router>
       <div className="App">
