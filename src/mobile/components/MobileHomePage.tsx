@@ -27,7 +27,7 @@ const MobileHomePage = () => {
       <ColorfulTitle>Daoki Mobile</ColorfulTitle>
       <Title>
         is coming soon! 👋🏻 <br />
-        view our desktop version
+        Check our desktop version.
       </Title>
       <TextBody>
         Join our community by submitting your information below!

@@ -1,14 +1,12 @@
 import { connect } from "react-redux";
 import { useState } from "react";
 import { Button, Modal } from "antd";
-import { useNavigate } from "react-router-dom";
 
 /* Styled Components */
 import {
   FormContentWrapper,
   FormUnorderedList,
   FormUnorderedListSpan,
-  FormTitle,
   ErrorText,
 } from "../styles/MobileHomePage";
 
@@ -53,7 +51,7 @@ const SubmitInfoCard = ({ submitInfo }: PropsType) => {
         </li>
       </FormUnorderedList>
       <input
-        placeholder="your email"
+        placeholder="Your email"
         style={{
           width: "100%",
           border: "solid 1px #C9D9F7",
@@ -70,7 +68,7 @@ const SubmitInfoCard = ({ submitInfo }: PropsType) => {
       <FormUnorderedList style={{ marginTop: "16px" }}>
         <li>
           <FormUnorderedListSpan>
-            What do you want to do for Daoki?
+            What do you want to do with Daoki?
           </FormUnorderedListSpan>
         </li>
       </FormUnorderedList>
