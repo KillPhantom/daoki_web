@@ -74,3 +74,17 @@ export type GetUserTopicServicesType = {
   totalCount: number;
   totalPage: number;
 };
+
+export type SearchResultItemType = {
+  title: string;
+  id: string;
+  description: string;
+};
+
+export type SearchResponse = {
+  pageNo: number;
+  pageSize: number;
+  totalPage: number;
+  totalCount: number;
+  items: Array<SearchResultItemType>;
+};

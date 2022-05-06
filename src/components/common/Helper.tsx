@@ -11,3 +11,13 @@ export const parseTwitterLink = (twitterLink: string) => {
   }
   return twitterLink.replace(/\?.+/, "").split("/").slice(-1).join(); // remove everything after ? should be ref params
 };
+
+export const formatAddressDisplayHash = (hash: string | undefined | null) => {
+  if (!hash || hash.length < 5) {
+    return "";
+  }
+  const first4digit = hash.substring(0, 5);
+  const last4digit = hash.substring(hash.length - 4);
+
+  return first4digit + "..." + last4digit;
+};

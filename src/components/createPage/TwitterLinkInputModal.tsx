@@ -57,8 +57,7 @@ const TwitterLinkInputBox = ({
     if (!parsedTwitterId || isNaN(Number(parsedTwitterId))) {
       Modal.warning({
         title: "Invalid twitter link format",
-        content:
-          "Copy the twitter link directly, like https://twitter.com/joe_jag/status/933354946111705097",
+        content: "Currently only specific Twitter links are supported",
       });
       return;
     }

@@ -24,11 +24,19 @@ const EditSideBarHOC = <P extends InjectedPropsType = InjectedPropsType>(
     ...propsToPass
   }: Omit<P, keyof InjectedPropsType> & HocOnlyPropsType) => {
     const [showEditBar, setShowEditBar] = useState(false);
+    let timeOut: any;
     return (
       <div
         style={{ position: "relative" }}
-        onMouseEnter={() => setShowEditBar(true)}
-        onMouseLeave={() => setShowEditBar(false)}
+        onMouseEnter={() => {
+          setShowEditBar(true);
+          clearTimeout(timeOut);
+        }}
+        onMouseLeave={() => {
+          timeOut = setTimeout(() => {
+            setShowEditBar(false);
+          }, 800);
+        }}
       >
         <WrappedComponents {...(propsToPass as unknown as P)} />
         {showEditBar && (

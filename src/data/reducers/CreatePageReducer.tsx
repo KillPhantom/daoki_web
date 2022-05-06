@@ -108,8 +108,8 @@ const buildStateByTopicData = (data: TopicDetailType) => {
     data: result,
     quoteTopic: [],
     isUploading: false,
-    userId: data.contributor.userId,
-    authorPublicAddress: data.contributor.walletPublicAddress,
+    userId: data.contributor?.userId,
+    authorPublicAddress: data.contributor?.walletPublicAddress,
     topicId: data.topicId,
   };
 };

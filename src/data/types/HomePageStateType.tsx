@@ -1,3 +1,5 @@
+import { SearchResponse } from "./CommonTypes";
+
 export type PreviewDataType = {
   title: string;
   link: string;
@@ -12,4 +14,5 @@ export type PreviewDataSectionType = {
 export type StateType = {
   hotTopics?: Array<PreviewDataSectionType | null>;
   rewardList?: Array<PreviewDataType | null>;
+  searchResult?: SearchResponse;
 };
