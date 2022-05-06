@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "antd";
 import { connect } from "react-redux";
 
@@ -15,10 +15,23 @@ import BookShelfIcon from "../common/icons/BookShelfIcon";
 import { Icon } from "./Components";
 import { updateQuoteTopic } from "../../data/actions/CreatePageActions";
 import { QuoteTopicType } from "../../data/types/CommonTypes";
+import { StateType } from "../../data/types/StateType";
+
+/* Actions */
+import { searchTopic } from "../../data/actions/HomePageActions";
+
+/* Selectors */
+import { getSearchTopicResult } from "../../data/selectors/HomePageSelectors";
+
+const mapStateToProps = (state: StateType) => ({
+  searchResult: getSearchTopicResult(state),
+});
 
 const mapDispatchToProps = (dispatch: any) => ({
   addQuoteTopic: (quoteTopic: QuoteTopicType) =>
     dispatch(updateQuoteTopic(quoteTopic)),
+  searchByName: (keyword: string, page: number, size: number) =>
+    dispatch(searchTopic(keyword, page, size)),
 });
 
 type PropsType = {
@@ -32,24 +45,42 @@ type PropsType = {
     description: string,
     isInternal: boolean
   ) => void;
-} & ReturnType<typeof mapDispatchToProps>;
+} & ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
 const LinkInputBox = ({
   visible,
   initialUrl = "",
   initialDescription = "",
+  searchResult,
   onClose,
   setInputValue,
   onCancelClick,
   addQuoteTopic,
+  searchByName,
 }: PropsType) => {
   const [linkValue, setLinkValue] = useState(initialUrl);
   const [suggestTopics, setSuggestTopics] = useState([
     { title: "NFTX 官方中文版", link: "/example-page-2", score: 3320 },
     { title: "NFTX 简介", link: "/example-page-3", score: 10 },
   ]);
-  const [description, setDescription] = useState(initialDescription);
 
+  const [description, setDescription] = useState(initialDescription);
+  const selectString = window.getSelection()?.toString();
+  useEffect(() => {
+    if (selectString) {
+      searchByName(selectString, 0, 100);
+    }
+  }, [selectString]);
+
+  useEffect(() => {
+    const recommendations = searchResult?.map((item) => ({
+      title: item.title,
+      link: `/topic/${item.id}`,
+      score: Math.floor(Math.random() * 10000),
+    }));
+    if (recommendations) setSuggestTopics(recommendations);
+  }, [searchResult]);
   const onLinkChange = (event: any) => {
     // fire a search function here
     setLinkValue(event.target.value);
@@ -126,4 +157,4 @@ const LinkInputBox = ({
   );
 };
 
-export default connect(null, mapDispatchToProps)(LinkInputBox);
+export default connect(mapStateToProps, mapDispatchToProps)(LinkInputBox);

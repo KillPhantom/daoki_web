@@ -1,8 +1,8 @@
 /* Actions */
 import {
   SUBMIT_COLLABORATOR_INFO_SERVICES_FULFILLED,
-  FETCH_HOME_PAGE_INITIAL_DATA_FULFILLED,
   FETCH_HOME_PAGE_INITIAL_DATA,
+  SEARCH_TOPIC_DATA_FULFILLED,
 } from "../actions/HomePageActions";
 
 /* Types */
@@ -86,6 +86,12 @@ const HomePageReducer = (
     case FETCH_HOME_PAGE_INITIAL_DATA:
       return {
         ...state,
+      };
+    case SEARCH_TOPIC_DATA_FULFILLED:
+      const data = action.payload;
+      return {
+        ...state,
+        searchResult: data,
       };
     default:
       //   ((checkType: never) => checkType)(action);

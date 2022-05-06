@@ -17,6 +17,7 @@ import {
   setUserIdCookie,
 } from "../../../utils/Cookie";
 import { getUserAuthToken } from "../../../data/selectors/UserSelectors";
+import { formatAddressDisplayHash } from "../../common/Helper";
 
 type PropsType = {};
 
@@ -30,7 +31,7 @@ const WalletButton = ({}: PropsType) => {
   const [loading, setLoading] = useState(false); // Loading button state
   const [authSuccess, setAuthSuccess] = useState(Boolean(getUserAuthToken));
   const [publicAddress, setPublicAddress] = useState<string | null | undefined>(
-    getPublicAddressCookie()
+    formatAddressDisplayHash(getPublicAddressCookie())
   );
 
   const onLoggedIn = (response: any) => {
@@ -116,7 +117,7 @@ const WalletButton = ({}: PropsType) => {
 
     const publicAddress = coinbase.toLowerCase();
     setLoading(true);
-    setPublicAddress(publicAddress);
+    setPublicAddress(formatAddressDisplayHash(publicAddress));
     setPublicAddressCookie(publicAddress);
 
     // Look if user with current publicAddress is already present on backend

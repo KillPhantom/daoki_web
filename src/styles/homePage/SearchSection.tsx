@@ -68,6 +68,7 @@ export const PreviewInfoItemHeaderTitle = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 240px;
 `;
 
 export const PreviewInfoItemBody = styled.div`
